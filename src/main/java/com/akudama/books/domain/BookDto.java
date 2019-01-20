@@ -4,9 +4,12 @@ import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 
+import java.util.ArrayList;
+import java.util.List;
+
 @Getter
-@NoArgsConstructor
 @AllArgsConstructor
+@NoArgsConstructor
 public class BookDto {
     private Long id;
     private int year;
@@ -14,4 +17,8 @@ public class BookDto {
     private String titleEn;
     private String series;
     private String genre;
+    private List<Author> authors = new ArrayList<>();
+    private MyScore myScore;
+    private WorldScore worldScore;
+    private HomeCollection homeCollection;
 }

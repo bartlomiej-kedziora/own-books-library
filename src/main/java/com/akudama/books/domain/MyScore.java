@@ -1,19 +1,38 @@
 package com.akudama.books.domain;
 
-import lombok.AllArgsConstructor;
-import lombok.Getter;
-import lombok.NoArgsConstructor;
-
 import javax.persistence.*;
+import javax.validation.constraints.NotNull;
 
-@Getter
-@AllArgsConstructor
-@NoArgsConstructor
-@Entity(name = "myscore")
+@Entity
+@Table(name = "MYSCORE")
 public class MyScore {
-    @Id
-    @GeneratedValue(strategy = GenerationType.AUTO)
     private Long Id;
-
     private int value;
+
+    public MyScore() {
+    }
+
+    public MyScore(int value) {
+        this.value = value;
+    }
+
+    @Id
+    @GeneratedValue
+    @NotNull
+    @Column(name = "myscore_id", unique = true)
+    public Long getId() {
+        return Id;
+    }
+
+    public int getValue() {
+        return value;
+    }
+
+    private void setId(Long id) {
+        Id = id;
+    }
+
+    public void setValue(int value) {
+        this.value = value;
+    }
 }
