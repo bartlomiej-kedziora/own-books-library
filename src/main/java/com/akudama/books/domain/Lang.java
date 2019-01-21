@@ -35,4 +35,16 @@ public class Lang {
     public HomeCollection getHomeCollection() {
         return homeCollection;
     }
+
+    private void setId(Long id) {
+        this.id = id;
+    }
+
+    public void setValue(LangKind value) {
+        this.value = value;
+    }
+
+    public void setHomeCollection(HomeCollection homeCollection) {
+        this.homeCollection = homeCollection;
+    }
 }

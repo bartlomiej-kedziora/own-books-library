@@ -57,7 +57,7 @@ public class Author {
         return country;
     }
 
-    @ManyToMany(cascade = CascadeType.ALL, mappedBy = "BOOKS")
+    @ManyToMany(cascade = CascadeType.ALL, mappedBy = "authors")
     public List<Book> getBooks() {
         return books;
     }

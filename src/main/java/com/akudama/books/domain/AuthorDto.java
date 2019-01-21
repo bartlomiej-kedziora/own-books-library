@@ -10,7 +10,6 @@ import java.util.List;
 @Getter
 @AllArgsConstructor
 @NoArgsConstructor
-@Entity
 public class AuthorDto {
     private Long Id;
     private int yearOfBirth;
