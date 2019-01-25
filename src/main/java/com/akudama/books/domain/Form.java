@@ -1,21 +1,19 @@
 package com.akudama.books.domain;
 
+import lombok.AllArgsConstructor;
+import lombok.NoArgsConstructor;
+
 import javax.persistence.*;
 import javax.validation.constraints.NotNull;
 
+@AllArgsConstructor
+@NoArgsConstructor
 @Entity
 @Table(name = "FORMS")
 public class Form {
     private Long id;
     private BookKind value;
     private HomeCollection homeCollection;
-
-    public Form() {
-    }
-
-    public Form(BookKind value) {
-        this.value = value;
-    }
 
     @Id
     @GeneratedValue

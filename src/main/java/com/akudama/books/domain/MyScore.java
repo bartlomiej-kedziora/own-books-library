@@ -1,20 +1,18 @@
 package com.akudama.books.domain;
 
+import lombok.AllArgsConstructor;
+import lombok.NoArgsConstructor;
+
 import javax.persistence.*;
 import javax.validation.constraints.NotNull;
 
+@AllArgsConstructor
+@NoArgsConstructor
 @Entity
 @Table(name = "MYSCORE")
 public class MyScore {
     private Long Id;
     private int value;
-
-    public MyScore() {
-    }
-
-    public MyScore(int value) {
-        this.value = value;
-    }
 
     @Id
     @GeneratedValue

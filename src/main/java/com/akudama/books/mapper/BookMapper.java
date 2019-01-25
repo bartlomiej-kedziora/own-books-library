@@ -1,0 +1,53 @@
+package com.akudama.books.mapper;
+
+import com.akudama.books.domain.Book;
+import com.akudama.books.domain.BookDto;
+
+import java.util.List;
+import java.util.stream.Collectors;
+
+public class BookMapper {
+    public Book mapToBook(final BookDto bookDto) {
+        return new Book(
+                bookDto.getId(),
+                bookDto.getYear(),
+                bookDto.getTitlePl(),
+                bookDto.getTitleEn(),
+                bookDto.getSeries(),
+                bookDto.getGenre(),
+                bookDto.getAuthors(),
+                bookDto.getMyScore(),
+                bookDto.getWorldScore(),
+                bookDto.getHomeCollection());
+    }
+
+    public BookDto mapToBookDto(final Book book) {
+        return new BookDto(
+                book.getId(),
+                book.getYear(),
+                book.getTitlePl(),
+                book.getTitleEn(),
+                book.getSeries(),
+                book.getGenre(),
+                book.getAuthors(),
+                book.getMyScore(),
+                book.getWorldScore(),
+                book.getHomeCollection());
+    }
+
+    public List<BookDto> mapToBookDtoList(final List<Book> bookList) {
+        return bookList.stream()
+                .map(b -> new BookDto(
+                        b.getId(),
+                        b.getYear(),
+                        b.getTitlePl(),
+                        b.getTitleEn(),
+                        b.getSeries(),
+                        b.getGenre(),
+                        b.getAuthors(),
+                        b.getMyScore(),
+                        b.getWorldScore(),
+                        b.getHomeCollection()))
+                .collect(Collectors.toList());
+    }
+}

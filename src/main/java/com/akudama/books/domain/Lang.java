@@ -1,21 +1,19 @@
 package com.akudama.books.domain;
 
+import lombok.AllArgsConstructor;
+import lombok.NoArgsConstructor;
+
 import javax.persistence.*;
 import javax.validation.constraints.NotNull;
 
+@AllArgsConstructor
+@NoArgsConstructor
 @Entity
 @Table(name = "LANGS")
 public class Lang {
     private Long id;
     private LangKind value;
     private HomeCollection homeCollection;
-
-    public Lang() {
-    }
-
-    public Lang(LangKind value) {
-        this.value = value;
-    }
 
     @Id
     @GeneratedValue

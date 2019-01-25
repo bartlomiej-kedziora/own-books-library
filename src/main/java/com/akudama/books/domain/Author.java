@@ -1,11 +1,15 @@
 package com.akudama.books.domain;
 
+import lombok.AllArgsConstructor;
+import lombok.NoArgsConstructor;
+
 import javax.persistence.*;
 import javax.validation.constraints.NotNull;
 import java.util.ArrayList;
 import java.util.List;
 
-
+@AllArgsConstructor
+@NoArgsConstructor
 @Entity
 @Table(name = "AUTHORS")
 public class Author {
@@ -16,17 +20,6 @@ public class Author {
     private String city;
     private String country;
     private List<Book> books = new ArrayList<>();
-
-    public Author() {
-    }
-
-    public Author(int yearOfBirth, String name, String surname, String city, String country) {
-        this.yearOfBirth = yearOfBirth;
-        this.name = name;
-        this.surname = surname;
-        this.city = city;
-        this.country = country;
-    }
 
     @Id
     @GeneratedValue

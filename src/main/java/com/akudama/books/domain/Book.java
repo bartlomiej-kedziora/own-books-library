@@ -1,10 +1,15 @@
 package com.akudama.books.domain;
 
+import lombok.AllArgsConstructor;
+import lombok.NoArgsConstructor;
+
 import javax.persistence.*;
 import javax.validation.constraints.NotNull;
 import java.util.ArrayList;
 import java.util.List;
 
+@AllArgsConstructor
+@NoArgsConstructor
 @Entity
 @Table(name = "BOOKS")
 public class Book {
@@ -19,15 +24,15 @@ public class Book {
     private WorldScore worldScore;
     private HomeCollection homeCollection;
 
-    public Book() {
-    }
+//    public Book() {
+//    }
 
-    public Book(String titlePl, String titleEn, String series, String genre) {
-        this.titlePl = titlePl;
-        this.titleEn = titleEn;
-        this.series = series;
-        this.genre = genre;
-    }
+//    public Book(String titlePl, String titleEn, String series, String genre) {
+//        this.titlePl = titlePl;
+//        this.titleEn = titleEn;
+//        this.series = series;
+//        this.genre = genre;
+//    }
 
     @Id
     @GeneratedValue

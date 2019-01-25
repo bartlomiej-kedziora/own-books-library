@@ -1,19 +1,21 @@
 package com.akudama.books.domain;
 
+import lombok.AllArgsConstructor;
+import lombok.NoArgsConstructor;
+
 import javax.persistence.*;
 import javax.validation.constraints.NotNull;
 import java.util.ArrayList;
 import java.util.List;
 
+@AllArgsConstructor
+@NoArgsConstructor
 @Entity
 @Table(name = "HOMECOLLECTION")
 public class HomeCollection {
     private Long Id;
     private List<Form> forms = new ArrayList<>();
     private List<Lang> langs = new ArrayList<>();
-
-    public HomeCollection() {
-    }
 
     @Id
     @GeneratedValue
