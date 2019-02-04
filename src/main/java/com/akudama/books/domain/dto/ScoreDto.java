@@ -1,16 +1,13 @@
-package com.akudama.books.domain;
+package com.akudama.books.domain.dto;
 
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 
-import javax.persistence.*;
-
 @Getter
 @AllArgsConstructor
 @NoArgsConstructor
-public class FormDto {
+public class ScoreDto {
     private Long id;
-    private BookKind value;
-    private HomeCollection homeCollection;
+    private int value;
 }

@@ -1,7 +1,8 @@
-package com.akudama.books.domain;
+package com.akudama.books.domain.entity;
 
 import lombok.AllArgsConstructor;
 import lombok.NoArgsConstructor;
+import lombok.Setter;
 
 import javax.persistence.*;
 import javax.validation.constraints.NotNull;
@@ -10,10 +11,11 @@ import java.util.List;
 
 @AllArgsConstructor
 @NoArgsConstructor
+@Setter
 @Entity
 @Table(name = "AUTHORS")
 public class Author {
-    private Long Id;
+    private Long id;
     private int yearOfBirth;
     private String name;
     private String surname;
@@ -21,12 +23,21 @@ public class Author {
     private String country;
     private List<Book> books = new ArrayList<>();
 
+    public Author(long id, int yearOfBirth, String name, String surname, String city, String country) {
+        this.id = id;
+        this.yearOfBirth = yearOfBirth;
+        this.name = name;
+        this.surname = surname;
+        this.city = city;
+        this.country = country;
+    }
+
     @Id
     @GeneratedValue
     @NotNull
     @Column(name="author_id", unique = true)
     public Long getId() {
-        return Id;
+        return id;
     }
 
     @Column(name = "year")
@@ -53,34 +64,6 @@ public class Author {
     @ManyToMany(cascade = CascadeType.ALL, mappedBy = "authors")
     public List<Book> getBooks() {
         return books;
-    }
-
-    private void setId(Long id) {
-        Id = id;
-    }
-
-    public void setYearOfBirth(int yearOfBirth) {
-        this.yearOfBirth = yearOfBirth;
-    }
-
-    public void setName(String name) {
-        this.name = name;
-    }
-
-    public void setSurname(String surname) {
-        this.surname = surname;
-    }
-
-    public void setCity(String city) {
-        this.city = city;
-    }
-
-    public void setCountry(String country) {
-        this.country = country;
-    }
-
-    public void setBooks(List<Book> books) {
-        this.books = books;
     }
 }
 

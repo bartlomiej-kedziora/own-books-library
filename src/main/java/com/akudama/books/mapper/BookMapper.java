@@ -1,7 +1,8 @@
 package com.akudama.books.mapper;
 
-import com.akudama.books.domain.Book;
-import com.akudama.books.domain.BookDto;
+import com.akudama.books.domain.dto.BookDetailsDto;
+import com.akudama.books.domain.entity.Book;
+import com.akudama.books.domain.dto.BookDto;
 
 import java.util.List;
 import java.util.stream.Collectors;
@@ -14,11 +15,22 @@ public class BookMapper {
                 bookDto.getTitlePl(),
                 bookDto.getTitleEn(),
                 bookDto.getSeries(),
-                bookDto.getGenre(),
-                bookDto.getAuthors(),
-                bookDto.getMyScore(),
-                bookDto.getWorldScore(),
-                bookDto.getHomeCollection());
+                bookDto.getGenre());
+    }
+
+    public Book mapToBookDetails(final BookDetailsDto bookDetailsDto) {
+        return new Book(
+                bookDetailsDto.getId(),
+                bookDetailsDto.getYear(),
+                bookDetailsDto.getTitlePl(),
+                bookDetailsDto.getTitleEn(),
+                bookDetailsDto.getSeries(),
+                bookDetailsDto.getGenre(),
+                bookDetailsDto.getAuthors(),
+                bookDetailsDto.getMyScore(),
+                bookDetailsDto.getWorldScore(),
+                bookDetailsDto.getHomeCollection()
+        );
     }
 
     public BookDto mapToBookDto(final Book book) {
@@ -28,16 +40,40 @@ public class BookMapper {
                 book.getTitlePl(),
                 book.getTitleEn(),
                 book.getSeries(),
+                book.getGenre()
+        );
+    }
+
+    public BookDetailsDto mapToBookDetailsDto(final Book book) {
+        return new BookDetailsDto(
+                book.getId(),
+                book.getYear(),
+                book.getTitlePl(),
+                book.getTitleEn(),
+                book.getSeries(),
                 book.getGenre(),
                 book.getAuthors(),
                 book.getMyScore(),
                 book.getWorldScore(),
-                book.getHomeCollection());
+                book.getHomeCollection()
+        );
     }
 
     public List<BookDto> mapToBookDtoList(final List<Book> bookList) {
         return bookList.stream()
                 .map(b -> new BookDto(
+                        b.getId(),
+                        b.getYear(),
+                        b.getTitlePl(),
+                        b.getTitleEn(),
+                        b.getSeries(),
+                        b.getGenre()))
+                .collect(Collectors.toList());
+    }
+
+    public List<BookDetailsDto> mapToBookDetailsDtoList(final List<Book> bookList) {
+        return bookList.stream()
+                .map(b -> new BookDetailsDto(
                         b.getId(),
                         b.getYear(),
                         b.getTitlePl(),

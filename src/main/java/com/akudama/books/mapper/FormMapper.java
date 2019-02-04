@@ -1,13 +1,13 @@
 package com.akudama.books.mapper;
 
-import com.akudama.books.domain.Form;
-import com.akudama.books.domain.FormDto;
+import com.akudama.books.domain.entity.Form;
+import com.akudama.books.domain.dto.FormDto;
 
 import java.util.List;
 import java.util.stream.Collectors;
 
 public class FormMapper {
-    public Form mapToForm(FormDto formDto) {
+    public Form mapToForm(final FormDto formDto) {
         return new Form(
                 formDto.getId(),
                 formDto.getValue(),
@@ -15,7 +15,7 @@ public class FormMapper {
         );
     }
 
-    public FormDto mapToFormDto(Form form) {
+    public FormDto mapToFormDto(final Form form) {
         return new FormDto(
                 form.getId(),
                 form.getValue(),
@@ -23,7 +23,7 @@ public class FormMapper {
         );
     }
 
-    public List<FormDto> mapToFormDtoList(List<Form> formList) {
+    public List<FormDto> mapToFormDtoList(final List<Form> formList) {
         return formList.stream()
                 .map(f -> new FormDto(
                         f.getId(),

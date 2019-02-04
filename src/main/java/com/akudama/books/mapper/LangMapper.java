@@ -1,13 +1,13 @@
 package com.akudama.books.mapper;
 
-import com.akudama.books.domain.Lang;
-import com.akudama.books.domain.LangDto;
+import com.akudama.books.domain.entity.Lang;
+import com.akudama.books.domain.dto.LangDto;
 
 import java.util.List;
 import java.util.stream.Collectors;
 
 public class LangMapper {
-    public Lang mapToLang(LangDto langDto) {
+    public Lang mapToLang(final LangDto langDto) {
         return new Lang(
                 langDto.getId(),
                 langDto.getValue(),
@@ -15,7 +15,7 @@ public class LangMapper {
         );
     }
 
-    public LangDto mapToLangDto(Lang lang) {
+    public LangDto mapToLangDto(final Lang lang) {
         return new LangDto(
                 lang.getId(),
                 lang.getValue(),
@@ -23,7 +23,7 @@ public class LangMapper {
         );
     }
 
-    public List<LangDto> mapToLangDtoList(List<Lang> langList) {
+    public List<LangDto> mapToLangDtoList(final List<Lang> langList) {
         return langList.stream()
                 .map(l -> new LangDto(
                         l.getId(),

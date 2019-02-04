@@ -1,13 +1,13 @@
 package com.akudama.books.mapper;
 
-import com.akudama.books.domain.HomeCollection;
+import com.akudama.books.domain.entity.HomeCollection;
 import com.akudama.books.domain.HomeCollectionDto;
 
 import java.util.List;
 import java.util.stream.Collectors;
 
 public class HomeCollectionMapper {
-    public HomeCollection mapToHomeCollection(HomeCollectionDto homeCollectionDto) {
+    public HomeCollection mapToHomeCollection(final HomeCollectionDto homeCollectionDto) {
         return new HomeCollection(
                 homeCollectionDto.getId(),
                 homeCollectionDto.getForms(),
@@ -15,7 +15,7 @@ public class HomeCollectionMapper {
         );
     }
 
-    public HomeCollectionDto mapToHomeCollectionDto(HomeCollection homeCollection) {
+    public HomeCollectionDto mapToHomeCollectionDto(final HomeCollection homeCollection) {
         return new HomeCollectionDto(
                 homeCollection.getId(),
                 homeCollection.getForms(),
@@ -23,7 +23,7 @@ public class HomeCollectionMapper {
         );
     }
 
-    public List<HomeCollectionDto> mapToHomeCollectionDtoList(List<HomeCollection> homeCollectionList) {
+    public List<HomeCollectionDto> mapToHomeCollectionDtoList(final List<HomeCollection> homeCollectionList) {
         return homeCollectionList.stream()
                 .map(h -> new HomeCollectionDto(
                         h.getId(),
