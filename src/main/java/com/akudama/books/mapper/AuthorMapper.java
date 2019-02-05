@@ -8,18 +8,7 @@ import java.util.List;
 import java.util.stream.Collectors;
 
 public class AuthorMapper {
-    public Author mapToAuthor(final AuthorDto authorDto) {
-        return new Author(
-                authorDto.getId(),
-                authorDto.getYearOfBirth(),
-                authorDto.getName(),
-                authorDto.getSurname(),
-                authorDto.getCity(),
-                authorDto.getCountry()
-        );
-    }
-
-    public Author mapToAuthorDetails(final AuthorDetailsDto authorDetailsDto) {
+    public Author mapToAuthor(final AuthorDetailsDto authorDetailsDto) {
         return new Author(
                 authorDetailsDto.getId(),
                 authorDetailsDto.getYearOfBirth(),

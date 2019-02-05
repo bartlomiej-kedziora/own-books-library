@@ -8,17 +8,7 @@ import java.util.List;
 import java.util.stream.Collectors;
 
 public class BookMapper {
-    public Book mapToBook(final BookDto bookDto) {
-        return new Book(
-                bookDto.getId(),
-                bookDto.getYear(),
-                bookDto.getTitlePl(),
-                bookDto.getTitleEn(),
-                bookDto.getSeries(),
-                bookDto.getGenre());
-    }
-
-    public Book mapToBookDetails(final BookDetailsDto bookDetailsDto) {
+    public Book mapToBook(final BookDetailsDto bookDetailsDto) {
         return new Book(
                 bookDetailsDto.getId(),
                 bookDetailsDto.getYear(),
