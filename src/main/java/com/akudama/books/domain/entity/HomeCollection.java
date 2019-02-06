@@ -1,26 +1,30 @@
-package com.akudama.books.domain;
+package com.akudama.books.domain.entity;
+
+import lombok.AllArgsConstructor;
+import lombok.NoArgsConstructor;
+import lombok.Setter;
 
 import javax.persistence.*;
 import javax.validation.constraints.NotNull;
 import java.util.ArrayList;
 import java.util.List;
 
+@AllArgsConstructor
+@NoArgsConstructor
+@Setter
 @Entity
 @Table(name = "HOMECOLLECTION")
 public class HomeCollection {
-    private Long Id;
+    private Long id;
     private List<Form> forms = new ArrayList<>();
     private List<Lang> langs = new ArrayList<>();
-
-    public HomeCollection() {
-    }
 
     @Id
     @GeneratedValue
     @NotNull
     @Column(name = "homecollection_id")
     public Long getId() {
-        return Id;
+        return id;
     }
 
     @OneToMany(targetEntity = Form.class, mappedBy = "homeCollection", cascade = CascadeType.ALL, fetch = FetchType.LAZY)
@@ -31,17 +35,5 @@ public class HomeCollection {
     @OneToMany(targetEntity = Lang.class, mappedBy = "homeCollection", cascade = CascadeType.ALL, fetch = FetchType.LAZY)
     public List<Lang> getLangs() {
         return langs;
-    }
-
-    private void setId(Long id) {
-        Id = id;
-    }
-
-    public void setForms(List<Form> forms) {
-        this.forms = forms;
-    }
-
-    public void setLangs(List<Lang> langs) {
-        this.langs = langs;
     }
 }

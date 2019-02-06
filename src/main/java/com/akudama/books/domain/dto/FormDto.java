@@ -1,16 +1,16 @@
-package com.akudama.books.domain;
+package com.akudama.books.domain.dto;
 
+import com.akudama.books.domain.BookKind;
+import com.akudama.books.domain.entity.HomeCollection;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 
-import javax.persistence.*;
-
 @Getter
 @AllArgsConstructor
 @NoArgsConstructor
-public class LangDto {
+public class FormDto {
     private Long id;
-    private LangKind value;
+    private BookKind value;
     private HomeCollection homeCollection;
 }

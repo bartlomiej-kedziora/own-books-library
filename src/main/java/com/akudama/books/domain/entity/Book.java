@@ -1,10 +1,17 @@
-package com.akudama.books.domain;
+package com.akudama.books.domain.entity;
+
+import lombok.AllArgsConstructor;
+import lombok.NoArgsConstructor;
+import lombok.Setter;
 
 import javax.persistence.*;
 import javax.validation.constraints.NotNull;
 import java.util.ArrayList;
 import java.util.List;
 
+@AllArgsConstructor
+@NoArgsConstructor
+@Setter
 @Entity
 @Table(name = "BOOKS")
 public class Book {
@@ -19,10 +26,9 @@ public class Book {
     private WorldScore worldScore;
     private HomeCollection homeCollection;
 
-    public Book() {
-    }
-
-    public Book(String titlePl, String titleEn, String series, String genre) {
+    public Book(long id, int year, String titlePl, String titleEn, String series, String genre ) {
+        this.id = id;
+        this.year = year;
         this.titlePl = titlePl;
         this.titleEn = titleEn;
         this.series = series;
@@ -83,45 +89,5 @@ public class Book {
     @JoinColumn(name = "homecollection_id")
     public HomeCollection getHomeCollection() {
         return homeCollection;
-    }
-
-    private void setId(Long id) {
-        this.id = id;
-    }
-
-    public void setYear(int year) {
-        this.year = year;
-    }
-
-    public void setTitlePl(String titlePl) {
-        this.titlePl = titlePl;
-    }
-
-    public void setTitleEn(String titleEn) {
-        this.titleEn = titleEn;
-    }
-
-    public void setSeries(String series) {
-        this.series = series;
-    }
-
-    public void setGenre(String genre) {
-        this.genre = genre;
-    }
-
-    public void setAuthors(List<Author> authors) {
-        this.authors = authors;
-    }
-
-    public void setMyScore(MyScore myScore) {
-        this.myScore = myScore;
-    }
-
-    public void setWorldScore(WorldScore worldScore) {
-        this.worldScore = worldScore;
-    }
-
-    public void setHomeCollection(HomeCollection homeCollection) {
-        this.homeCollection = homeCollection;
     }
 }

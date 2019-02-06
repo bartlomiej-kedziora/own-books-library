@@ -1,21 +1,22 @@
-package com.akudama.books.domain;
+package com.akudama.books.domain.entity;
+
+import com.akudama.books.domain.BookKind;
+import lombok.AllArgsConstructor;
+import lombok.NoArgsConstructor;
+import lombok.Setter;
 
 import javax.persistence.*;
 import javax.validation.constraints.NotNull;
 
+@AllArgsConstructor
+@NoArgsConstructor
+@Setter
 @Entity
 @Table(name = "FORMS")
 public class Form {
     private Long id;
     private BookKind value;
     private HomeCollection homeCollection;
-
-    public Form() {
-    }
-
-    public Form(BookKind value) {
-        this.value = value;
-    }
 
     @Id
     @GeneratedValue
@@ -34,17 +35,5 @@ public class Form {
     @JoinColumn(name = "homecollection_id")
     public HomeCollection getHomeCollection() {
         return homeCollection;
-    }
-
-    private void setId(Long id) {
-        this.id = id;
-    }
-
-    public void setValue(BookKind value) {
-        this.value = value;
-    }
-
-    public void setHomeCollection(HomeCollection homeCollection) {
-        this.homeCollection = homeCollection;
     }
 }

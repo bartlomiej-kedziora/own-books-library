@@ -1,38 +1,30 @@
-package com.akudama.books.domain;
+package com.akudama.books.domain.entity;
+
+import lombok.AllArgsConstructor;
+import lombok.NoArgsConstructor;
+import lombok.Setter;
 
 import javax.persistence.*;
 import javax.validation.constraints.NotNull;
 
+@AllArgsConstructor
+@NoArgsConstructor
+@Setter
 @Entity
 @Table(name = "WORLDSCORE")
 public class WorldScore {
-    private Long Id;
+    private Long id;
     private int value;
-
-    public WorldScore() {
-    }
-
-    public WorldScore(int value) {
-        this.value = value;
-    }
 
     @Id
     @GeneratedValue
     @NotNull
     @Column(name = "worldscore_id", unique = true)
     public Long getId() {
-        return Id;
+        return id;
     }
 
     public int getValue() {
         return value;
-    }
-
-    private void setId(Long id) {
-        Id = id;
-    }
-
-    public void setValue(int value) {
-        this.value = value;
     }
 }
