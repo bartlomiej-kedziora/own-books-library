@@ -1,6 +1,6 @@
 package com.akudama.books.repository;
 
-import com.akudama.books.domain.Author;
+import com.akudama.books.domain.entity.Author;
 import org.springframework.data.repository.CrudRepository;
 
 import javax.transaction.Transactional;
@@ -20,7 +20,7 @@ public interface AuthorRepository extends CrudRepository<Author, Long> {
     @Override
     void delete(Author author);
 
-    void deleteById(long id);
+    void delete(long id);
 
     @Override
     long count();
