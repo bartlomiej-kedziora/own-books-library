@@ -1,30 +1,33 @@
-package com.akudama.books.domain;
+package com.akudama.books.domain.entity;
 
+import com.akudama.books.domain.BookKind;
 import lombok.AllArgsConstructor;
 import lombok.NoArgsConstructor;
+import lombok.Setter;
 
 import javax.persistence.*;
 import javax.validation.constraints.NotNull;
 
 @AllArgsConstructor
 @NoArgsConstructor
+@Setter
 @Entity
-@Table(name = "LANGS")
-public class Lang {
+@Table(name = "FORMS")
+public class Form {
     private Long id;
-    private LangKind value;
+    private BookKind value;
     private HomeCollection homeCollection;
 
     @Id
     @GeneratedValue
     @NotNull
-    @Column(name = "lang_id")
+    @Column(name = "form_id")
     public Long getId() {
         return id;
     }
 
     @Enumerated(EnumType.STRING)
-    public LangKind getValue() {
+    public BookKind getValue() {
         return value;
     }
 
@@ -32,17 +35,5 @@ public class Lang {
     @JoinColumn(name = "homecollection_id")
     public HomeCollection getHomeCollection() {
         return homeCollection;
-    }
-
-    private void setId(Long id) {
-        this.id = id;
-    }
-
-    public void setValue(LangKind value) {
-        this.value = value;
-    }
-
-    public void setHomeCollection(HomeCollection homeCollection) {
-        this.homeCollection = homeCollection;
     }
 }
