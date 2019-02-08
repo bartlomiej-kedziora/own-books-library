@@ -25,13 +25,4 @@ public class BookDetailsDto {
     private MyScore myScore;
     private WorldScore worldScore;
     private HomeCollection homeCollection;
-
-//    public BookDto(Long id, int year, String titlePl, String titleEn, String series, String genre) {
-//        this.id = id;
-//        this.year = year;
-//        this.titlePl = titlePl;
-//        this.titleEn = titleEn;
-//        this.series = series;
-//        this.genre = genre;
-//    }
 }
