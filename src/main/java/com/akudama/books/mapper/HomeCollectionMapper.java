@@ -2,10 +2,12 @@ package com.akudama.books.mapper;
 
 import com.akudama.books.domain.entity.HomeCollection;
 import com.akudama.books.domain.HomeCollectionDto;
+import org.springframework.stereotype.Component;
 
 import java.util.List;
 import java.util.stream.Collectors;
 
+@Component
 public class HomeCollectionMapper {
     public HomeCollection mapToHomeCollection(final HomeCollectionDto homeCollectionDto) {
         return new HomeCollection(

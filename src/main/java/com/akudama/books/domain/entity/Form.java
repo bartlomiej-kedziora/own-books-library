@@ -19,7 +19,7 @@ public class Form {
     private HomeCollection homeCollection;
 
     @Id
-    @GeneratedValue
+    @GeneratedValue(strategy = GenerationType.AUTO)
     @NotNull
     @Column(name = "form_id")
     public Long getId() {

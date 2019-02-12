@@ -36,7 +36,7 @@ public class Book {
     }
 
     @Id
-    @GeneratedValue
+    @GeneratedValue(strategy = GenerationType.AUTO)
     @NotNull
     @Column(name = "book_id", unique = true)
     public Long getId() {

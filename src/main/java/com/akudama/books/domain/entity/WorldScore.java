@@ -17,7 +17,7 @@ public class WorldScore {
     private int value;
 
     @Id
-    @GeneratedValue
+    @GeneratedValue(strategy = GenerationType.AUTO)
     @NotNull
     @Column(name = "worldscore_id", unique = true)
     public Long getId() {

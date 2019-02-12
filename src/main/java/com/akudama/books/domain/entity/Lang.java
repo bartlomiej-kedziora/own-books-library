@@ -20,7 +20,7 @@ public class Lang {
     private HomeCollection homeCollection;
 
     @Id
-    @GeneratedValue
+    @GeneratedValue(strategy = GenerationType.AUTO)
     @NotNull
     @Column(name = "lang_id")
     public Long getId() {

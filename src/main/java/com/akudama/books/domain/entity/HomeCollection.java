@@ -20,7 +20,7 @@ public class HomeCollection {
     private List<Lang> langs = new ArrayList<>();
 
     @Id
-    @GeneratedValue
+    @GeneratedValue(strategy = GenerationType.AUTO)
     @NotNull
     @Column(name = "homecollection_id")
     public Long getId() {

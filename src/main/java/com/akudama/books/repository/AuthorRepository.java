@@ -12,7 +12,7 @@ public interface AuthorRepository extends CrudRepository<Author, Long> {
     @Override
     List<Author> findAll();
 
-    Optional<Author> findById();
+    Optional<Author> findById(long id);
 
     @Override
     Author save(Author author);
@@ -20,7 +20,7 @@ public interface AuthorRepository extends CrudRepository<Author, Long> {
     @Override
     void delete(Author author);
 
-    void delete(long id);
+    void deleteById(long id);
 
     @Override
     long count();

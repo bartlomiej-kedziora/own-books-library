@@ -3,10 +3,12 @@ package com.akudama.books.mapper;
 import com.akudama.books.domain.dto.BookDetailsDto;
 import com.akudama.books.domain.entity.Book;
 import com.akudama.books.domain.dto.BookDto;
+import org.springframework.stereotype.Component;
 
 import java.util.List;
 import java.util.stream.Collectors;
 
+@Component
 public class BookMapper {
     public Book mapToBook(final BookDetailsDto bookDetailsDto) {
         return new Book(
