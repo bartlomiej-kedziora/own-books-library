@@ -26,15 +26,7 @@ public class AuthorDbService {
     }
 
     public void deleteAuthor(final long id) {
-<<<<<<< 985ccf338a87b0f052e631cbccc62ce4665c128b
-        repository.delete(id);
-=======
-<<<<<<< 985ccf338a87b0f052e631cbccc62ce4665c128b
-        repository.delete(id);
-=======
         repository.deleteById(id);
->>>>>>> add controller and update deleteById
->>>>>>> add controller and update deleteById
     }
 
 }

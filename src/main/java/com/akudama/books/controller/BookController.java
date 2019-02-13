@@ -26,12 +26,12 @@ public class BookController {
     }
 
     @RequestMapping(method = RequestMethod.GET, value = "/{bookId}")
-    public BookDto getBook(@PathVariable Long bookId) throws ItemNotFoundException {
+    public BookDto getBook(@PathVariable long bookId) {
         return bookMapper.mapToBookDto(service.getBook(bookId).orElseThrow(ItemNotFoundException::new));
     }
 
     @RequestMapping(method = RequestMethod.DELETE, value = "/{bookId}")
-    public void deleteBook(@PathVariable Long bookId) {
+    public void deleteBook(@PathVariable long bookId) {
         service.deleteBook(bookId);
     }
 

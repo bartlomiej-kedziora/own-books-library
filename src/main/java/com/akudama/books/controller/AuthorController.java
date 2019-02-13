@@ -31,12 +31,12 @@ public class AuthorController {
     }
 
     @RequestMapping(method = RequestMethod.GET, value = "/{authorId}")
-    public AuthorDto getAuthor(@PathVariable Long authorId) throws ItemNotFoundException {
+    public AuthorDto getAuthor(@PathVariable long authorId) {
         return authorMapper.mapToAuthorDto(service.getAuthor(authorId).orElseThrow(ItemNotFoundException::new));
     }
 
     @RequestMapping(method = RequestMethod.DELETE, value = "/{authorId}")
-    public void deleteAuthor(@PathVariable Long authorId) {
+    public void deleteAuthor(@PathVariable long authorId) {
         service.deleteAuthor(authorId);
     }
 
