@@ -26,7 +26,7 @@ public class AuthorDbService {
     }
 
     public void deleteAuthor(final long id) {
-        repository.delete(id);
+        repository.deleteById(id);
     }
 
 }

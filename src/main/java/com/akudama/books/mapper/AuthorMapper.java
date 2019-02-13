@@ -3,10 +3,12 @@ package com.akudama.books.mapper;
 import com.akudama.books.domain.dto.AuthorDetailsDto;
 import com.akudama.books.domain.entity.Author;
 import com.akudama.books.domain.dto.AuthorDto;
+import org.springframework.stereotype.Component;
 
 import java.util.List;
 import java.util.stream.Collectors;
 
+@Component
 public class AuthorMapper {
     public Author mapToAuthor(final AuthorDetailsDto authorDetailsDto) {
         return new Author(

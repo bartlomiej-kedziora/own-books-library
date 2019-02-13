@@ -20,7 +20,7 @@ public interface BookRepository extends CrudRepository<Book, Long> {
     @Override
     void delete(Book book);
 
-    void delete(long id);
+    void deleteById(long id);
 
     @Override
     long count();

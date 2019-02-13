@@ -26,6 +26,6 @@ public class BookDbService {
     }
 
     public void deleteBook(final long id) {
-        repository.delete(id);
+        repository.deleteById(id);
     }
 }
