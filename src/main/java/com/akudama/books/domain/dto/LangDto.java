@@ -1,7 +1,6 @@
 package com.akudama.books.domain.dto;
 
 import com.akudama.books.domain.LangKind;
-import com.akudama.books.domain.entity.HomeCollection;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
@@ -12,5 +11,5 @@ import lombok.NoArgsConstructor;
 public class LangDto {
     private Long id;
     private LangKind value;
-    private HomeCollection homeCollection;
+    private HomeCollectionDto homeCollection;
 }

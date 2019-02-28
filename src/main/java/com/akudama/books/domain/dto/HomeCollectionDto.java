@@ -1,7 +1,5 @@
-package com.akudama.books.domain;
+package com.akudama.books.domain.dto;
 
-import com.akudama.books.domain.entity.Form;
-import com.akudama.books.domain.entity.Lang;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
@@ -14,7 +12,7 @@ import java.util.List;
 @NoArgsConstructor
 public class HomeCollectionDto {
     private Long id;
-    private List<Form> forms = new ArrayList<>();
-    private List<Lang> langs = new ArrayList<>();
+    private List<FormDto> forms = new ArrayList<>();
+    private List<LangDto> langs = new ArrayList<>();
 
 }
