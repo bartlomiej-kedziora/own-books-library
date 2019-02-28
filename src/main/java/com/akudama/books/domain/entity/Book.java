@@ -37,7 +37,6 @@ public class Book {
 
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
-    @NotNull
     @Column(name = "book_id", unique = true)
     public Long getId() {
         return id;

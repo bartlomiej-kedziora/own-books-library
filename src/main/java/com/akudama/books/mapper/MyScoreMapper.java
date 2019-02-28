@@ -2,10 +2,12 @@ package com.akudama.books.mapper;
 
 import com.akudama.books.domain.entity.MyScore;
 import com.akudama.books.domain.dto.ScoreDto;
+import org.springframework.stereotype.Component;
 
 import java.util.List;
 import java.util.stream.Collectors;
 
+@Component
 public class MyScoreMapper {
     public MyScore mapToMyScore(final ScoreDto scoreDto) {
         return new MyScore(

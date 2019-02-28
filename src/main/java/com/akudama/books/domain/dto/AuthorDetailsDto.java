@@ -1,6 +1,5 @@
 package com.akudama.books.domain.dto;
 
-import com.akudama.books.domain.entity.Book;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
@@ -18,5 +17,13 @@ public class AuthorDetailsDto {
     private String surname;
     private String city;
     private String country;
-    private List<Book> books = new ArrayList<>();
+    private List<BookDto> books = new ArrayList<>();
+
+    @Getter
+    @AllArgsConstructor
+    public static class BookDto {
+        private long id;
+        private String titlePl;
+        private String titleEn;
+    }
 }

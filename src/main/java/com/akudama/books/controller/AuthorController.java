@@ -2,6 +2,7 @@ package com.akudama.books.controller;
 
 import com.akudama.books.domain.dto.AuthorDetailsDto;
 import com.akudama.books.domain.dto.AuthorDto;
+import com.akudama.books.mapper.AuthorDetailsMapper;
 import com.akudama.books.mapper.AuthorMapper;
 import com.akudama.books.service.AuthorDbService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -19,7 +20,8 @@ public class AuthorController {
     private AuthorDbService service;
     @Autowired
     private AuthorMapper authorMapper;
-
+    @Autowired
+    private AuthorDetailsMapper authorDetailsMapper;
     @Autowired
     public AuthorController() {
 
@@ -35,6 +37,11 @@ public class AuthorController {
         return authorMapper.mapToAuthorDto(service.getAuthor(authorId).orElseThrow(ItemNotFoundException::new));
     }
 
+    @RequestMapping(method = RequestMethod.GET, value = "/{authorId}/details")
+    public AuthorDetailsDto getAuthorWithDetails(@PathVariable long authorId) {
+        return authorDetailsMapper.mapToAuthorDetailsDto(service.getAuthor(authorId).orElseThrow(ItemNotFoundException::new));
+    }
+
     @RequestMapping(method = RequestMethod.DELETE, value = "/{authorId}")
     public void deleteAuthor(@PathVariable long authorId) {
         service.deleteAuthor(authorId);
@@ -42,11 +49,15 @@ public class AuthorController {
 
     @RequestMapping(method = RequestMethod.PUT)
     public AuthorDetailsDto updateAuthor(@RequestBody AuthorDetailsDto authorDetailsDto) {
-        return authorMapper.mapToAuthorDetailsDto(service.saveAuthor(authorMapper.mapToAuthor(authorDetailsDto)));
+        return authorDetailsMapper.mapToAuthorDetailsDto(
+                service.saveAuthor(
+                        authorDetailsMapper.mapToAuthor(authorDetailsDto)
+                )
+        );
     }
 
     @RequestMapping(method = RequestMethod.POST, consumes = APPLICATION_JSON_VALUE)
     public void createAuthor(@RequestBody AuthorDetailsDto authorDetailsDto) {
-        service.saveAuthor(authorMapper.mapToAuthor(authorDetailsDto));
+        service.saveAuthor(authorDetailsMapper.mapToAuthor(authorDetailsDto));
     }
 }
