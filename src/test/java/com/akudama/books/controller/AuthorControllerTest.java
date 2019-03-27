@@ -38,11 +38,13 @@ public class AuthorControllerTest {
 
     private Author author = new Author(1L, 1946, "Graham", "Masterton", "Edinburgh", "Scotland");
     private AuthorDto authorDto = new AuthorDto(1L, 1946, "Graham", "Masterton", "Edinburgh", "Scotland");
-    private List<AuthorDto> authorDtos = Arrays.asList(authorDto);
+    private AuthorDetailsDto authorDetailsDto = createAuthorDetailsDto();
+
     private List<Author> authors = Arrays.asList(author);
+    private List<AuthorDto> authorDtos = Arrays.asList(authorDto);
+
     private Optional<Author> optionalAuthor = Optional.of(author);
-    private List<AuthorDetailsDto.BookDto> bookDtos = Arrays.asList(new AuthorDetailsDto.BookDto(1L, "Manitu", "Manitou"));
-    private AuthorDetailsDto authorDetailsDto = new AuthorDetailsDto(1L, 1946, "Graham", "Masterton", "Edinburgh", "Scotland", bookDtos);
+
     private long id = 1;
     private Gson gson = new Gson();
 
@@ -173,5 +175,11 @@ public class AuthorControllerTest {
         verify(authorDetailsMapper, times(1)).mapToAuthor(captor.capture());
         AuthorDetailsDto result = captor.getValue();
         assertThat(result).isEqualToComparingFieldByField(authorDetailsDto);
+    }
+
+    private AuthorDetailsDto createAuthorDetailsDto() {
+        List<AuthorDetailsDto.BookDto> bookDtos = Arrays.asList(new AuthorDetailsDto.BookDto(1L, "Manitu", "Manitou"));
+
+        return new AuthorDetailsDto(1L, 1946, "Graham", "Masterton", "Edinburgh", "Scotland", bookDtos);
     }
 }
