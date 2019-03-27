@@ -20,6 +20,7 @@ import org.springframework.test.context.junit4.SpringRunner;
 import org.springframework.test.web.servlet.MockMvc;
 
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.List;
 import java.util.Optional;
 
@@ -37,6 +38,12 @@ public class AuthorControllerTest {
 
     private Author author = new Author(1L, 1946, "Graham", "Masterton", "Edinburgh", "Scotland");
     private AuthorDto authorDto = new AuthorDto(1L, 1946, "Graham", "Masterton", "Edinburgh", "Scotland");
+    private List<AuthorDto> authorDtos = Arrays.asList(authorDto);
+    private List<Author> authors = Arrays.asList(author);
+    private Optional<Author> optionalAuthor = Optional.of(author);
+    private List<AuthorDetailsDto.BookDto> bookDtos = Arrays.asList(new AuthorDetailsDto.BookDto(1L, "Manitu", "Manitou"));
+    private AuthorDetailsDto authorDetailsDto = new AuthorDetailsDto(1L, 1946, "Graham", "Masterton", "Edinburgh", "Scotland", bookDtos);
+    private long id = 1;
     private Gson gson = new Gson();
 
     @Autowired
@@ -54,12 +61,6 @@ public class AuthorControllerTest {
     @Test
     public void shouldGetAuthors() throws Exception {
         //Given
-        List<AuthorDto> authorDtos = new ArrayList<>();
-        authorDtos.add(authorDto);
-
-        List<Author> authors = new ArrayList<>();
-        authors.add(author);
-
         when(service.getAllAuthors()).thenReturn(authors);
         when(authorMapper.mapToAuthorDtoList(ArgumentMatchers.anyList())).thenReturn(authorDtos);
 
@@ -78,13 +79,11 @@ public class AuthorControllerTest {
     @Test
     public void shouldGetAuthor() throws Exception {
         //Given
-        Optional<Author> optionalAuthor = Optional.of(author);
-
-        when(service.getAuthor(1)).thenReturn(optionalAuthor);
+        when(service.getAuthor(id)).thenReturn(optionalAuthor);
         when(authorMapper.mapToAuthorDto(ArgumentMatchers.any(Author.class))).thenReturn(authorDto);
 
         //When & Then
-        mockMvc.perform(get("/v1/authors/{authorId}", 1L).contentType(MediaType.APPLICATION_JSON))
+        mockMvc.perform(get("/v1/authors/{authorId}", id).contentType(MediaType.APPLICATION_JSON))
                 .andExpect(status().isOk())
                 .andExpect(jsonPath("$.id", is(1)))
                 .andExpect(jsonPath("$.yearOfBirth", is(1946)))
@@ -97,17 +96,11 @@ public class AuthorControllerTest {
     @Test
     public void shouldGetAuthorWithDetails() throws Exception {
         //Given
-        List<AuthorDetailsDto.BookDto> bookDtos = new ArrayList<>();
-        bookDtos.add(new AuthorDetailsDto.BookDto(1L, "Manitu", "Manitou"));
-        AuthorDetailsDto authorDetailsDto = new AuthorDetailsDto(1L, 1946, "Graham", "Masterton", "Edinburgh", "Scotland", bookDtos);
-
-        Optional<Author> optionalAuthor = Optional.of(author);
-
-        when(service.getAuthor(1)).thenReturn(optionalAuthor);
+        when(service.getAuthor(id)).thenReturn(optionalAuthor);
         when(authorDetailsMapper.mapToAuthorDetailsDto(ArgumentMatchers.any(Author.class))).thenReturn(authorDetailsDto);
 
         //When & Then
-        mockMvc.perform(get("/v1/authors/{authorId}/details", 1L).contentType(MediaType.APPLICATION_JSON))
+        mockMvc.perform(get("/v1/authors/{authorId}/details", id).contentType(MediaType.APPLICATION_JSON))
                 .andExpect(status().isOk())
                 .andExpect(jsonPath("$.id", is(1)))
                 .andExpect(jsonPath("$.yearOfBirth", is(1946)))
@@ -123,24 +116,17 @@ public class AuthorControllerTest {
 
     @Test
     public void shouldDeleteTask() throws Exception {
-        //Given
-        long authorId = 1;
-
         //When
-        mockMvc.perform(delete("/v1/authors/{authorId}", authorId))
+        mockMvc.perform(delete("/v1/authors/{authorId}", id))
                 .andExpect(status().isOk());
 
         //Then
-        verify(service, times(1)).deleteAuthor(authorId);
+        verify(service, times(1)).deleteAuthor(id);
     }
 
     @Test
     public void shouldUpdateAuthor() throws Exception {
         //Given
-        List<AuthorDetailsDto.BookDto> bookDtos = new ArrayList<>();
-        bookDtos.add(new AuthorDetailsDto.BookDto(1L, "Manitu", "Manitou"));
-        AuthorDetailsDto authorDetailsDto = new AuthorDetailsDto(1L, 1946, "Graham", "Masterton", "Edinburgh", "Scotland", bookDtos);
-
         when(authorDetailsMapper.mapToAuthor(ArgumentMatchers.any(AuthorDetailsDto.class))).thenReturn(author);
         when(service.saveAuthor(ArgumentMatchers.any(Author.class))).thenReturn(author);
         when(authorDetailsMapper.mapToAuthorDetailsDto(ArgumentMatchers.any(Author.class))).thenReturn(authorDetailsDto);
@@ -188,5 +174,4 @@ public class AuthorControllerTest {
         AuthorDetailsDto result = captor.getValue();
         assertThat(result).isEqualToComparingFieldByField(authorDetailsDto);
     }
-
 }

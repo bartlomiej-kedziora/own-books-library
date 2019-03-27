@@ -21,6 +21,7 @@ import org.springframework.test.context.junit4.SpringRunner;
 import org.springframework.test.web.servlet.MockMvc;
 
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.List;
 import java.util.Optional;
 
@@ -37,6 +38,17 @@ import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.
 public class BookControllerTest {
     private Book book = new Book(1L, 1976, "Manitu", "Manitou", "Manitou", "horror");
     private BookDto bookDto = new BookDto(1L, 1976, "Manitu", "Manitou", "Manitou", "horror");
+    private List<BookDto> bookDtos = Arrays.asList(bookDto);
+    private List<Book> books = Arrays.asList(book);
+    private Optional<Book> optionalBook = Optional.of(book);
+    private List<BookDetailsDto.AuthorDto> authorDtos = Arrays.asList(new BookDetailsDto.AuthorDto(1L, "Graham", "Masterton"));
+    private List<FormDto> formDtos = Arrays.asList(new FormDto(1L, BookKind.EBOOK));
+    private List<LangDto> langDtos = Arrays.asList(new LangDto(1L, LangKind.EN));
+    private HomeCollectionDto homeCollectionDto = new HomeCollectionDto(1L, formDtos, langDtos);
+    private ScoreDto myScoreDto = new ScoreDto(1L, 5);
+    private ScoreDto worldScoreDto = new ScoreDto(1L, 3);
+    private BookDetailsDto bookDetailsDto = new BookDetailsDto(1L, 1976, "Manitu", "Manitou", "Manitou", "horror", authorDtos, myScoreDto, worldScoreDto, homeCollectionDto);
+    private long id = 1;
     private Gson gson = new Gson();
 
     @Autowired
@@ -54,12 +66,6 @@ public class BookControllerTest {
     @Test
     public void shouldGetBooks() throws Exception {
         //Given
-        List<BookDto> bookDtos = new ArrayList<>();
-        bookDtos.add(bookDto);
-
-        List<Book> books = new ArrayList<>();
-        books.add(book);
-
         when(service.getAllBooks()).thenReturn(books);
         when(bookMapper.mapToBookDtoList(ArgumentMatchers.anyList())).thenReturn(bookDtos);
 
@@ -78,13 +84,11 @@ public class BookControllerTest {
     @Test
     public void shouldGetBook() throws Exception {
         //Given
-        Optional<Book> optionalBook = Optional.of(book);
-
-        when(service.getBook(1)).thenReturn(optionalBook);
+        when(service.getBook(id)).thenReturn(optionalBook);
         when(bookMapper.mapToBookDto(ArgumentMatchers.any(Book.class))).thenReturn(bookDto);
 
         //When & Then
-        mockMvc.perform(get("/v1/books/{bookId}", 1L).contentType(MediaType.APPLICATION_JSON))
+        mockMvc.perform(get("/v1/books/{bookId}", id).contentType(MediaType.APPLICATION_JSON))
                 .andExpect(status().isOk())
                 .andExpect(jsonPath("$.id", is(1)))
                 .andExpect(jsonPath("$.year", is(1976)))
@@ -97,38 +101,11 @@ public class BookControllerTest {
     @Test
     public void shouldGetBookWithDetails() throws Exception {
         //Given
-        List<BookDetailsDto.AuthorDto> authorDtos = new ArrayList<>();
-        authorDtos.add(new BookDetailsDto.AuthorDto(1L, "Graham", "Masterton"));
-
-        ScoreDto myScoreDto = new ScoreDto(1L, 5);
-        ScoreDto worldScoreDto = new ScoreDto(1L, 3);
-
-        List<FormDto> formDtos = new ArrayList<>();
-        formDtos.add(new FormDto(1L, BookKind.EBOOK));
-
-        List<LangDto> langDtos = new ArrayList<>();
-        langDtos.add(new LangDto(1L, LangKind.EN));
-
-        HomeCollectionDto homeCollectionDto = new HomeCollectionDto(1L, formDtos, langDtos);
-        BookDetailsDto bookDetailsDto = new BookDetailsDto(
-                1L,
-                1976,
-                "Manitu",
-                "Manitou",
-                "Manitou",
-                "horror",
-                authorDtos,
-                myScoreDto,
-                worldScoreDto,
-                homeCollectionDto);
-
-        Optional<Book> optionalBook = Optional.of(book);
-
-        when(service.getBook(1)).thenReturn(optionalBook);
+        when(service.getBook(id)).thenReturn(optionalBook);
         when(bookDetailsMapper.mapToBookDetailsDto(ArgumentMatchers.any(Book.class))).thenReturn(bookDetailsDto);
 
         //When & Then
-        mockMvc.perform(get("/v1/books/{bookId}/details", 1L).contentType(MediaType.APPLICATION_JSON))
+        mockMvc.perform(get("/v1/books/{bookId}/details", id).contentType(MediaType.APPLICATION_JSON))
                 .andExpect(status().isOk())
                 .andExpect(jsonPath("$.id", is(1)))
                 .andExpect(jsonPath("$.year", is(1976)))
@@ -152,46 +129,18 @@ public class BookControllerTest {
 
     @Test
     public void shouldDeleteBook() throws Exception {
-        //Given
-        long bookId = 1;
-
         //When
-        mockMvc.perform(delete("/v1/books/{bookId}", 1L))
+        mockMvc.perform(delete("/v1/books/{bookId}", id))
                 .andExpect(status().isOk());
 
         //Then
-        verify(service, times(1)).deleteBook(bookId);
+        verify(service, times(1)).deleteBook(id);
 
     }
 
     @Test
     public void shouldUpdateBook() throws Exception {
         //Given
-        List<BookDetailsDto.AuthorDto> authorDtos = new ArrayList<>();
-        authorDtos.add(new BookDetailsDto.AuthorDto(1L, "Graham", "Masterton"));
-
-        ScoreDto myScoreDto = new ScoreDto(1L, 5);
-        ScoreDto worldScoreDto = new ScoreDto(1L, 3);
-
-        List<FormDto> formDtos = new ArrayList<>();
-        formDtos.add(new FormDto(1L, BookKind.EBOOK));
-
-        List<LangDto> langDtos = new ArrayList<>();
-        langDtos.add(new LangDto(1L, LangKind.EN));
-
-        HomeCollectionDto homeCollectionDto = new HomeCollectionDto(1L, formDtos, langDtos);
-        BookDetailsDto bookDetailsDto = new BookDetailsDto(
-                1L,
-                1976,
-                "Manitu",
-                "Manitou",
-                "Manitou",
-                "horror",
-                authorDtos,
-                myScoreDto,
-                worldScoreDto,
-                homeCollectionDto);
-
         when(bookDetailsMapper.mapToBook(ArgumentMatchers.any(BookDetailsDto.class))).thenReturn(book);
         when(service.saveBook(ArgumentMatchers.any(Book.class))).thenReturn(book);
         when(bookDetailsMapper.mapToBookDetailsDto(ArgumentMatchers.any(Book.class))).thenReturn(bookDetailsDto);
