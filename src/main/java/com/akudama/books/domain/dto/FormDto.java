@@ -12,4 +12,9 @@ public class FormDto {
     private Long id;
     private BookKind value;
     private HomeCollectionDto homeCollection;
+
+    public FormDto(Long id, BookKind value) {
+        this.id = id;
+        this.value = value;
+    }
 }
