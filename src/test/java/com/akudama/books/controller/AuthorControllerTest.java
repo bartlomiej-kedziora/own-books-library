@@ -2,6 +2,7 @@ package com.akudama.books.controller;
 
 import com.akudama.books.domain.dto.AuthorDetailsDto;
 import com.akudama.books.domain.dto.AuthorDto;
+import com.akudama.books.domain.dto.BookDto;
 import com.akudama.books.domain.entity.Author;
 import com.akudama.books.mapper.AuthorDetailsMapper;
 import com.akudama.books.mapper.AuthorMapper;
@@ -178,7 +179,7 @@ public class AuthorControllerTest {
     }
 
     private AuthorDetailsDto createAuthorDetailsDto() {
-        List<AuthorDetailsDto.BookDto> bookDtos = Arrays.asList(new AuthorDetailsDto.BookDto(1L, "Manitu", "Manitou"));
+        List<BookDto> bookDtos = Arrays.asList(new BookDto(1L, 1976, "Manitu", "Manitou", "Manitou", "horror"));
 
         return new AuthorDetailsDto(1L, 1946, "Graham", "Masterton", "Edinburgh", "Scotland", bookDtos);
     }

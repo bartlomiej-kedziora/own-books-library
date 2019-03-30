@@ -21,12 +21,4 @@ public class BookDetailsDto {
     private ScoreDto myScore;
     private ScoreDto worldScore;
     private HomeCollectionDto homeCollection;
-
-    @Getter
-    @AllArgsConstructor
-    public static class AuthorDto {
-        private long id;
-        private String name;
-        private String surname;
-    }
 }
