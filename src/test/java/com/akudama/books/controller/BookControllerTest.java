@@ -205,7 +205,7 @@ public class BookControllerTest {
     }
 
     private BookDetailsDto createBookDetailsDto() {
-        List<BookDetailsDto.AuthorDto> authorDtos = Arrays.asList(new BookDetailsDto.AuthorDto(1L, "Graham", "Masterton"));
+        List<AuthorDto> authorDtos = Arrays.asList(new AuthorDto(1L, 1946, "Graham", "Masterton", "Edinburgh", "Scotland"));
         List<FormDto> formDtos = Arrays.asList(new FormDto(1L, BookKind.EBOOK));
         List<LangDto> langDtos = Arrays.asList(new LangDto(1L, LangKind.EN));
         HomeCollectionDto homeCollectionDto = new HomeCollectionDto(1L, formDtos, langDtos);

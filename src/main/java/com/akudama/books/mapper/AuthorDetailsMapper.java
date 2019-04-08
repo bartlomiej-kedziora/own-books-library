@@ -1,11 +1,9 @@
 package com.akudama.books.mapper;
 
-import com.akudama.books.controller.ItemNotFoundException;
 import com.akudama.books.domain.dto.AuthorDetailsDto;
+import com.akudama.books.domain.dto.BookDto;
 import com.akudama.books.domain.entity.Author;
 import com.akudama.books.domain.entity.Book;
-import com.akudama.books.service.AuthorDbService;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
 import java.util.List;
@@ -13,8 +11,6 @@ import java.util.stream.Collectors;
 
 @Component
 public class AuthorDetailsMapper {
-    @Autowired
-    private AuthorDbService service;
 
     public Author mapToAuthor(final AuthorDetailsDto authorDetailsDto) {
         return new Author(
@@ -24,7 +20,7 @@ public class AuthorDetailsMapper {
                 authorDetailsDto.getSurname(),
                 authorDetailsDto.getCity(),
                 authorDetailsDto.getCountry(),
-                getBooksByAuthor(authorDetailsDto.getId())
+                mapToBook(authorDetailsDto.getBooks())
         );
     }
 
@@ -53,18 +49,24 @@ public class AuthorDetailsMapper {
                 .collect(Collectors.toList());
     }
 
-    private AuthorDetailsDto.BookDto mapToBookDto(Book book) {
-        return new AuthorDetailsDto.BookDto(book.getId(), book.getTitlePl(), book.getTitleEn());
+    private BookDto mapToBookDto(Book book) {
+        return new BookDto(book.getId(), book.getYear(), book.getTitlePl(), book.getTitleEn(), book.getSeries(), book.getGenre());
     }
 
-    private List<AuthorDetailsDto.BookDto> mapToBooksDto(List<Book> books) {
+    private List<BookDto> mapToBooksDto(List<Book> books) {
         return books.stream()
                 .map(this::mapToBookDto)
                 .collect(Collectors.toList());
     }
 
-
-    private List<Book> getBooksByAuthor(long authorId) {
-        return service.getAuthor(authorId).orElseThrow(ItemNotFoundException::new).getBooks();
+    private List<Book> mapToBook(List<BookDto> bookDtos) {
+        return bookDtos.stream()
+                .map(bookDto -> new Book(bookDto.getId(),
+                        bookDto.getYear(),
+                        bookDto.getTitlePl(),
+                        bookDto.getTitleEn(),
+                        bookDto.getSeries(),
+                        bookDto.getGenre()))
+                .collect(Collectors.toList());
     }
 }

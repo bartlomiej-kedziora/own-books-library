@@ -1,20 +1,18 @@
 package com.akudama.books.mapper;
 
-import com.akudama.books.controller.ItemNotFoundException;
+import com.akudama.books.domain.dto.AuthorDto;
 import com.akudama.books.domain.dto.BookDetailsDto;
 import com.akudama.books.domain.entity.Author;
 import com.akudama.books.domain.entity.Book;
-import com.akudama.books.service.BookDbService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
 import java.util.List;
-import java.util.stream.Collectors;
+
+import static java.util.stream.Collectors.toList;
 
 @Component
 public class BookDetailsMapper {
-    @Autowired
-    private BookDbService service;
     @Autowired
     private MyScoreMapper myScoreMapper;
     @Autowired
@@ -30,7 +28,7 @@ public class BookDetailsMapper {
                 bookDetailsDto.getTitleEn(),
                 bookDetailsDto.getSeries(),
                 bookDetailsDto.getGenre(),
-                getAuthorsByBook(bookDetailsDto.getId()),
+                mapToAuthor(bookDetailsDto.getAuthors()),
                 myScoreMapper.mapToMyScore(bookDetailsDto.getMyScore()),
                 worldScoreMapper.mapToWorldScore(bookDetailsDto.getWorldScore()),
                 homeCollectionMapper.mapToHomeCollection(bookDetailsDto.getHomeCollection())
@@ -65,20 +63,22 @@ public class BookDetailsMapper {
                         myScoreMapper.mapToMyScoreDto(b.getMyScore()),
                         worldScoreMapper.mapToWorldScoreDto(b.getWorldScore()),
                         homeCollectionMapper.mapToHomeCollectionDto(b.getHomeCollection())))
-                .collect(Collectors.toList());
+                .collect(toList());
     }
 
-    private BookDetailsDto.AuthorDto mapToAuthorDto(Author author) {
-        return new BookDetailsDto.AuthorDto(author.getId(), author.getName(), author.getSurname());
+    private AuthorDto mapToAuthorDto(Author author) {
+        return new AuthorDto(author.getId(), author.getYearOfBirth(), author.getName(), author.getSurname(), author.getCity(), author.getCountry());
     }
 
-    private List<BookDetailsDto.AuthorDto> mapToAuthorsDto(List<Author> authors) {
+    private List<AuthorDto> mapToAuthorsDto(List<Author> authors) {
         return authors.stream()
                 .map(this::mapToAuthorDto)
-                .collect(Collectors.toList());
+                .collect(toList());
     }
 
-    private List<Author> getAuthorsByBook(long bookId) {
-        return service.getBook(bookId).orElseThrow(ItemNotFoundException::new).getAuthors();
+    private List<Author> mapToAuthor(List<AuthorDto> authorDtos) {
+        return authorDtos.stream()
+                .map(authorDto -> new Author(authorDto.getId(), authorDto.getYearOfBirth(), authorDto.getName(), authorDto.getSurname(), authorDto.getCity(), authorDto.getCountry()))
+                .collect(toList());
     }
 }
