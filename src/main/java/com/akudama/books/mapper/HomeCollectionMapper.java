@@ -1,7 +1,7 @@
 package com.akudama.books.mapper;
 
-import com.akudama.books.domain.entity.HomeCollection;
 import com.akudama.books.domain.dto.HomeCollectionDto;
+import com.akudama.books.domain.entity.HomeCollection;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
@@ -11,23 +11,23 @@ import java.util.stream.Collectors;
 @Component
 public class HomeCollectionMapper {
     @Autowired
-    private FormMapper formMapper;
+    private UserMapper userMapper;
     @Autowired
-    private  LangMapper langMapper;
+    private HomeCollectionItemMapper homeCollectionItemMapper;
 
     public HomeCollection mapToHomeCollection(final HomeCollectionDto homeCollectionDto) {
         return new HomeCollection(
                 homeCollectionDto.getId(),
-                formMapper.mapToFormList(homeCollectionDto.getForms()),
-                langMapper.mapToLangList(homeCollectionDto.getLangs())
+                userMapper.mapToUser(homeCollectionDto.getUser()),
+                homeCollectionItemMapper.mapToHomeCollectionItemList(homeCollectionDto.getHomeCollectionItems())
         );
     }
 
     public HomeCollectionDto mapToHomeCollectionDto(final HomeCollection homeCollection) {
         return new HomeCollectionDto(
                 homeCollection.getId(),
-                formMapper.mapToFormDtoList(homeCollection.getForms()),
-                langMapper.mapToLangDtoList(homeCollection.getLangs())
+                userMapper.mapToUserDto(homeCollection.getUser()),
+                homeCollectionItemMapper.mapToHomeCollectionItemDtoList(homeCollection.getHomeCollectionItems())
         );
     }
 
@@ -35,8 +35,8 @@ public class HomeCollectionMapper {
         return homeCollectionList.stream()
                 .map(h -> new HomeCollectionDto(
                         h.getId(),
-                        formMapper.mapToFormDtoList(h.getForms()),
-                        langMapper.mapToLangDtoList(h.getLangs())))
+                        userMapper.mapToUserDto(h.getUser()),
+                        homeCollectionItemMapper.mapToHomeCollectionItemDtoList(h.getHomeCollectionItems())))
                 .collect(Collectors.toList());
     }
 }

@@ -46,8 +46,6 @@ public class BookDetailsMapperTest {
         assertEquals("Masterton", book.getAuthors().get(0).getSurname());
         assertEquals("Edinburgh", book.getAuthors().get(0).getCity());
         assertEquals("Scotland", book.getAuthors().get(0).getCountry());
-        assertEquals(Numbers.ONE, book.getMyScore().getId());
-        assertEquals(5, book.getMyScore().getValue());
         assertEquals(Numbers.ONE, book.getWorldScore().getId());
         assertEquals(3, book.getWorldScore().getValue());
         assertEquals(Numbers.ONE, book.getHomeCollection().getId());

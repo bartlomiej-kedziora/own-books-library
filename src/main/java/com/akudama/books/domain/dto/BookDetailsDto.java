@@ -18,7 +18,6 @@ public class BookDetailsDto {
     private String series;
     private String genre;
     private List<AuthorDto> authors = new ArrayList<>();
-    private ScoreDto myScore;
     private ScoreDto worldScore;
-    private HomeCollectionDto homeCollection;
+    private List<HomeCollectionItemDto> homeCollectionItems = new ArrayList<>();
 }

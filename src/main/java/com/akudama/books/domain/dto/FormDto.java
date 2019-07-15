@@ -11,7 +11,7 @@ import lombok.NoArgsConstructor;
 public class FormDto {
     private Long id;
     private BookKind value;
-    private HomeCollectionDto homeCollection;
+    private HomeCollectionItemDto homeCollectionItem;
 
     public FormDto(Long id, BookKind value) {
         this.id = id;

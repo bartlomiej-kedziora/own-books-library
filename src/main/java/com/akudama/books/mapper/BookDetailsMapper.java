@@ -14,11 +14,9 @@ import static java.util.stream.Collectors.toList;
 @Component
 public class BookDetailsMapper {
     @Autowired
-    private MyScoreMapper myScoreMapper;
-    @Autowired
     private WorldScoreMapper worldScoreMapper;
     @Autowired
-    private HomeCollectionMapper homeCollectionMapper;
+    private HomeCollectionItemMapper homeCollectionItemMapper;
 
     public Book mapToBook(final BookDetailsDto bookDetailsDto) {
         return new Book(
@@ -29,9 +27,8 @@ public class BookDetailsMapper {
                 bookDetailsDto.getSeries(),
                 bookDetailsDto.getGenre(),
                 mapToAuthor(bookDetailsDto.getAuthors()),
-                myScoreMapper.mapToMyScore(bookDetailsDto.getMyScore()),
                 worldScoreMapper.mapToWorldScore(bookDetailsDto.getWorldScore()),
-                homeCollectionMapper.mapToHomeCollection(bookDetailsDto.getHomeCollection())
+                homeCollectionItemMapper.mapToHomeCollectionItemList(bookDetailsDto.getHomeCollectionItems())
         );
     }
 
@@ -44,9 +41,8 @@ public class BookDetailsMapper {
                 book.getSeries(),
                 book.getGenre(),
                 mapToAuthorsDto(book.getAuthors()),
-                myScoreMapper.mapToMyScoreDto(book.getMyScore()),
                 worldScoreMapper.mapToWorldScoreDto(book.getWorldScore()),
-                homeCollectionMapper.mapToHomeCollectionDto(book.getHomeCollection())
+                homeCollectionItemMapper.mapToHomeCollectionItemDtoList(book.getHomeCollectionItems())
         );
     }
 
@@ -60,9 +56,8 @@ public class BookDetailsMapper {
                         b.getSeries(),
                         b.getGenre(),
                         mapToAuthorsDto(b.getAuthors()),
-                        myScoreMapper.mapToMyScoreDto(b.getMyScore()),
                         worldScoreMapper.mapToWorldScoreDto(b.getWorldScore()),
-                        homeCollectionMapper.mapToHomeCollectionDto(b.getHomeCollection())))
+                        homeCollectionItemMapper.mapToHomeCollectionItemDtoList(b.getHomeCollectionItems())))
                 .collect(toList());
     }
 

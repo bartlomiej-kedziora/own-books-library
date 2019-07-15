@@ -1,7 +1,7 @@
 package com.akudama.books.mapper;
 
-import com.akudama.books.domain.entity.Lang;
 import com.akudama.books.domain.dto.LangDto;
+import com.akudama.books.domain.entity.Lang;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
@@ -11,13 +11,13 @@ import java.util.stream.Collectors;
 @Component
 public class LangMapper {
     @Autowired
-    private HomeCollectionMapper homeCollectionMapper;
+    private HomeCollectionItemMapper homeCollectionItemMapper;
 
     public Lang mapToLang(final LangDto langDto) {
         return new Lang(
                 langDto.getId(),
                 langDto.getValue(),
-                homeCollectionMapper.mapToHomeCollection(langDto.getHomeCollection())
+                homeCollectionItemMapper.mapToHomeCollectionItem(langDto.getHomeCollectionItem())
         );
     }
 
@@ -26,7 +26,7 @@ public class LangMapper {
                 .map(l -> new Lang(
                         l.getId(),
                         l.getValue(),
-                        homeCollectionMapper.mapToHomeCollection(l.getHomeCollection())))
+                        homeCollectionItemMapper.mapToHomeCollectionItem(l.getHomeCollectionItem())))
                 .collect(Collectors.toList());
     }
 
@@ -34,7 +34,7 @@ public class LangMapper {
         return new LangDto(
                 lang.getId(),
                 lang.getValue(),
-                homeCollectionMapper.mapToHomeCollectionDto(lang.getHomeCollection())
+                homeCollectionItemMapper.mapToHomeCollectionItemDto(lang.getHomeCollectionItem())
         );
     }
 
@@ -43,7 +43,7 @@ public class LangMapper {
                 .map(l -> new LangDto(
                         l.getId(),
                         l.getValue(),
-                        homeCollectionMapper.mapToHomeCollectionDto(l.getHomeCollection())))
+                        homeCollectionItemMapper.mapToHomeCollectionItemDto(l.getHomeCollectionItem())))
                 .collect(Collectors.toList());
     }
 }

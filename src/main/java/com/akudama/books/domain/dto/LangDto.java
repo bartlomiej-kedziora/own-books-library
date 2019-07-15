@@ -11,7 +11,7 @@ import lombok.NoArgsConstructor;
 public class LangDto {
     private Long id;
     private LangKind value;
-    private HomeCollectionDto homeCollection;
+    private HomeCollectionItemDto homeCollectionItem;
 
     public LangDto(Long id, LangKind value) {
         this.id = id;

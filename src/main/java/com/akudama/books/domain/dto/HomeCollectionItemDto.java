@@ -10,8 +10,11 @@ import java.util.List;
 @Getter
 @AllArgsConstructor
 @NoArgsConstructor
-public class HomeCollectionDto {
+public class HomeCollectionItemDto {
     private Long id;
-    private UserDto user;
-    private List<HomeCollectionItemDto> homeCollectionItems = new ArrayList<>();
+    private BookDto book;
+    private HomeCollectionDto homeCollection;
+    private ScoreDto myScore;
+    private List<FormDto> forms = new ArrayList<>();
+    private List<LangDto> langs = new ArrayList<>();
 }
