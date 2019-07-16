@@ -1,17 +1,17 @@
 package com.akudama.books.domain.dto;
 
+import com.akudama.books.auth.user.UserDetailsDto;
+import java.util.List;
 import lombok.AllArgsConstructor;
-import lombok.Getter;
+import lombok.Data;
 import lombok.NoArgsConstructor;
 
-import java.util.ArrayList;
-import java.util.List;
-
-@Getter
 @AllArgsConstructor
 @NoArgsConstructor
+@Data
 public class HomeCollectionDto {
+
     private Long id;
-    private UserDto user;
-    private List<HomeCollectionItemDto> homeCollectionItems = new ArrayList<>();
+    private BasicUserDto user;
+    private List<HomeCollectionItemDto> homeCollectionItems;
 }

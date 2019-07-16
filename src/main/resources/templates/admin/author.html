@@ -1,0 +1,82 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head th:replace="fragments/header :: header"></head>
+<body>
+<div th:replace="fragments/menu :: menu"></div>
+<h1 class="bk-heading bk-heading--main">Own-library</h1>
+
+<main class="crud container">
+    <section class="datatable">
+        <h2>Add a new author</h2>
+        <form
+                class="datatable__row datatable__row--add"
+                method="POST"
+                action="/authors"
+                data-task-add-form
+        >
+            <div>
+            <fieldset class="datatable__row-section datatable__row-section--input-section">
+                <label class="datatable__input-label">
+                    Name
+                </label>
+                <input type="text" name="name" placeholder="Insert a name" required minlength="2">
+            </fieldset>
+
+            <fieldset class="datatable__row-section datatable__row-section--input-section">
+                <label class="datatable__input-label">
+                    Surname
+                </label>
+                <input type="text" name="surname" placeholder="Insert a surname" required minlength="2">
+            </fieldset>
+
+            <fieldset class="datatable__row-section datatable__row-section--input-section">
+                <label class="datatable__input-label">
+                    Country
+                </label>
+                <input type="text" name="country" placeholder="Insert a country" required minlength="2">
+            </fieldset>
+
+            <fieldset class="datatable__row-section datatable__row-section--input-section">
+                <label class="datatable__input-label">
+                    City
+                </label>
+                <input type="text" name="city" placeholder="Insert a city" required minlength="2">
+            </fieldset>
+
+            <fieldset class="datatable__row-section datatable__row-section--input-section">
+                <label class="datatable__input-label">
+                    Year of Birth
+                </label>
+                <input type="text" name="birth" placeholder="Insert a year of birth" required minlength="2">
+            </fieldset>
+
+            <fieldset class="datatable__row-section datatable__row-section--input-section">
+                <label class="datatable__input-label">
+                    Surname
+                </label>
+                <input type="text" name="surname" placeholder="Insert a surname" required minlength="2">
+            </fieldset>
+            </div>
+            <div class="datatable__tasks-container" data-tasks-container></div>
+
+            <div class="template">
+                <div data-datatable-row-template>
+                    <fieldset class="datatable__row-section datatable__row-section--trello-section">
+                         <select class="datatable__select" name="list-name" data-list-name-select>
+                            <option disabled selected>--- select a list ---</option>
+                         </select>
+                    </fieldset>
+                    <fieldset class="datatable__row-section datatable__row-section--button-section">
+                        <button type="submit" data-task-add-button class="datatable__button">Add</button>
+                    </fieldset>
+                </div>
+            </div>
+        </form>
+    </section>
+</main>
+<div th:replace="fragments/footer :: footer">&copy; 2019 The Static Templates</div>
+<script th:src="@{/js/jquery-3.3.1.min.js}"></script>
+<script th:src="@{/js/script.js}"></script>
+
+</body>
+</html>

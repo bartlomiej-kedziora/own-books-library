@@ -25,7 +25,10 @@ public class WorldScoreMapperTest {
     @Test
     public void shouldMapToWorldScoreScore() {
         //Given
-        ScoreDto worldScoreDto = new ScoreDto(1L, 3);
+        ScoreDto worldScoreDto = ScoreDto.ScoreDtoBuilder.aScoreDtoBuilder()
+                .withId(1L)
+                .withValue(3)
+                .build();
 
         //When
         WorldScore worldScore = WorldScoreMapper.mapToWorldScore(worldScoreDto);

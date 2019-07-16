@@ -1,30 +1,26 @@
 package com.akudama.books.domain.entity;
 
-import lombok.AllArgsConstructor;
-import lombok.NoArgsConstructor;
-import lombok.Setter;
-
-import javax.persistence.*;
+import javax.persistence.Column;
+import javax.persistence.Entity;
+import javax.persistence.GeneratedValue;
+import javax.persistence.GenerationType;
+import javax.persistence.Id;
+import javax.persistence.Table;
 import javax.validation.constraints.NotNull;
+import lombok.AllArgsConstructor;
+import lombok.Data;
+import lombok.NoArgsConstructor;
 
 @AllArgsConstructor
 @NoArgsConstructor
-@Setter
+@Data
 @Entity
 @Table(name = "MYSCORE")
 public class MyScore {
-    private Long id;
-    private int value;
 
     @Id
-    @GeneratedValue(strategy = GenerationType.AUTO)
-    @NotNull
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "myscore_id", unique = true)
-    public Long getId() {
-        return id;
-    }
-
-    public int getValue() {
-        return value;
-    }
+    private Long id;
+    private int value;
 }

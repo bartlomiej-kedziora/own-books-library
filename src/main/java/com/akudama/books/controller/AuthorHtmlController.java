@@ -8,11 +8,16 @@ import org.springframework.web.bind.annotation.RequestMapping;
 
 @CrossOrigin(origins = "*")
 @Controller
-@RequestMapping("/authors")
+@RequestMapping("/")
 public class AuthorHtmlController {
 
-    @GetMapping
+    @GetMapping(value = {"authors", "authors/{id}"})
     public String getAuthorPage(Model model) {
         return "authors";
+    }
+
+    @GetMapping("author")
+    public String getCreateAuthorPage(Model model) {
+        return "admin/author";
     }
 }

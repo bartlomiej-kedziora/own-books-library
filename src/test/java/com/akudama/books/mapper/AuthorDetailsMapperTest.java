@@ -1,8 +1,6 @@
 package com.akudama.books.mapper;
 
 import com.akudama.books.domain.Numbers;
-import com.akudama.books.domain.dto.AuthorDetailsDto;
-import com.akudama.books.domain.dto.BookDto;
 import com.akudama.books.domain.entity.Author;
 import com.akudama.books.domain.entity.Book;
 import org.junit.Test;
@@ -28,8 +26,23 @@ public class AuthorDetailsMapperTest {
     @Test
     public void shouldMapToAuthor() {
         //Given
-        BookDto bookDto = new BookDto(1L, 1975, "Manitu", "Manitou", "manitou", "horror");
-        AuthorDetailsDto authorDetailsDto = new AuthorDetailsDto(1L, 1946, "Graham", "Masterton", "Edinburgh", "Scotland", Arrays.asList(bookDto));
+        BookDto bookDto = BookDto.BookDtoBuilder.aBookDtoBuilder()
+                .withId(1L)
+                .withYear(1975)
+                .withTitlePl("Manitu")
+                .withTitleEn("Manitou")
+                .withSeries("manitou")
+                .withGenre("horror")
+                .build();
+        AuthorDetailsDto authorDetailsDto = AuthorDetailsDto.AuthorDetailsDtoBuilder.aAuthorDetailsDtoBuilder()
+                .withId(1L)
+                .withYearOfBirth(1946)
+                .withName("Graham")
+                .withSurname("Masterton")
+                .withCity("Edinburgh")
+                .withCountry("Scotland")
+                .withBooks(Arrays.asList(bookDto))
+                .build();
 
         //When
         Author author = authorDetailsMapper.mapToAuthor(authorDetailsDto);
@@ -44,8 +57,8 @@ public class AuthorDetailsMapperTest {
         assertEquals(1, author.getBooks().size());
         assertEquals(Numbers.ONE, author.getBooks().get(0).getId());
         assertEquals(1975, author.getBooks().get(0).getYear());
-        assertEquals("Manitu", author.getBooks().get(0).getTitlePl());
-        assertEquals("Manitou", author.getBooks().get(0).getTitleEn());
+        assertEquals("Manitu", author.getBooks().get(0).getTitle());
+        assertEquals("Manitou", author.getBooks().get(0).getTitleEng());
         assertEquals("manitou", author.getBooks().get(0).getSeries());
         assertEquals("horror", author.getBooks().get(0).getGenre());
     }

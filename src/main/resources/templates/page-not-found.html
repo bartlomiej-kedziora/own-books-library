@@ -1,0 +1,40 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head th:replace="fragments/header :: header"></head>
+<body>
+<div th:replace="fragments/menu :: menu"></div>
+<h1 class="bk-heading bk-heading--main">Own-library</h1>
+
+<main class="crud container">
+    <section class="datatable">
+        <h2>Authors</h2>
+        <div class="grid-container header" data-datatable-row-header>
+            <div class="grid-item">No</div>
+            <div class="grid-item">Name</div>
+            <div class="grid-item">Surname</div>
+            <div class="grid-item">Country</div>
+            <div class="grid-item">City</div>
+            <div class="grid-item">Year of Birth</div>
+            <div class="grid-item">Books</div>
+        </div>
+        <div class="datatable__tasks-container" data-tasks-container></div>
+    </section>
+</main>
+
+<div class="template">
+    <div class="grid-container" data-datatable-row-template>
+        <div class="grid-item" data-task-counter ><p class="datatable__field-value" data-task-counter-paragraph></p></div>
+        <div class="grid-item" data-task-name-section><p class="datatable__field-value" data-task-name-paragraph></p></div>
+        <div class="grid-item" data-task-content-section><p class="datatable__field-value" data-task-content-paragraph></p></div>
+        <div class="grid-item" data-task-country-section><p class="datatable__field-value" data-task-country-paragraph></p></div>
+        <div class="grid-item" data-task-city-section><p class="datatable__field-value" data-task-city-paragraph></p></div>
+        <div class="grid-item" data-task-birth-section><p class="datatable__field-value" data-task-birth-paragraph></p></div>
+        <div class="grid-item" ><p><a href="#" data-task-books-section data-task-id="0"><img th:src="@{/img/icon-books.png}" height="22" width="22"/></a></p></div>
+    </div>
+</div>
+<div th:replace="fragments/footer :: footer">&copy; 2019 The Static Templates</div>
+<script th:src="@{/js/jquery-3.3.1.min.js}"></script>
+<!--<script th:src="@{/js/script.js}"></script>-->
+
+</body>
+</html>

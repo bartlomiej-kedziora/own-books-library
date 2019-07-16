@@ -1,7 +1,6 @@
 package com.akudama.books.mapper;
 
 import com.akudama.books.domain.Numbers;
-import com.akudama.books.domain.dto.AuthorDto;
 import com.akudama.books.domain.entity.Author;
 import org.junit.Test;
 import org.junit.runner.RunWith;
@@ -24,7 +23,14 @@ public class AuthorMapperTest {
     @Test
     public void shouldMapToAuthor() {
         //Given
-        AuthorDto authorDto = new AuthorDto(1L, 1946, "Graham", "Masterton", "Edinburgh", "Scotland");
+        AuthorDto authorDto = AuthorDto.AuthorDtoBuilder.aAuthorDtoBuilder()
+                .withId(1L)
+                .withYearOfBirth(1946)
+                .withName("Graham")
+                .withSurname("Masterton")
+                .withCity("Edinburgh")
+                .withCountry("Scotland")
+                .build();
 
         //When
         Author author = authorMapper.mapToAuthor(authorDto);

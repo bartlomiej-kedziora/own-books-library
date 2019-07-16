@@ -1,9 +1,11 @@
 package com.akudama.books.domain.entity;
 
-import lombok.AllArgsConstructor;
-import lombok.NoArgsConstructor;
-import lombok.Setter;
-
+import java.util.ArrayList;
+import java.util.HashSet;
+import java.util.List;
+import java.util.Objects;
+import java.util.Set;
+import java.util.stream.Collectors;
 import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
@@ -15,81 +17,81 @@ import javax.persistence.JoinColumn;
 import javax.persistence.JoinTable;
 import javax.persistence.ManyToMany;
 import javax.persistence.OneToMany;
-import javax.persistence.OneToOne;
 import javax.persistence.Table;
-import java.util.ArrayList;
-import java.util.List;
+import javax.persistence.Transient;
+import lombok.AllArgsConstructor;
+import lombok.Getter;
+import lombok.NoArgsConstructor;
+import lombok.Setter;
 
 @AllArgsConstructor
 @NoArgsConstructor
+@Getter
 @Setter
 @Entity
 @Table(name = "BOOKS")
 public class Book {
-    private Long id;
-    private int year;
-    private String titlePl;
-    private String titleEn;
-    private String series;
-    private String genre;
-    private List<Author> authors = new ArrayList<>();
-    private WorldScore worldScore;
-    private List<HomeCollectionItem> homeCollectionItems = new ArrayList<>();
-
-    public Book(long id, int year, String titlePl, String titleEn, String series, String genre) {
-        this.id = id;
-        this.year = year;
-        this.titlePl = titlePl;
-        this.titleEn = titleEn;
-        this.series = series;
-        this.genre = genre;
-    }
 
     @Id
-    @GeneratedValue(strategy = GenerationType.AUTO)
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "book_id", unique = true)
-    public Long getId() {
-        return id;
-    }
-
-    public int getYear() {
-        return year;
-    }
-
-    public String getTitlePl() {
-        return titlePl;
-    }
-
-    public String getTitleEn() {
-        return titleEn;
-    }
-
-    public String getSeries() {
-        return series;
-    }
-
-    public String getGenre() {
-        return genre;
-    }
-
-    @ManyToMany(cascade = CascadeType.ALL)
+    private Long id;
+    private int year;
+    private String title;
+    private String titleEng;
+    private String series;
+    private String genre;
+    @ManyToMany(cascade = {CascadeType.PERSIST, CascadeType.REFRESH, CascadeType.MERGE})
     @JoinTable(
-            name = "join_author_book",
+            name = "author_book",
             joinColumns = {@JoinColumn(name = "book_id", referencedColumnName = "book_id")},
             inverseJoinColumns = {@JoinColumn(name = "author_id", referencedColumnName = "author_id")}
     )
-    public List<Author> getAuthors() {
-        return authors;
+    private Set<Author> authors = new HashSet<>();
+    @Transient
+    private WorldScore worldScore;
+    @OneToMany(targetEntity = HomeCollectionItem.class, mappedBy = "book", cascade = CascadeType.ALL,
+            fetch = FetchType.LAZY)
+    private List<HomeCollectionItem> homeCollectionItems = new ArrayList<>();
+
+    public Book(Long id, int year, String title, String titleEng, String series, String genre,
+            Set<Author> authors, List<HomeCollectionItem> homeCollectionItems) {
+        this.id = id;
+        this.year = year;
+        this.title = title;
+        this.titleEng = titleEng;
+        this.series = series;
+        this.genre = genre;
+        this.authors = authors;
+        this.homeCollectionItems = homeCollectionItems;
     }
 
-    @OneToOne(cascade = CascadeType.ALL, fetch = FetchType.EAGER)
-    @JoinColumn(name = "worldscore_id")
-    public WorldScore getWorldScore() {
-        return worldScore;
+    public void removeAuthorById(long id) {
+        Set<Author> updatedAuthors = getAuthors()
+                .stream()
+                .filter(a -> !a.getId().equals(id))
+                .collect(Collectors.toSet());
+        setAuthors(updatedAuthors);
     }
 
-    @OneToMany(targetEntity = HomeCollectionItem.class, mappedBy = "book", cascade = CascadeType.ALL, fetch = FetchType.LAZY)
-    public List<HomeCollectionItem> getHomeCollectionItems() {
-        return homeCollectionItems;
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) {
+            return true;
+        }
+        if (o == null || getClass() != o.getClass()) {
+            return false;
+        }
+        Book book = (Book) o;
+        return year == book.year &&
+                Objects.equals(title, book.title) &&
+                Objects.equals(titleEng, book.titleEng) &&
+                Objects.equals(series, book.series) &&
+                Objects.equals(genre, book.genre);
+    }
+
+    @Override
+    public int hashCode() {
+        return Objects.hash(year, title, titleEng, series, genre);
     }
 }

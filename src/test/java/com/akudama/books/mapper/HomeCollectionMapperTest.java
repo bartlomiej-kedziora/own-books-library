@@ -3,8 +3,17 @@ package com.akudama.books.mapper;
 import com.akudama.books.domain.BookKind;
 import com.akudama.books.domain.LangKind;
 import com.akudama.books.domain.Numbers;
-import com.akudama.books.domain.dto.*;
-import com.akudama.books.domain.entity.*;
+import com.akudama.books.domain.dto.FormDto;
+import com.akudama.books.domain.dto.HomeCollectionDetailsDto;
+import com.akudama.books.domain.dto.HomeCollectionItemDetailsDto;
+import com.akudama.books.domain.dto.LangDto;
+import com.akudama.books.domain.dto.ScoreDto;
+import com.akudama.books.domain.entity.Book;
+import com.akudama.books.domain.entity.Form;
+import com.akudama.books.domain.entity.HomeCollection;
+import com.akudama.books.domain.entity.HomeCollectionItem;
+import com.akudama.books.domain.entity.Lang;
+import com.akudama.books.domain.entity.MyScore;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -21,75 +30,97 @@ import static org.junit.Assert.assertEquals;
 public class HomeCollectionMapperTest {
 
     @Autowired
-    private HomeCollectionMapper homeCollectionMapper;
+    private HomeCollectionItemMapper homeCollectionItemMapper;
 
-//    @Test
-//    public void shouldMapToHomeCollection() {
-//        //Given
-//        HomeCollectionDto homeCollectionDto = createHomeCollectionDto();
-//
-//        //When
-//        HomeCollection homeCollection = homeCollectionMapper.mapToHomeCollection(homeCollectionDto);
-//
-//        //Then
-//        assertEquals(Numbers.ONE, homeCollection.getId());
-//        assertEquals(Numbers.ONE, homeCollection.getForms().get(0).getId());
-//        assertEquals(BookKind.EBOOK, homeCollection.getForms().get(0).getValue());
-//        assertEquals(Numbers.ONE, homeCollection.getLangs().get(0).getId());
-//        assertEquals(LangKind.EN, homeCollection.getLangs().get(0).getValue());
-//    }
-//
-//    @Test
-//    public void shouldMapToHomeCollectionDto() {
-//        //Given
-//        HomeCollection homeCollection = createHomeCollection();
-//
-//        //When
-//        HomeCollectionDto homeCollectionDto = homeCollectionMapper.mapToHomeCollectionDto(homeCollection);
-//
-//        //Then
-//        assertEquals(Numbers.ONE, homeCollectionDto.getId());
-//        assertEquals(1, homeCollectionDto.getForms().size());
-//        assertEquals(Numbers.ONE, homeCollectionDto.getForms().get(0).getId());
-//        assertEquals(BookKind.EBOOK, homeCollectionDto.getForms().get(0).getValue());
-//        assertEquals(1, homeCollectionDto.getLangs().size());
-//        assertEquals(Numbers.ONE, homeCollectionDto.getLangs().get(0).getId());
-//        assertEquals(LangKind.EN, homeCollectionDto.getLangs().get(0).getValue());
-//    }
-//
-//    @Test
-//    public void shouldMapToHomeCollectionDtoList() {
-//        //Given
-//        List<HomeCollection> homeCollections = Arrays.asList(createHomeCollection());
-//
-//        //When
-//        List<HomeCollectionDto> homeCollectionDtos = homeCollectionMapper.mapToHomeCollectionDtoList(homeCollections);
-//
-//        //Then
-//        assertEquals(1, homeCollectionDtos.size());
-//        assertEquals(Numbers.ONE, homeCollectionDtos.get(0).getId());
-//        assertEquals(1, homeCollectionDtos.get(0).getForms().size());
-//        assertEquals(Numbers.ONE, homeCollectionDtos.get(0).getForms().get(0).getId());
-//        assertEquals(BookKind.EBOOK, homeCollectionDtos.get(0).getForms().get(0).getValue());
-//        assertEquals(1, homeCollectionDtos.get(0).getLangs().size());
-//        assertEquals(Numbers.ONE, homeCollectionDtos.get(0).getLangs().get(0).getId());
-//        assertEquals(LangKind.EN, homeCollectionDtos.get(0).getLangs().get(0).getValue());
-//    }
-//
-//    private HomeCollection createHomeCollection() {
-//
-//        HomeCollection homeCollection = new HomeCollection();
-//        List<Form> forms = Arrays.asList(new Form(1L, BookKind.EBOOK, homeCollection));
-//        List<Lang> langs = Arrays.asList(new Lang(1L, LangKind.EN, homeCollection));
-//
-//        return new HomeCollection(1L, forms, langs);
-//    }
-//
-//    private HomeCollectionDto createHomeCollectionDto() {
-//        HomeCollectionDto homeCollectionDto = new HomeCollectionDto();
-//        List<FormDto> formDtos = Arrays.asList(new FormDto(1L, BookKind.EBOOK, homeCollectionDto));
-//        List<LangDto> langDtos = Arrays.asList(new LangDto(1L, LangKind.EN, homeCollectionDto));
-//
-//        return new HomeCollectionDto(1L, formDtos, langDtos);
-//    }
+    @Test
+    public void shouldMapToHomeCollection() {
+        //Given
+        HomeCollectionItemDetailsDto homeCollectionItemDto = createHomeCollectionItemDto();
+
+        //When
+        HomeCollectionItem homeCollectionItem = homeCollectionItemMapper.mapToHomeCollectionItem(homeCollectionItemDto);
+
+        //Then
+        assertEquals(Numbers.ONE, homeCollectionItem.getId());
+        assertEquals(Numbers.ONE, homeCollectionItem.getForms().get(0).getId());
+        assertEquals(BookKind.EBOOK, homeCollectionItem.getForms().get(0).getValue());
+        assertEquals(Numbers.ONE, homeCollectionItem.getLangs().get(0).getId());
+        assertEquals(LangKind.EN, homeCollectionItem.getLangs().get(0).getValue());
+    }
+
+    @Test
+    public void shouldMapToHomeCollectionDto() {
+        //Given
+        HomeCollectionItem homeCollectionItem = createHomeCollectionItem();
+
+        //When
+        HomeCollectionItemDetailsDto homeCollectionItemDto = homeCollectionItemMapper.mapToHomeCollectionItemDto(homeCollectionItem);
+
+        //Then
+        assertEquals(Numbers.ONE, homeCollectionItemDto.getId());
+        assertEquals(1, homeCollectionItemDto.getForms().size());
+        assertEquals(Numbers.ONE, homeCollectionItemDto.getForms().get(0).getId());
+        assertEquals(BookKind.EBOOK, homeCollectionItemDto.getForms().get(0).getValue());
+        assertEquals(1, homeCollectionItemDto.getLangs().size());
+        assertEquals(Numbers.ONE, homeCollectionItemDto.getLangs().get(0).getId());
+        assertEquals(LangKind.EN, homeCollectionItemDto.getLangs().get(0).getValue());
+    }
+
+    @Test
+    public void shouldMapToHomeCollectionDtoList() {
+        //Given
+        List<HomeCollectionItem> homeCollectionItems = Arrays.asList(createHomeCollectionItem());
+
+        //When
+        List<HomeCollectionItemDetailsDto> homeCollectionItemDetailsDtos = homeCollectionItemMapper.mapToHomeCollectionItemDtoList(homeCollectionItems);
+
+        //Then
+        assertEquals(1, homeCollectionItemDetailsDtos.size());
+        assertEquals(Numbers.ONE, homeCollectionItemDetailsDtos.get(0).getId());
+        assertEquals(1, homeCollectionItemDetailsDtos.get(0).getForms().size());
+        assertEquals(Numbers.ONE, homeCollectionItemDetailsDtos.get(0).getForms().get(0).getId());
+        assertEquals(BookKind.EBOOK, homeCollectionItemDetailsDtos.get(0).getForms().get(0).getValue());
+        assertEquals(1, homeCollectionItemDetailsDtos.get(0).getLangs().size());
+        assertEquals(Numbers.ONE, homeCollectionItemDetailsDtos.get(0).getLangs().get(0).getId());
+        assertEquals(LangKind.EN, homeCollectionItemDetailsDtos.get(0).getLangs().get(0).getValue());
+    }
+
+    private HomeCollectionItem createHomeCollectionItem() {
+
+        HomeCollectionItem homeCollectionItem = new HomeCollectionItem();
+        List<Form> forms = Arrays.asList(new Form(1L, BookKind.EBOOK, homeCollectionItem));
+        List<Lang> langs = Arrays.asList(new Lang(1L, LangKind.EN, homeCollectionItem));
+        MyScore myScore = new MyScore(1L, 5);
+
+        return new HomeCollectionItem(1L, new Book(), new HomeCollection(), myScore, forms, langs);
+    }
+
+    private HomeCollectionItemDetailsDto createHomeCollectionItemDto() {
+        HomeCollectionItemDetailsDto homeCollectionItemDto = HomeCollectionItemDetailsDto.HomeCollectionItemDtoBuilder.aHomeCollectionItemDtoBuilder()
+                .build();
+        List<FormDto> formDtos = Arrays.asList(FormDto.FormDtoBuilder.aFormDtoBuilder()
+                .withId(1L)
+                .withValue(BookKind.EBOOK)
+                .withHomeCollectionItem(homeCollectionItemDto)
+                .build());
+        List<LangDto> langDtos = Arrays.asList(LangDto.LangDtoBuilder.alangDtoBuilder()
+                .withId(1L)
+                .withValue(LangKind.EN)
+                .withHomeCollectionItem(homeCollectionItemDto)
+                .build());
+        ScoreDto myScoreDto = ScoreDto.ScoreDtoBuilder.aScoreDtoBuilder()
+                .withId(1L)
+                .withValue(5)
+                .build();
+        BookDto bookDto = BookDto.BookDtoBuilder.aBookDtoBuilder().build();
+        HomeCollectionDetailsDto homeCollectionDetailsDto = HomeCollectionDetailsDto.HomeCollectionDtoBuilder.aHomeCollectionDtoBuilder().build();
+
+        return HomeCollectionItemDetailsDto.HomeCollectionItemDtoBuilder.aHomeCollectionItemDtoBuilder().withId(1L)
+                .withBook(bookDto)
+                .withHomeCollection(homeCollectionDetailsDto)
+                .withMyScore(myScoreDto)
+                .withForms(formDtos)
+                .withLangs(langDtos)
+                .build();
+    }
 }

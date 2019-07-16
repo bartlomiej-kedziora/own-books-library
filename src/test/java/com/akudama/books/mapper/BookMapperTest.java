@@ -1,8 +1,7 @@
 package com.akudama.books.mapper;
 
 import com.akudama.books.domain.Numbers;
-import com.akudama.books.domain.dto.*;
-import com.akudama.books.domain.entity.*;
+import com.akudama.books.domain.entity.Book;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -24,7 +23,14 @@ public class BookMapperTest {
     @Test
     public void shouldMapToBook() {
         //Given
-        BookDto bookDto = new BookDto(1L, 1976, "Manitu", "Manitou", "Manitou", "horror");
+        BookDto bookDto = BookDto.BookDtoBuilder.aBookDtoBuilder()
+                .withId(1L)
+                .withYear(1976)
+                .withTitlePl("Manitu")
+                .withTitleEn("Manitou")
+                .withSeries("manitou")
+                .withGenre("horror")
+                .build();
 
         //When
         Book book = bookMapper.mapToBook(bookDto);
@@ -32,8 +38,8 @@ public class BookMapperTest {
         //Then
         assertEquals(Numbers.ONE, book.getId());
         assertEquals(1976, book.getYear());
-        assertEquals("Manitu", book.getTitlePl());
-        assertEquals("Manitou", book.getTitleEn());
+        assertEquals("Manitu", book.getTitle());
+        assertEquals("Manitou", book.getTitleEng());
         assertEquals("Manitou", book.getSeries());
         assertEquals("horror", book.getGenre());
     }

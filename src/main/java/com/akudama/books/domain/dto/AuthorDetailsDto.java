@@ -1,21 +1,20 @@
 package com.akudama.books.domain.dto;
 
+import java.util.Set;
 import lombok.AllArgsConstructor;
-import lombok.Getter;
+import lombok.Data;
 import lombok.NoArgsConstructor;
 
-import java.util.ArrayList;
-import java.util.List;
-
-@Getter
 @AllArgsConstructor
 @NoArgsConstructor
-public class AuthorDetailsDto {
-    private Long id;
-    private int yearOfBirth;
-    private String name;
-    private String surname;
-    private String city;
-    private String country;
-    private List<BookDto> books = new ArrayList<>();
+@Data
+public class AuthorDetailsDto extends AuthorDto {
+
+    private Set<BookDto> books;
+
+    public AuthorDetailsDto(Long id, int yearOfBirth, String name, String surname, String city, String country,
+            Set<BookDto> books) {
+        super(id, yearOfBirth, name, surname, city, country);
+        this.books = books;
+    }
 }

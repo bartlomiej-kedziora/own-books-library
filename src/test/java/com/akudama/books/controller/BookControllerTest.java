@@ -1,11 +1,7 @@
 package com.akudama.books.controller;
 
-import com.akudama.books.domain.BookKind;
-import com.akudama.books.domain.LangKind;
-import com.akudama.books.domain.dto.*;
+import com.akudama.books.domain.dto.ScoreDto;
 import com.akudama.books.domain.entity.Book;
-import com.akudama.books.mapper.BookDetailsMapper;
-import com.akudama.books.mapper.BookMapper;
 import com.akudama.books.service.BookDbService;
 import com.google.gson.Gson;
 import org.junit.Test;
@@ -28,8 +24,13 @@ import java.util.Optional;
 import static org.assertj.core.api.Java6Assertions.assertThat;
 import static org.hamcrest.Matchers.hasSize;
 import static org.hamcrest.Matchers.is;
-import static org.mockito.Mockito.*;
-import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.*;
+import static org.mockito.Mockito.times;
+import static org.mockito.Mockito.verify;
+import static org.mockito.Mockito.when;
+import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.delete;
+import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.get;
+import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.post;
+import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.put;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.jsonPath;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
 
@@ -37,7 +38,14 @@ import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.
 @WebMvcTest(BookController.class)
 public class BookControllerTest {
     private Book book = new Book(1L, 1976, "Manitu", "Manitou", "Manitou", "horror");
-    private BookDto bookDto = new BookDto(1L, 1976, "Manitu", "Manitou", "Manitou", "horror");
+    private BookDto bookDto = BookDto.BookDtoBuilder.aBookDtoBuilder()
+            .withId(1L)
+            .withYear(1976)
+            .withTitlePl("Manitu")
+            .withTitleEn("Manitou")
+            .withSeries("manitou")
+            .withGenre("horror")
+            .build();
     private BookDetailsDto bookDetailsDto = createBookDetailsDto();
 
     private List<Book> books = Arrays.asList(book);
@@ -72,8 +80,8 @@ public class BookControllerTest {
                 .andExpect(jsonPath("$", hasSize(1)))
                 .andExpect(jsonPath("$[0].id", is(1)))
                 .andExpect(jsonPath("$[0].year", is(1976)))
-                .andExpect(jsonPath("$[0].titlePl", is("Manitu")))
-                .andExpect(jsonPath("$[0].titleEn", is("Manitou")))
+                .andExpect(jsonPath("$[0].title", is("Manitu")))
+                .andExpect(jsonPath("$[0].titleEng", is("Manitou")))
                 .andExpect(jsonPath("$[0].series", is("Manitou")))
                 .andExpect(jsonPath("$[0].genre", is("horror")));
     }
@@ -89,8 +97,8 @@ public class BookControllerTest {
                 .andExpect(status().isOk())
                 .andExpect(jsonPath("$.id", is(1)))
                 .andExpect(jsonPath("$.year", is(1976)))
-                .andExpect(jsonPath("$.titlePl", is("Manitu")))
-                .andExpect(jsonPath("$.titleEn", is("Manitou")))
+                .andExpect(jsonPath("$.title", is("Manitu")))
+                .andExpect(jsonPath("$.titleEng", is("Manitou")))
                 .andExpect(jsonPath("$.series", is("Manitou")))
                 .andExpect(jsonPath("$.genre", is("horror")));
     }
@@ -106,8 +114,8 @@ public class BookControllerTest {
                 .andExpect(status().isOk())
                 .andExpect(jsonPath("$.id", is(1)))
                 .andExpect(jsonPath("$.year", is(1976)))
-                .andExpect(jsonPath("$.titlePl", is("Manitu")))
-                .andExpect(jsonPath("$.titleEn", is("Manitou")))
+                .andExpect(jsonPath("$.title", is("Manitu")))
+                .andExpect(jsonPath("$.titleEng", is("Manitou")))
                 .andExpect(jsonPath("$.series", is("Manitou")))
                 .andExpect(jsonPath("$.genre", is("horror")))
                 .andExpect(jsonPath("$.authors[0].id", is(1)))
@@ -151,8 +159,8 @@ public class BookControllerTest {
                 .content(jsonContent))
                 .andExpect(jsonPath("$.id", is(1)))
                 .andExpect(jsonPath("$.year", is(1976)))
-                .andExpect(jsonPath("$.titlePl", is("Manitu")))
-                .andExpect(jsonPath("$.titleEn", is("Manitou")))
+                .andExpect(jsonPath("$.title", is("Manitu")))
+                .andExpect(jsonPath("$.titleEng", is("Manitou")))
                 .andExpect(jsonPath("$.series", is("Manitou")))
                 .andExpect(jsonPath("$.genre", is("horror")))
                 .andExpect(jsonPath("$.authors[0].id", is(1)))
@@ -171,20 +179,21 @@ public class BookControllerTest {
 
     @Captor
     ArgumentCaptor<BookDetailsDto> captor;
+
     @Test
     public void shouldCreateBook() throws Exception {
         //Given
-        BookDetailsDto bookDetailsDto = new BookDetailsDto(
-                1L,
-                1976,
-                "Manitu",
-                "Manitou",
-                "Manitou",
-                "horror",
-                new ArrayList<>(),
-                null,
-                null,
-                null);
+        BookDetailsDto bookDetailsDto = BookDetailsDto.BookDetailsDtoBuilder.aBookDetailsDtoBuilder()
+                .withId(1L)
+                .withYear(1976)
+                .withTitlePl("Manitu")
+                .withTitleEn("Manitou")
+                .withSeries("manitou")
+                .withGenre("horror")
+                .withAuthors(new ArrayList<>())
+                .withWorldScore(null)
+                .withHomeCollectionItems(null)
+                .build();
 
         when(bookDetailsMapper.mapToBook(ArgumentMatchers.any(BookDetailsDto.class))).thenReturn(book);
         when(service.saveBook(ArgumentMatchers.any(Book.class))).thenReturn(book);
@@ -205,13 +214,30 @@ public class BookControllerTest {
     }
 
     private BookDetailsDto createBookDetailsDto() {
-        List<AuthorDto> authorDtos = Arrays.asList(new AuthorDto(1L, 1946, "Graham", "Masterton", "Edinburgh", "Scotland"));
-        List<FormDto> formDtos = Arrays.asList(new FormDto(1L, BookKind.EBOOK));
-        List<LangDto> langDtos = Arrays.asList(new LangDto(1L, LangKind.EN));
-        HomeCollectionDto homeCollectionDto = new HomeCollectionDto(1L, formDtos, langDtos);
-        ScoreDto myScoreDto = new ScoreDto(1L, 5);
-        ScoreDto worldScoreDto = new ScoreDto(1L, 3);
+        List<AuthorDto> authorDtos = Arrays.asList(AuthorDto.AuthorDtoBuilder.aAuthorDtoBuilder()
+                .withId(1L)
+                .withYearOfBirth(1946)
+                .withName("Graham")
+                .withSurname("Masterton")
+                .withCity("Edinburgh")
+                .withCountry("Scotland")
+                .build());
 
-        return new BookDetailsDto(1L, 1976, "Manitu", "Manitou", "Manitou", "horror", authorDtos, myScoreDto, worldScoreDto, homeCollectionDto);
+        ScoreDto worldScoreDto = ScoreDto.ScoreDtoBuilder.aScoreDtoBuilder()
+                .withId(1L)
+                .withValue(3)
+                .build();
+
+        return BookDetailsDto.BookDetailsDtoBuilder.aBookDetailsDtoBuilder()
+                .withId(1L)
+                .withYear(1976)
+                .withTitlePl("Manitu")
+                .withTitleEn("Manitou")
+                .withSeries("manitou")
+                .withGenre("horror")
+                .withAuthors(authorDtos)
+                .withWorldScore(worldScoreDto)
+                .withHomeCollectionItems(new ArrayList<>())
+                .build();
     }
 }

@@ -1,17 +1,18 @@
 package com.akudama.books.domain.dto;
 
 import lombok.AllArgsConstructor;
-import lombok.Getter;
+import lombok.Data;
 import lombok.NoArgsConstructor;
 
-@Getter
 @AllArgsConstructor
 @NoArgsConstructor
+@Data
 public class AuthorDto {
-    private Long id;
-    private int yearOfBirth;
-    private String name;
-    private String surname;
-    private String city;
-    private String country;
+
+    protected Long id;
+    protected int yearOfBirth;
+    protected String name;
+    protected String surname;
+    protected String city;
+    protected String country;
 }

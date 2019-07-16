@@ -25,7 +25,10 @@ public class MyScoreMapperTest {
     @Test
     public void shouldMapToMyScore() {
         //Given
-        ScoreDto myScoreDto = new ScoreDto(1L, 5);
+        ScoreDto myScoreDto = ScoreDto.ScoreDtoBuilder.aScoreDtoBuilder()
+                .withId(1L)
+                .withValue(5)
+                .build();
 
         //When
         MyScore myScore = myScoreMapper.mapToMyScore(myScoreDto);

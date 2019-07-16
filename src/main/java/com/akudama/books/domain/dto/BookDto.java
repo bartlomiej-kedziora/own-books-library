@@ -1,17 +1,18 @@
 package com.akudama.books.domain.dto;
 
 import lombok.AllArgsConstructor;
-import lombok.Getter;
+import lombok.Data;
 import lombok.NoArgsConstructor;
 
-@Getter
 @AllArgsConstructor
 @NoArgsConstructor
+@Data
 public class BookDto {
-    private Long id;
-    private int year;
-    private String titlePl;
-    private String titleEn;
-    private String series;
-    private String genre;
+
+    protected Long id;
+    protected int year;
+    protected String title;
+    protected String titleEng;
+    protected String series;
+    protected String genre;
 }

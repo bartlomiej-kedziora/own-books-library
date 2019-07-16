@@ -1,0 +1,48 @@
+<!DOCTYPE html>
+<html>
+<head>
+    ...
+</head>
+<body>
+    <div th:fragment="menu" class="menu">
+        <div class="dropdown">
+            <a href="/"><button class="dropbtn">Home</button></a>
+        </div>
+        <div class="dropdown">
+            <button class="dropbtn">Authors</button>
+            <div class="dropdown-content">
+                <a href="/author">Add</a>
+                <a href="/authors">List</a>
+            </div>
+        </div>
+        <div class="dropdown">
+            <button class="dropbtn">Books</button>
+            <div class="dropdown-content">
+                <a href="/book">Add</a>
+                <a href="/books">List</a>
+            </div>
+        </div>
+        <div class="dropdown">
+            <button class="dropbtn">Forms</button>
+            <div class="dropdown-content">
+                <a href="/forms">Add</a>
+                <a href="/forms">List</a>
+            </div>
+        </div>
+        <div class="dropdown">
+            <button class="dropbtn">Languages</button>
+            <div class="dropdown-content">
+                <a href="/langs">Add</a>
+                <a href="/langs">List</a>
+            </div>
+        </div>
+        <div class="dropdown">
+            <a href="/collections"><button class="dropbtn">Collection</button></a>
+        </div>
+        <div class="dropdown">
+            <a href="/swagger-ui.html"><button class="dropbtn">API</button></a>
+        </div>
+    </div>
+    ...
+</body>
+</html>
