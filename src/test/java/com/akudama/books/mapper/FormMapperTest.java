@@ -22,7 +22,12 @@ import static org.junit.Assert.assertEquals;
 @RunWith(SpringRunner.class)
 @SpringBootTest
 public class FormMapperTest {
-    private FormDto formDto = new FormDto(1L, BookKind.EBOOK, new HomeCollectionItemDto());
+    private FormDto formDto = FormDto.FormDtoBuilder.aFormDtoBuilder()
+            .withId(1L)
+            .withValue(BookKind.EBOOK)
+            .withHomeCollectionItem(HomeCollectionItemDto.HomeCollectionItemDtoBuilder.aHomeCollectionItemDtoBuilder()
+                    .build())
+            .build();
     private Form form = new Form(1L, BookKind.EBOOK, new HomeCollectionItem());
 
     @Autowired

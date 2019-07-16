@@ -22,25 +22,19 @@ public class AuthorMapper {
     }
 
     public AuthorDto mapToAuthorDto(final Author author) {
-        return new AuthorDto(
-                author.getId(),
-                author.getYearOfBirth(),
-                author.getName(),
-                author.getSurname(),
-                author.getCity(),
-                author.getCountry()
-        );
+        return AuthorDto.AuthorDtoBuilder.aAuthorDtoBuilder()
+                .withId(author.getId())
+                .withYearOfBirth(author.getYearOfBirth())
+                .withName(author.getName())
+                .withSurname(author.getSurname())
+                .withCity(author.getCity())
+                .withCountry(author.getCountry())
+                .build();
     }
 
     public List<AuthorDto> mapToAuthorDtoList(final List<Author> authorList) {
         return authorList.stream()
-                .map(a -> new AuthorDto(
-                        a.getId(),
-                        a.getYearOfBirth(),
-                        a.getName(),
-                        a.getSurname(),
-                        a.getCity(),
-                        a.getCountry()))
+                .map(this::mapToAuthorDto)
                 .collect(Collectors.toList());
     }
 }

@@ -1,8 +1,9 @@
 package com.akudama.books.controller;
 
-import com.akudama.books.domain.BookKind;
-import com.akudama.books.domain.LangKind;
-import com.akudama.books.domain.dto.*;
+import com.akudama.books.domain.dto.AuthorDto;
+import com.akudama.books.domain.dto.BookDetailsDto;
+import com.akudama.books.domain.dto.BookDto;
+import com.akudama.books.domain.dto.ScoreDto;
 import com.akudama.books.domain.entity.Book;
 import com.akudama.books.mapper.BookDetailsMapper;
 import com.akudama.books.mapper.BookMapper;
@@ -28,8 +29,13 @@ import java.util.Optional;
 import static org.assertj.core.api.Java6Assertions.assertThat;
 import static org.hamcrest.Matchers.hasSize;
 import static org.hamcrest.Matchers.is;
-import static org.mockito.Mockito.*;
-import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.*;
+import static org.mockito.Mockito.times;
+import static org.mockito.Mockito.verify;
+import static org.mockito.Mockito.when;
+import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.delete;
+import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.get;
+import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.post;
+import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.put;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.jsonPath;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
 
@@ -37,7 +43,14 @@ import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.
 @WebMvcTest(BookController.class)
 public class BookControllerTest {
     private Book book = new Book(1L, 1976, "Manitu", "Manitou", "Manitou", "horror");
-    private BookDto bookDto = new BookDto(1L, 1976, "Manitu", "Manitou", "Manitou", "horror");
+    private BookDto bookDto = BookDto.BookDtoBuilder.aBookDtoBuilder()
+            .withId(1L)
+            .withYear(1976)
+            .withTitlePl("Manitu")
+            .withTitleEn("Manitou")
+            .withSeries("manitou")
+            .withGenre("horror")
+            .build();
     private BookDetailsDto bookDetailsDto = createBookDetailsDto();
 
     private List<Book> books = Arrays.asList(book);
@@ -171,19 +184,21 @@ public class BookControllerTest {
 
     @Captor
     ArgumentCaptor<BookDetailsDto> captor;
+
     @Test
     public void shouldCreateBook() throws Exception {
         //Given
-        BookDetailsDto bookDetailsDto = new BookDetailsDto(
-                1L,
-                1976,
-                "Manitu",
-                "Manitou",
-                "Manitou",
-                "horror",
-                new ArrayList<>(),
-                null,
-                null);
+        BookDetailsDto bookDetailsDto = BookDetailsDto.BookDetailsDtoBuilder.aBookDetailsDtoBuilder()
+                .withId(1L)
+                .withYear(1976)
+                .withTitlePl("Manitu")
+                .withTitleEn("Manitou")
+                .withSeries("manitou")
+                .withGenre("horror")
+                .withAuthors(new ArrayList<>())
+                .withWorldScore(null)
+                .withHomeCollectionItems(null)
+                .build();
 
         when(bookDetailsMapper.mapToBook(ArgumentMatchers.any(BookDetailsDto.class))).thenReturn(book);
         when(service.saveBook(ArgumentMatchers.any(Book.class))).thenReturn(book);
@@ -204,9 +219,30 @@ public class BookControllerTest {
     }
 
     private BookDetailsDto createBookDetailsDto() {
-        List<AuthorDto> authorDtos = Arrays.asList(new AuthorDto(1L, 1946, "Graham", "Masterton", "Edinburgh", "Scotland"));
-        ScoreDto worldScoreDto = new ScoreDto(1L, 3);
+        List<AuthorDto> authorDtos = Arrays.asList(AuthorDto.AuthorDtoBuilder.aAuthorDtoBuilder()
+                .withId(1L)
+                .withYearOfBirth(1946)
+                .withName("Graham")
+                .withSurname("Masterton")
+                .withCity("Edinburgh")
+                .withCountry("Scotland")
+                .build());
 
-        return new BookDetailsDto(1L, 1976, "Manitu", "Manitou", "Manitou", "horror", authorDtos, worldScoreDto, new ArrayList<>());
+        ScoreDto worldScoreDto = ScoreDto.ScoreDtoBuilder.aScoreDtoBuilder()
+                .withId(1L)
+                .withValue(3)
+                .build();
+
+        return BookDetailsDto.BookDetailsDtoBuilder.aBookDetailsDtoBuilder()
+                .withId(1L)
+                .withYear(1976)
+                .withTitlePl("Manitu")
+                .withTitleEn("Manitou")
+                .withSeries("manitou")
+                .withGenre("horror")
+                .withAuthors(authorDtos)
+                .withWorldScore(worldScoreDto)
+                .withHomeCollectionItems(new ArrayList<>())
+                .build();
     }
 }

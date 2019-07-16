@@ -13,10 +13,14 @@ import static java.util.stream.Collectors.toList;
 
 @Component
 public class BookDetailsMapper {
+    private final WorldScoreMapper worldScoreMapper;
+    private final HomeCollectionItemMapper homeCollectionItemMapper;
+
     @Autowired
-    private WorldScoreMapper worldScoreMapper;
-    @Autowired
-    private HomeCollectionItemMapper homeCollectionItemMapper;
+    public BookDetailsMapper(WorldScoreMapper worldScoreMapper, HomeCollectionItemMapper homeCollectionItemMapper) {
+        this.worldScoreMapper = worldScoreMapper;
+        this.homeCollectionItemMapper = homeCollectionItemMapper;
+    }
 
     public Book mapToBook(final BookDetailsDto bookDetailsDto) {
         return new Book(
@@ -33,36 +37,34 @@ public class BookDetailsMapper {
     }
 
     public BookDetailsDto mapToBookDetailsDto(final Book book) {
-        return new BookDetailsDto(
-                book.getId(),
-                book.getYear(),
-                book.getTitlePl(),
-                book.getTitleEn(),
-                book.getSeries(),
-                book.getGenre(),
-                mapToAuthorsDto(book.getAuthors()),
-                worldScoreMapper.mapToWorldScoreDto(book.getWorldScore()),
-                homeCollectionItemMapper.mapToHomeCollectionItemDtoList(book.getHomeCollectionItems())
-        );
+        return BookDetailsDto.BookDetailsDtoBuilder.aBookDetailsDtoBuilder()
+                .withId(book.getId())
+                .withYear(book.getYear())
+                .withTitlePl(book.getTitlePl())
+                .withTitleEn(book.getTitleEn())
+                .withSeries(book.getSeries())
+                .withGenre(book.getGenre())
+                .withAuthors(mapToAuthorsDto(book.getAuthors()))
+                .withWorldScore(worldScoreMapper.mapToWorldScoreDto(book.getWorldScore()))
+                .withHomeCollectionItems(homeCollectionItemMapper.mapToHomeCollectionItemDtoList(book.getHomeCollectionItems()))
+                .build();
     }
 
     public List<BookDetailsDto> mapToBookDetailsDtoList(final List<Book> bookList) {
         return bookList.stream()
-                .map(b -> new BookDetailsDto(
-                        b.getId(),
-                        b.getYear(),
-                        b.getTitlePl(),
-                        b.getTitleEn(),
-                        b.getSeries(),
-                        b.getGenre(),
-                        mapToAuthorsDto(b.getAuthors()),
-                        worldScoreMapper.mapToWorldScoreDto(b.getWorldScore()),
-                        homeCollectionItemMapper.mapToHomeCollectionItemDtoList(b.getHomeCollectionItems())))
+                .map(this::mapToBookDetailsDto)
                 .collect(toList());
     }
 
     private AuthorDto mapToAuthorDto(Author author) {
-        return new AuthorDto(author.getId(), author.getYearOfBirth(), author.getName(), author.getSurname(), author.getCity(), author.getCountry());
+        return AuthorDto.AuthorDtoBuilder.aAuthorDtoBuilder()
+                .withId(author.getId())
+                .withYearOfBirth(author.getYearOfBirth())
+                .withName(author.getName())
+                .withSurname(author.getSurname())
+                .withCity(author.getCity())
+                .withCountry(author.getCountry())
+                .build();
     }
 
     private List<AuthorDto> mapToAuthorsDto(List<Author> authors) {

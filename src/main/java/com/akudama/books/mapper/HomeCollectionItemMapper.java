@@ -34,36 +34,24 @@ public class HomeCollectionItemMapper {
 
     public List<HomeCollectionItem> mapToHomeCollectionItemList(final List<HomeCollectionItemDto> homeCollectionItemDtoList) {
         return homeCollectionItemDtoList.stream()
-                .map(h -> new HomeCollectionItem(
-                        h.getId(),
-                        bookMapper.mapToBook(h.getBook()),
-                        homeCollectionMapper.mapToHomeCollection(h.getHomeCollection()),
-                        myScoreMapper.mapToMyScore(h.getMyScore()),
-                        formMapper.mapToFormList(h.getForms()),
-                        langMapper.mapToLangList(h.getLangs())))
+                .map(this::mapToHomeCollectionItem)
                 .collect(Collectors.toList());
     }
 
     public HomeCollectionItemDto mapToHomeCollectionItemDto(final HomeCollectionItem homeCollectionItem) {
-        return new HomeCollectionItemDto(
-                homeCollectionItem.getId(),
-                bookMapper.mapToBookDto(homeCollectionItem.getBook()),
-                homeCollectionMapper.mapToHomeCollectionDto(homeCollectionItem.getHomeCollection()),
-                myScoreMapper.mapToMyScoreDto(homeCollectionItem.getMyScore()),
-                formMapper.mapToFormDtoList(homeCollectionItem.getForms()),
-                langMapper.mapToLangDtoList(homeCollectionItem.getLangs())
-        );
+        return HomeCollectionItemDto.HomeCollectionItemDtoBuilder.aHomeCollectionItemDtoBuilder()
+                .withId(homeCollectionItem.getId())
+                .withBook(bookMapper.mapToBookDto(homeCollectionItem.getBook()))
+                .withHomeCollection(homeCollectionMapper.mapToHomeCollectionDto(homeCollectionItem.getHomeCollection()))
+                .withMyScore(myScoreMapper.mapToMyScoreDto(homeCollectionItem.getMyScore()))
+                .withForms(formMapper.mapToFormDtoList(homeCollectionItem.getForms()))
+                .withLangs(langMapper.mapToLangDtoList(homeCollectionItem.getLangs()))
+                .build();
     }
 
     public List<HomeCollectionItemDto> mapToHomeCollectionItemDtoList(final List<HomeCollectionItem> homeCollectionItemList) {
         return homeCollectionItemList.stream()
-                .map(h -> new HomeCollectionItemDto(
-                        h.getId(),
-                        bookMapper.mapToBookDto(h.getBook()),
-                        homeCollectionMapper.mapToHomeCollectionDto(h.getHomeCollection()),
-                        myScoreMapper.mapToMyScoreDto(h.getMyScore()),
-                        formMapper.mapToFormDtoList(h.getForms()),
-                        langMapper.mapToLangDtoList(h.getLangs())))
+                .map(this::mapToHomeCollectionItemDto)
                 .collect(Collectors.toList());
     }
 }

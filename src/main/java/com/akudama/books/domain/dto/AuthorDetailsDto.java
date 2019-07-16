@@ -36,6 +36,10 @@ public class AuthorDetailsDto {
         private AuthorDetailsDtoBuilder() {
         }
 
+        public static AuthorDetailsDtoBuilder aAuthorDetailsDtoBuilder() {
+            return new AuthorDetailsDtoBuilder();
+        }
+
         public AuthorDetailsDtoBuilder withId(Long id) {
             this.id = id;
             return this;

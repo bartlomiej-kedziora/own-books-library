@@ -24,6 +24,10 @@ public class HomeCollectionDto {
         private HomeCollectionDtoBuilder() {
         }
 
+        public static HomeCollectionDtoBuilder aHomeCollectionDtoBuilder() {
+            return new HomeCollectionDtoBuilder();
+        }
+
         public HomeCollectionDtoBuilder withId(Long id) {
             this.id = id;
             return this;

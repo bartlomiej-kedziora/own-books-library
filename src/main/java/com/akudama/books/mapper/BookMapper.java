@@ -21,25 +21,19 @@ public class BookMapper {
     }
 
     public BookDto mapToBookDto(final Book book) {
-        return new BookDto(
-                book.getId(),
-                book.getYear(),
-                book.getTitlePl(),
-                book.getTitleEn(),
-                book.getSeries(),
-                book.getGenre()
-        );
+        return BookDto.BookDtoBuilder.aBookDtoBuilder()
+                .withId(book.getId())
+                .withYear(book.getYear())
+                .withTitlePl(book.getTitlePl())
+                .withTitleEn(book.getTitleEn())
+                .withSeries(book.getSeries())
+                .withGenre(book.getGenre())
+                .build();
     }
 
     public List<BookDto> mapToBookDtoList(final List<Book> bookList) {
         return bookList.stream()
-                .map(b -> new BookDto(
-                        b.getId(),
-                        b.getYear(),
-                        b.getTitlePl(),
-                        b.getTitleEn(),
-                        b.getSeries(),
-                        b.getGenre()))
+                .map(this::mapToBookDto)
                 .collect(Collectors.toList());
     }
 }

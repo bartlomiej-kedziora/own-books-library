@@ -10,8 +10,12 @@ import java.util.stream.Collectors;
 
 @Component
 public class FormMapper {
+    private final HomeCollectionItemMapper homeCollectionItemMapper;
+
     @Autowired
-    private HomeCollectionItemMapper homeCollectionItemMapper;
+    public FormMapper(HomeCollectionItemMapper homeCollectionItemMapper) {
+        this.homeCollectionItemMapper = homeCollectionItemMapper;
+    }
 
     public Form mapToForm(final FormDto formDto) {
         return new Form(
@@ -23,27 +27,20 @@ public class FormMapper {
 
     public List<Form> mapToFormList(final List<FormDto> formDtoList) {
         return formDtoList.stream()
-                .map(f -> new Form(
-                        f.getId(),
-                        f.getValue(),
-                        homeCollectionItemMapper.mapToHomeCollectionItem(f.getHomeCollectionItem())))
+                .map(this::mapToForm)
                 .collect(Collectors.toList());
     }
 
     public FormDto mapToFormDto(final Form form) {
-        return new FormDto(
-                form.getId(),
-                form.getValue(),
-                homeCollectionItemMapper.mapToHomeCollectionItemDto(form.getHomeCollectionItem())
-        );
+        return FormDto.FormDtoBuilder.aFormDtoBuilder()
+                .withId(form.getId())
+                .withValue(form.getValue())
+                .build();
     }
 
     public List<FormDto> mapToFormDtoList(final List<Form> formList) {
         return formList.stream()
-                .map(f -> new FormDto(
-                        f.getId(),
-                        f.getValue(),
-                        homeCollectionItemMapper.mapToHomeCollectionItemDto(f.getHomeCollectionItem())))
+                .map(this::mapToFormDto)
                 .collect(Collectors.toList());
     }
 }

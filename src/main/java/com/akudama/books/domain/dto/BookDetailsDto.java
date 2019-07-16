@@ -50,7 +50,11 @@ public class BookDetailsDto {
         private BookDetailsDtoBuilder() {
         }
 
-        public BookDetailsDtoBuilder setId(Long id) {
+        public static BookDetailsDtoBuilder aBookDetailsDtoBuilder() {
+            return new BookDetailsDtoBuilder();
+        }
+
+        public BookDetailsDtoBuilder withId(Long id) {
             this.id = id;
             return this;
         }

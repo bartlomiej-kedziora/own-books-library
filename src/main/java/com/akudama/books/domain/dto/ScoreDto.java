@@ -19,6 +19,10 @@ public class ScoreDto {
         private ScoreDtoBuilder() {
         }
 
+        public static ScoreDtoBuilder aScoreDtoBuilder() {
+            return new ScoreDtoBuilder();
+        }
+
         public ScoreDtoBuilder withId(Long id) {
             this.id = id;
             return this;

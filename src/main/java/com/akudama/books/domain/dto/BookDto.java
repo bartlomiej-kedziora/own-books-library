@@ -31,7 +31,11 @@ public class BookDto {
         private BookDtoBuilder() {
         }
 
-        public BookDtoBuilder setId(Long id) {
+        public static BookDtoBuilder aBookDtoBuilder() {
+            return new BookDtoBuilder();
+        }
+
+        public BookDtoBuilder withId(Long id) {
             this.id = id;
             return this;
         }

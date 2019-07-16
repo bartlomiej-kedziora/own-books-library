@@ -114,9 +114,30 @@ public class BookDetailsMapperTest {
     }
 
     private BookDetailsDto createBookDetailsDto() {
-        List<AuthorDto> authorDtos = Arrays.asList(new AuthorDto(1L, 1946, "Graham", "Masterton", "Edinburgh", "Scotland"));
-        ScoreDto worldScoreDto = new ScoreDto(1L, 3);
+        List<AuthorDto> authorDtos = Arrays.asList(AuthorDto.AuthorDtoBuilder.aAuthorDtoBuilder()
+                .withId(1L)
+                .withYearOfBirth(1946)
+                .withName("Graham")
+                .withSurname("Masterton")
+                .withCity("Edinburgh")
+                .withCountry("Scotland")
+                .build());
 
-        return new BookDetailsDto(1L, 1976, "Manitu", "Manitou", "Manitou", "horror", authorDtos, worldScoreDto, new ArrayList<>());
+        ScoreDto worldScoreDto = ScoreDto.ScoreDtoBuilder.aScoreDtoBuilder()
+                .withId(1L)
+                .withValue(3)
+                .build();
+
+        return BookDetailsDto.BookDetailsDtoBuilder.aBookDetailsDtoBuilder()
+                .withId(1L)
+                .withYear(1976)
+                .withTitlePl("Manitu")
+                .withTitleEn("Manitou")
+                .withSeries("manitou")
+                .withGenre("horror")
+                .withAuthors(authorDtos)
+                .withWorldScore(worldScoreDto)
+                .withHomeCollectionItems(new ArrayList<>())
+                .build();
     }
 }

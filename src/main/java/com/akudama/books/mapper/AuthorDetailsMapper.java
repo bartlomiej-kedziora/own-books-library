@@ -25,32 +25,32 @@ public class AuthorDetailsMapper {
     }
 
     public AuthorDetailsDto mapToAuthorDetailsDto(final Author author) {
-        return new AuthorDetailsDto(
-                author.getId(),
-                author.getYearOfBirth(),
-                author.getName(),
-                author.getSurname(),
-                author.getCity(),
-                author.getCountry(),
-                mapToBooksDto(author.getBooks())
-        );
+        return AuthorDetailsDto.AuthorDetailsDtoBuilder.aAuthorDetailsDtoBuilder()
+                .withId(author.getId())
+                .withYearOfBirth(author.getYearOfBirth())
+                .withName(author.getName())
+                .withSurname(author.getSurname())
+                .withCity(author.getCity())
+                .withCountry(author.getCountry())
+                .withBooks(mapToBooksDto(author.getBooks()))
+                .build();
     }
 
     public List<AuthorDetailsDto> mapToAuthorDetailsDtoList(List<Author> authorList) {
         return authorList.stream()
-                .map(a -> new AuthorDetailsDto(
-                        a.getId(),
-                        a.getYearOfBirth(),
-                        a.getName(),
-                        a.getSurname(),
-                        a.getCity(),
-                        a.getCountry(),
-                        mapToBooksDto(a.getBooks())))
+                .map(a -> mapToAuthorDetailsDto(a))
                 .collect(Collectors.toList());
     }
 
     private BookDto mapToBookDto(Book book) {
-        return new BookDto(book.getId(), book.getYear(), book.getTitlePl(), book.getTitleEn(), book.getSeries(), book.getGenre());
+        return BookDto.BookDtoBuilder.aBookDtoBuilder()
+                .withId(book.getId())
+                .withYear(book.getYear())
+                .withTitlePl(book.getTitlePl())
+                .withTitleEn(book.getTitleEn())
+                .withSeries(book.getSeries())
+                .withGenre(book.getGenre())
+                .build();
     }
 
     private List<BookDto> mapToBooksDto(List<Book> books) {

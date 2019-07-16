@@ -28,10 +28,7 @@ public class LangMapper {
 
     public List<Lang> mapToLangList(final List<LangDto> langDtoList) {
         return langDtoList.stream()
-                .map(l -> new Lang(
-                        l.getId(),
-                        l.getValue(),
-                        homeCollectionItemMapper.mapToHomeCollectionItem(l.getHomeCollectionItem())))
+                .map(this::mapToLang)
                 .collect(Collectors.toList());
     }
 
@@ -44,9 +41,7 @@ public class LangMapper {
 
     public List<LangDto> mapToLangDtoList(final List<Lang> langList) {
         return langList.stream()
-                .map(l -> new LangDto(
-                        l.getId(),
-                        l.getValue()))
+                .map(this::mapToLangDto)
                 .collect(Collectors.toList());
     }
 }

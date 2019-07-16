@@ -38,7 +38,14 @@ import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.
 public class AuthorControllerTest {
 
     private Author author = new Author(1L, 1946, "Graham", "Masterton", "Edinburgh", "Scotland");
-    private AuthorDto authorDto = new AuthorDto(1L, 1946, "Graham", "Masterton", "Edinburgh", "Scotland");
+    private AuthorDto authorDto = AuthorDto.AuthorDtoBuilder.aAuthorDtoBuilder()
+            .withId(1L)
+            .withYearOfBirth(1946)
+            .withName("Graham")
+            .withSurname("Masterton")
+            .withCity("Edinburgh")
+            .withCountry("Scotland")
+            .build();
     private AuthorDetailsDto authorDetailsDto = createAuthorDetailsDto();
 
     private List<Author> authors = Arrays.asList(author);
@@ -158,7 +165,15 @@ public class AuthorControllerTest {
     @Test
     public void shouldCreateAuthor() throws Exception {
         //Given
-        AuthorDetailsDto authorDetailsDto = new AuthorDetailsDto(1L, 1946, "Graham", "Masterton", "Edinburgh", "Scotland", new ArrayList<>());
+        AuthorDetailsDto authorDetailsDto = AuthorDetailsDto.AuthorDetailsDtoBuilder.aAuthorDetailsDtoBuilder()
+                .withId(1L)
+                .withYearOfBirth(1946)
+                .withName("Graham")
+                .withSurname("Masterton")
+                .withCity("Edinburgh")
+                .withCountry("Scotland")
+                .withBooks(new ArrayList<>())
+                .build();
 
         when(authorDetailsMapper.mapToAuthor(ArgumentMatchers.any(AuthorDetailsDto.class))).thenReturn(author);
         when(service.saveAuthor(ArgumentMatchers.any(Author.class))).thenReturn(author);
@@ -179,8 +194,24 @@ public class AuthorControllerTest {
     }
 
     private AuthorDetailsDto createAuthorDetailsDto() {
-        List<BookDto> bookDtos = Arrays.asList(new BookDto(1L, 1976, "Manitu", "Manitou", "Manitou", "horror"));
+        List<BookDto> bookDtos = Arrays.asList(
+                BookDto.BookDtoBuilder.aBookDtoBuilder()
+                        .withId(1L)
+                        .withYear(1976)
+                        .withTitlePl("Manitu")
+                        .withTitleEn("Manitou")
+                        .withSeries("manitou")
+                        .withGenre("horror")
+                        .build());
 
-        return new AuthorDetailsDto(1L, 1946, "Graham", "Masterton", "Edinburgh", "Scotland", bookDtos);
+        return AuthorDetailsDto.AuthorDetailsDtoBuilder.aAuthorDetailsDtoBuilder()
+                .withId(1L)
+                .withYearOfBirth(1946)
+                .withName("Graham")
+                .withSurname("Masterton")
+                .withCity("Edinburgh")
+                .withCountry("Scotland")
+                .withBooks(bookDtos)
+                .build();
     }
 }

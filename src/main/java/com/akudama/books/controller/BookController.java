@@ -16,12 +16,16 @@ import static org.springframework.http.MediaType.APPLICATION_JSON_VALUE;
 @RestController
 @RequestMapping("/v1/books")
 public class BookController {
+    private final BookDbService service;
+    private final BookMapper bookMapper;
+    private final BookDetailsMapper bookDetailsMapper;
+
     @Autowired
-    private BookDbService service;
-    @Autowired
-    private BookMapper bookMapper;
-    @Autowired
-    private BookDetailsMapper bookDetailsMapper;
+    public BookController(BookDbService service, BookMapper bookMapper, BookDetailsMapper bookDetailsMapper) {
+        this.service = service;
+        this.bookMapper = bookMapper;
+        this.bookDetailsMapper = bookDetailsMapper;
+    }
 
     @RequestMapping(method = RequestMethod.GET)
     public List<BookDto> getBooks() {

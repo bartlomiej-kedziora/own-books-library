@@ -25,6 +25,10 @@ public class UserDto {
         private UserDtoBuilder() {
         }
 
+        public static UserDtoBuilder aUserDtoBuilder() {
+            return new UserDtoBuilder();
+        }
+
         public UserDtoBuilder withId(Long id) {
             this.id = id;
             return this;

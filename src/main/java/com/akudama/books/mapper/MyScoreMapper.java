@@ -1,7 +1,7 @@
 package com.akudama.books.mapper;
 
-import com.akudama.books.domain.entity.MyScore;
 import com.akudama.books.domain.dto.ScoreDto;
+import com.akudama.books.domain.entity.MyScore;
 import org.springframework.stereotype.Component;
 
 import java.util.List;
@@ -17,17 +17,15 @@ public class MyScoreMapper {
     }
 
     public ScoreDto mapToMyScoreDto(final MyScore myScore) {
-        return new ScoreDto(
-                myScore.getId(),
-                myScore.getValue()
-        );
+        return ScoreDto.ScoreDtoBuilder.aScoreDtoBuilder()
+                .withId(myScore.getId())
+                .withValue(myScore.getValue())
+                .build();
     }
 
     public List<ScoreDto> mapToMyScoreDtoList(final List<MyScore> myScoreList) {
         return myScoreList.stream()
-                .map(m -> new ScoreDto(
-                        m.getId(),
-                        m.getValue()))
+                .map(this::mapToMyScoreDto)
                 .collect(Collectors.toList());
     }
 }

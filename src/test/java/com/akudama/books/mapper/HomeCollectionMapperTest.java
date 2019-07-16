@@ -3,8 +3,18 @@ package com.akudama.books.mapper;
 import com.akudama.books.domain.BookKind;
 import com.akudama.books.domain.LangKind;
 import com.akudama.books.domain.Numbers;
-import com.akudama.books.domain.dto.*;
-import com.akudama.books.domain.entity.*;
+import com.akudama.books.domain.dto.BookDto;
+import com.akudama.books.domain.dto.FormDto;
+import com.akudama.books.domain.dto.HomeCollectionDto;
+import com.akudama.books.domain.dto.HomeCollectionItemDto;
+import com.akudama.books.domain.dto.LangDto;
+import com.akudama.books.domain.dto.ScoreDto;
+import com.akudama.books.domain.entity.Book;
+import com.akudama.books.domain.entity.Form;
+import com.akudama.books.domain.entity.HomeCollection;
+import com.akudama.books.domain.entity.HomeCollectionItem;
+import com.akudama.books.domain.entity.Lang;
+import com.akudama.books.domain.entity.MyScore;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -87,11 +97,31 @@ public class HomeCollectionMapperTest {
     }
 
     private HomeCollectionItemDto createHomeCollectionItemDto() {
-        HomeCollectionItemDto homeCollectionItemDto = new HomeCollectionItemDto();
-        List<FormDto> formDtos = Arrays.asList(new FormDto(1L, BookKind.EBOOK, homeCollectionItemDto));
-        List<LangDto> langDtos = Arrays.asList(new LangDto(1L, LangKind.EN, homeCollectionItemDto));
-        ScoreDto myScoreDto = new ScoreDto(1L, 5);
+        HomeCollectionItemDto homeCollectionItemDto = HomeCollectionItemDto.HomeCollectionItemDtoBuilder.aHomeCollectionItemDtoBuilder()
+                .build();
+        List<FormDto> formDtos = Arrays.asList(FormDto.FormDtoBuilder.aFormDtoBuilder()
+                .withId(1L)
+                .withValue(BookKind.EBOOK)
+                .withHomeCollectionItem(homeCollectionItemDto)
+                .build());
+        List<LangDto> langDtos = Arrays.asList(LangDto.LangDtoBuilder.alangDtoBuilder()
+                .withId(1L)
+                .withValue(LangKind.EN)
+                .withHomeCollectionItem(homeCollectionItemDto)
+                .build());
+        ScoreDto myScoreDto = ScoreDto.ScoreDtoBuilder.aScoreDtoBuilder()
+                .withId(1L)
+                .withValue(5)
+                .build();
+        BookDto bookDto = BookDto.BookDtoBuilder.aBookDtoBuilder().build();
+        HomeCollectionDto homeCollectionDto = HomeCollectionDto.HomeCollectionDtoBuilder.aHomeCollectionDtoBuilder().build();
 
-        return new HomeCollectionItemDto(1L, new BookDto(), new HomeCollectionDto(), myScoreDto, formDtos, langDtos);
+        return HomeCollectionItemDto.HomeCollectionItemDtoBuilder.aHomeCollectionItemDtoBuilder().withId(1L)
+                .withBook(bookDto)
+                .withHomeCollection(homeCollectionDto)
+                .withMyScore(myScoreDto)
+                .withForms(formDtos)
+                .withLangs(langDtos)
+                .build();
     }
 }

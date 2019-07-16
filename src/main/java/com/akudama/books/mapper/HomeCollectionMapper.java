@@ -24,19 +24,18 @@ public class HomeCollectionMapper {
     }
 
     public HomeCollectionDto mapToHomeCollectionDto(final HomeCollection homeCollection) {
-        return new HomeCollectionDto(
-                homeCollection.getId(),
-                userMapper.mapToUserDto(homeCollection.getUser()),
-                homeCollectionItemMapper.mapToHomeCollectionItemDtoList(homeCollection.getHomeCollectionItems())
-        );
+        return HomeCollectionDto.HomeCollectionDtoBuilder.aHomeCollectionDtoBuilder()
+                .withId(homeCollection.getId())
+                .withUser(userMapper.mapToUserDto(homeCollection.getUser()))
+                .withHomeCollectionItems(homeCollectionItemMapper.mapToHomeCollectionItemDtoList(
+                        homeCollection.getHomeCollectionItems())
+                )
+                .build();
     }
 
     public List<HomeCollectionDto> mapToHomeCollectionDtoList(final List<HomeCollection> homeCollectionList) {
         return homeCollectionList.stream()
-                .map(h -> new HomeCollectionDto(
-                        h.getId(),
-                        userMapper.mapToUserDto(h.getUser()),
-                        homeCollectionItemMapper.mapToHomeCollectionItemDtoList(h.getHomeCollectionItems())))
+                .map(this::mapToHomeCollectionDto)
                 .collect(Collectors.toList());
     }
 }

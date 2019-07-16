@@ -1,25 +1,31 @@
 package com.akudama.books.domain.dto;
 
 import com.akudama.books.domain.BookKind;
-import lombok.AllArgsConstructor;
 import lombok.Getter;
-import lombok.NoArgsConstructor;
 
 @Getter
 public class FormDto {
     private final Long id;
     private final BookKind value;
+    private final HomeCollectionItemDto homeCollectionItem;
 
-    private FormDto(Long id, BookKind value) {
+    private FormDto(Long id, BookKind value, HomeCollectionItemDto homeCollectionItem) {
         this.id = id;
         this.value = value;
+        this.homeCollectionItem = homeCollectionItem;
     }
 
     public static final class FormDtoBuilder {
         private Long id;
         private BookKind value;
+        private HomeCollectionItemDto homeCollectionItem;
 
-        private FormDtoBuilder() {}
+        private FormDtoBuilder() {
+        }
+
+        public static FormDtoBuilder aFormDtoBuilder() {
+            return new FormDtoBuilder();
+        }
 
         public FormDtoBuilder withId(Long id) {
             this.id = id;
@@ -31,8 +37,13 @@ public class FormDto {
             return this;
         }
 
+        public FormDtoBuilder withHomeCollectionItem(HomeCollectionItemDto homeCollectionItem) {
+            this.homeCollectionItem = homeCollectionItem;
+            return this;
+        }
+
         public FormDto build() {
-            return new FormDto(id, value);
+            return new FormDto(id, value, homeCollectionItem);
         }
     }
 }

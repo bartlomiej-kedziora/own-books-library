@@ -16,15 +16,15 @@ import static org.springframework.http.MediaType.APPLICATION_JSON_VALUE;
 @RestController
 @RequestMapping("/v1/authors")
 public class AuthorController {
+    private final AuthorDbService service;
+    private final AuthorMapper authorMapper;
+    private final AuthorDetailsMapper authorDetailsMapper;
     @Autowired
-    private AuthorDbService service;
-    @Autowired
-    private AuthorMapper authorMapper;
-    @Autowired
-    private AuthorDetailsMapper authorDetailsMapper;
-    @Autowired
-    public AuthorController() {
+    public AuthorController(AuthorDbService service, AuthorMapper authorMapper, AuthorDetailsMapper authorDetailsMapper) {
 
+        this.service = service;
+        this.authorMapper = authorMapper;
+        this.authorDetailsMapper = authorDetailsMapper;
     }
 
     @RequestMapping(method = RequestMethod.GET)
