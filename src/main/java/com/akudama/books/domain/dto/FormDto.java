@@ -6,15 +6,33 @@ import lombok.Getter;
 import lombok.NoArgsConstructor;
 
 @Getter
-@AllArgsConstructor
-@NoArgsConstructor
 public class FormDto {
-    private Long id;
-    private BookKind value;
-    private HomeCollectionItemDto homeCollectionItem;
+    private final Long id;
+    private final BookKind value;
 
-    public FormDto(Long id, BookKind value) {
+    private FormDto(Long id, BookKind value) {
         this.id = id;
         this.value = value;
+    }
+
+    public static final class FormDtoBuilder {
+        private Long id;
+        private BookKind value;
+
+        private FormDtoBuilder() {}
+
+        public FormDtoBuilder withId(Long id) {
+            this.id = id;
+            return this;
+        }
+
+        public FormDtoBuilder withValue(BookKind value) {
+            this.value = value;
+            return this;
+        }
+
+        public FormDto build() {
+            return new FormDto(id, value);
+        }
     }
 }

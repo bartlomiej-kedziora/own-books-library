@@ -10,8 +10,13 @@ import java.util.stream.Collectors;
 
 @Component
 public class LangMapper {
+
+    private final HomeCollectionItemMapper homeCollectionItemMapper;
+
     @Autowired
-    private HomeCollectionItemMapper homeCollectionItemMapper;
+    public LangMapper(HomeCollectionItemMapper homeCollectionItemMapper) {
+        this.homeCollectionItemMapper = homeCollectionItemMapper;
+    }
 
     public Lang mapToLang(final LangDto langDto) {
         return new Lang(
@@ -31,19 +36,17 @@ public class LangMapper {
     }
 
     public LangDto mapToLangDto(final Lang lang) {
-        return new LangDto(
-                lang.getId(),
-                lang.getValue(),
-                homeCollectionItemMapper.mapToHomeCollectionItemDto(lang.getHomeCollectionItem())
-        );
+        return LangDto.LangDtoBuilder.alangDtoBuilder()
+                .withId(lang.getId())
+                .withValue(lang.getValue())
+                .build();
     }
 
     public List<LangDto> mapToLangDtoList(final List<Lang> langList) {
         return langList.stream()
                 .map(l -> new LangDto(
                         l.getId(),
-                        l.getValue(),
-                        homeCollectionItemMapper.mapToHomeCollectionItemDto(l.getHomeCollectionItem())))
+                        l.getValue()))
                 .collect(Collectors.toList());
     }
 }

@@ -1,16 +1,19 @@
 package com.akudama.books.mapper;
 
-import com.akudama.books.domain.BookKind;
-import com.akudama.books.domain.LangKind;
 import com.akudama.books.domain.Numbers;
-import com.akudama.books.domain.dto.*;
-import com.akudama.books.domain.entity.*;
+import com.akudama.books.domain.dto.AuthorDto;
+import com.akudama.books.domain.dto.BookDetailsDto;
+import com.akudama.books.domain.dto.ScoreDto;
+import com.akudama.books.domain.entity.Author;
+import com.akudama.books.domain.entity.Book;
+import com.akudama.books.domain.entity.WorldScore;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.test.context.junit4.SpringRunner;
 
+import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 
@@ -48,13 +51,7 @@ public class BookDetailsMapperTest {
         assertEquals("Scotland", book.getAuthors().get(0).getCountry());
         assertEquals(Numbers.ONE, book.getWorldScore().getId());
         assertEquals(3, book.getWorldScore().getValue());
-        assertEquals(Numbers.ONE, book.getHomeCollection().getId());
-        assertEquals(1, book.getHomeCollection().getForms().size());
-        assertEquals(Numbers.ONE, book.getHomeCollection().getForms().get(0).getId());
-        assertEquals(BookKind.EBOOK, book.getHomeCollection().getForms().get(0).getValue());
-        assertEquals(1, book.getHomeCollection().getLangs().size());
-        assertEquals(Numbers.ONE, book.getHomeCollection().getLangs().get(0).getId());
-        assertEquals(LangKind.EN, book.getHomeCollection().getLangs().get(0).getValue());
+        assertEquals(Numbers.ZERO, book.getHomeCollectionItems().size());
     }
 
     @Test
@@ -76,17 +73,9 @@ public class BookDetailsMapperTest {
         assertEquals("Masterton", bookDetailsDto.getAuthors().get(0).getSurname());
         assertEquals("Edinburgh", bookDetailsDto.getAuthors().get(0).getCity());
         assertEquals("Scotland", bookDetailsDto.getAuthors().get(0).getCountry());
-        assertEquals(Numbers.ONE, bookDetailsDto.getMyScore().getId());
-        assertEquals(5, bookDetailsDto.getMyScore().getValue());
         assertEquals(Numbers.ONE, bookDetailsDto.getWorldScore().getId());
         assertEquals(3, bookDetailsDto.getWorldScore().getValue());
-        assertEquals(Numbers.ONE, bookDetailsDto.getHomeCollection().getId());
-        assertEquals(1, bookDetailsDto.getHomeCollection().getForms().size());
-        assertEquals(Numbers.ONE, bookDetailsDto.getHomeCollection().getForms().get(0).getId());
-        assertEquals(BookKind.EBOOK, bookDetailsDto.getHomeCollection().getForms().get(0).getValue());
-        assertEquals(1, bookDetailsDto.getHomeCollection().getLangs().size());
-        assertEquals(Numbers.ONE, bookDetailsDto.getHomeCollection().getLangs().get(0).getId());
-        assertEquals(LangKind.EN, bookDetailsDto.getHomeCollection().getLangs().get(0).getValue());
+        assertEquals(Numbers.ZERO, bookDetailsDto.getHomeCollectionItems().size());
     }
 
     @Test
@@ -112,40 +101,22 @@ public class BookDetailsMapperTest {
         assertEquals("Masterton", bookDetailsDtos.get(0).getAuthors().get(0).getSurname());
         assertEquals("Edinburgh", bookDetailsDtos.get(0).getAuthors().get(0).getCity());
         assertEquals("Scotland", bookDetailsDtos.get(0).getAuthors().get(0).getCountry());
-        assertEquals(Numbers.ONE, bookDetailsDtos.get(0).getMyScore().getId());
-        assertEquals(5, bookDetailsDtos.get(0).getMyScore().getValue());
         assertEquals(Numbers.ONE, bookDetailsDtos.get(0).getWorldScore().getId());
         assertEquals(3, bookDetailsDtos.get(0).getWorldScore().getValue());
-        assertEquals(Numbers.ONE, bookDetailsDtos.get(0).getHomeCollection().getId());
-        assertEquals(1, bookDetailsDtos.get(0).getHomeCollection().getForms().size());
-        assertEquals(Numbers.ONE, bookDetailsDtos.get(0).getHomeCollection().getForms().get(0).getId());
-        assertEquals(BookKind.EBOOK, bookDetailsDtos.get(0).getHomeCollection().getForms().get(0).getValue());
-        assertEquals(1, bookDetailsDtos.get(0).getHomeCollection().getLangs().size());
-        assertEquals(Numbers.ONE, bookDetailsDtos.get(0).getHomeCollection().getLangs().get(0).getId());
-        assertEquals(LangKind.EN, bookDetailsDtos.get(0).getHomeCollection().getLangs().get(0).getValue());
+        assertEquals(Numbers.ZERO, bookDetailsDtos.get(0).getHomeCollectionItems().size());
     }
 
     private Book createBook() {
         List<Author> authors = Arrays.asList(new Author(1L, 1946, "Graham", "Masterton", "Edinburgh", "Scotland"));
-        HomeCollection homeCollection = new HomeCollection();
-        List<Form> forms = Arrays.asList(new Form(1L, BookKind.EBOOK, homeCollection));
-        List<Lang> langs = Arrays.asList(new Lang(1L, LangKind.EN, homeCollection));
-        homeCollection = new HomeCollection(1L, forms, langs);
-        MyScore myScore = new MyScore(1L, 5);
         WorldScore worldScore = new WorldScore(1L, 3);
 
-        return new Book(1L, 1976, "Manitu", "Manitou", "Manitou", "horror", authors, myScore, worldScore, homeCollection);
+        return new Book(1L, 1976, "Manitu", "Manitou", "Manitou", "horror", authors, worldScore, new ArrayList<>());
     }
 
     private BookDetailsDto createBookDetailsDto() {
         List<AuthorDto> authorDtos = Arrays.asList(new AuthorDto(1L, 1946, "Graham", "Masterton", "Edinburgh", "Scotland"));
-        HomeCollectionDto homeCollectionDto = new HomeCollectionDto();
-        List<FormDto> formDtos = Arrays.asList(new FormDto(1L, BookKind.EBOOK, homeCollectionDto));
-        List<LangDto> langDtos = Arrays.asList(new LangDto(1L, LangKind.EN, homeCollectionDto));
-        homeCollectionDto = new HomeCollectionDto(1L, formDtos, langDtos);
-        ScoreDto myScoreDto = new ScoreDto(1L, 5);
         ScoreDto worldScoreDto = new ScoreDto(1L, 3);
 
-        return new BookDetailsDto(1L, 1976, "Manitu", "Manitou", "Manitou", "horror", authorDtos, myScoreDto, worldScoreDto, homeCollectionDto);
+        return new BookDetailsDto(1L, 1976, "Manitu", "Manitou", "Manitou", "horror", authorDtos, worldScoreDto, new ArrayList<>());
     }
 }

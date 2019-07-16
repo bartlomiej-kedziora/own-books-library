@@ -183,7 +183,6 @@ public class BookControllerTest {
                 "horror",
                 new ArrayList<>(),
                 null,
-                null,
                 null);
 
         when(bookDetailsMapper.mapToBook(ArgumentMatchers.any(BookDetailsDto.class))).thenReturn(book);
@@ -206,12 +205,8 @@ public class BookControllerTest {
 
     private BookDetailsDto createBookDetailsDto() {
         List<AuthorDto> authorDtos = Arrays.asList(new AuthorDto(1L, 1946, "Graham", "Masterton", "Edinburgh", "Scotland"));
-        List<FormDto> formDtos = Arrays.asList(new FormDto(1L, BookKind.EBOOK));
-        List<LangDto> langDtos = Arrays.asList(new LangDto(1L, LangKind.EN));
-        HomeCollectionDto homeCollectionDto = new HomeCollectionDto(1L, formDtos, langDtos);
-        ScoreDto myScoreDto = new ScoreDto(1L, 5);
         ScoreDto worldScoreDto = new ScoreDto(1L, 3);
 
-        return new BookDetailsDto(1L, 1976, "Manitu", "Manitou", "Manitou", "horror", authorDtos, myScoreDto, worldScoreDto, homeCollectionDto);
+        return new BookDetailsDto(1L, 1976, "Manitu", "Manitou", "Manitou", "horror", authorDtos, worldScoreDto, new ArrayList<>());
     }
 }

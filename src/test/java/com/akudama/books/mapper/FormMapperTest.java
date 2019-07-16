@@ -4,8 +4,10 @@ import com.akudama.books.domain.BookKind;
 import com.akudama.books.domain.Numbers;
 import com.akudama.books.domain.dto.FormDto;
 import com.akudama.books.domain.dto.HomeCollectionDto;
+import com.akudama.books.domain.dto.HomeCollectionItemDto;
 import com.akudama.books.domain.entity.Form;
 import com.akudama.books.domain.entity.HomeCollection;
+import com.akudama.books.domain.entity.HomeCollectionItem;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -20,8 +22,8 @@ import static org.junit.Assert.assertEquals;
 @RunWith(SpringRunner.class)
 @SpringBootTest
 public class FormMapperTest {
-    private FormDto formDto = new FormDto(1L, BookKind.EBOOK, new HomeCollectionDto());
-    private Form form = new Form(1L, BookKind.EBOOK, new HomeCollection());
+    private FormDto formDto = new FormDto(1L, BookKind.EBOOK, new HomeCollectionItemDto());
+    private Form form = new Form(1L, BookKind.EBOOK, new HomeCollectionItem());
 
     @Autowired
     private FormMapper formMapper;
