@@ -3,8 +3,11 @@ package com.akudama.books.domain.dto;
 import lombok.Getter;
 
 import java.util.List;
+import lombok.NoArgsConstructor;
+import lombok.Setter;
 
 @Getter
+@Setter
 public class HomeCollectionItemDto {
     private final Long id;
     private final BookDto book;

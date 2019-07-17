@@ -11,18 +11,10 @@ import java.util.stream.Collectors;
 @Component
 public class LangMapper {
 
-    private final HomeCollectionItemMapper homeCollectionItemMapper;
-
-    @Autowired
-    public LangMapper(HomeCollectionItemMapper homeCollectionItemMapper) {
-        this.homeCollectionItemMapper = homeCollectionItemMapper;
-    }
-
     public Lang mapToLang(final LangDto langDto) {
         return new Lang(
                 langDto.getId(),
-                langDto.getValue(),
-                homeCollectionItemMapper.mapToHomeCollectionItem(langDto.getHomeCollectionItem())
+                langDto.getValue()
         );
     }
 

@@ -32,6 +32,14 @@ public class HomeCollectionItem {
     private List<Form> forms = new ArrayList<>();
     private List<Lang> langs = new ArrayList<>();
 
+    public HomeCollectionItem(Long id, MyScore myScore,
+            List<Form> forms, List<Lang> langs) {
+        this.id = id;
+        this.myScore = myScore;
+        this.forms = forms;
+        this.langs = langs;
+    }
+
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
     @Column(name = "homecollectionitem_id", unique = true)
@@ -57,12 +65,12 @@ public class HomeCollectionItem {
         return myScore;
     }
 
-    @OneToMany(targetEntity = Form.class, mappedBy = "homeCollectionItem", cascade = CascadeType.ALL, fetch = FetchType.LAZY)
+    @OneToMany(targetEntity = Form.class, mappedBy = "id", cascade = CascadeType.ALL, fetch = FetchType.LAZY)
     public List<Form> getForms() {
         return forms;
     }
 
-    @OneToMany(targetEntity = Lang.class, mappedBy = "homeCollectionItem", cascade = CascadeType.ALL, fetch = FetchType.LAZY)
+    @OneToMany(targetEntity = Lang.class, mappedBy = "id", cascade = CascadeType.ALL, fetch = FetchType.LAZY)
     public List<Lang> getLangs() {
         return langs;
     }

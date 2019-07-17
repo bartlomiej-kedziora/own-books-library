@@ -17,7 +17,6 @@ import javax.validation.constraints.NotNull;
 public class Lang {
     private Long id;
     private LangKind value;
-    private HomeCollectionItem homeCollectionItem;
 
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
@@ -30,11 +29,5 @@ public class Lang {
     @Enumerated(EnumType.STRING)
     public LangKind getValue() {
         return value;
-    }
-
-    @ManyToOne
-    @JoinColumn(name = "homecollectionitem_id")
-    public HomeCollectionItem getHomeCollectionItem() {
-        return homeCollectionItem;
     }
 }

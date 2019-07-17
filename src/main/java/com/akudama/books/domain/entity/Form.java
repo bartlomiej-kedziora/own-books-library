@@ -16,7 +16,6 @@ import javax.validation.constraints.NotNull;
 public class Form {
     private Long id;
     private BookKind value;
-    private HomeCollectionItem homeCollectionItem;
 
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
@@ -29,11 +28,5 @@ public class Form {
     @Enumerated(EnumType.STRING)
     public BookKind getValue() {
         return value;
-    }
-
-    @ManyToOne
-    @JoinColumn(name = "homecollectionitem_id")
-    public HomeCollectionItem getHomeCollectionItem() {
-        return homeCollectionItem;
     }
 }

@@ -10,18 +10,11 @@ import java.util.stream.Collectors;
 
 @Component
 public class FormMapper {
-    private final HomeCollectionItemMapper homeCollectionItemMapper;
-
-    @Autowired
-    public FormMapper(HomeCollectionItemMapper homeCollectionItemMapper) {
-        this.homeCollectionItemMapper = homeCollectionItemMapper;
-    }
 
     public Form mapToForm(final FormDto formDto) {
         return new Form(
                 formDto.getId(),
-                formDto.getValue(),
-                homeCollectionItemMapper.mapToHomeCollectionItem(formDto.getHomeCollectionItem())
+                formDto.getValue()
         );
     }
 
