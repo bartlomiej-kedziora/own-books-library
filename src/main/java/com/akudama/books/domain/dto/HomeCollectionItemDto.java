@@ -6,29 +6,26 @@ import java.util.List;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
 
+@NoArgsConstructor
 @Getter
-@Setter
 public class HomeCollectionItemDto {
-    private final Long id;
-    private final BookDto book;
-    private final HomeCollectionDto homeCollection;
-    private final ScoreDto myScore;
-    private final List<FormDto> forms;
-    private final List<LangDto> langs;
+    private Long id;
+    private BookDetailsDto book;
+    private ScoreDto myScore;
+    private List<FormDto> forms;
+    private List<LangDto> langs;
 
-    private HomeCollectionItemDto(Long id, BookDto book, HomeCollectionDto homeCollection, ScoreDto myScore, List<FormDto> forms, List<LangDto> langs) {
+    public HomeCollectionItemDto(Long id, BookDetailsDto book, ScoreDto myScore, List<FormDto> forms, List<LangDto> langs) {
         this.id = id;
         this.book = book;
         this.myScore = myScore;
         this.forms = forms;
         this.langs = langs;
-        this.homeCollection = homeCollection;
     }
 
     public static final class HomeCollectionItemDtoBuilder {
         private Long id;
-        private BookDto book;
-        private HomeCollectionDto homeCollection;
+        private BookDetailsDto book;
         private ScoreDto myScore;
         private List<FormDto> forms;
         private List<LangDto> langs;
@@ -45,13 +42,8 @@ public class HomeCollectionItemDto {
             return this;
         }
 
-        public HomeCollectionItemDtoBuilder withBook(BookDto book) {
+        public HomeCollectionItemDtoBuilder withBook(BookDetailsDto book) {
             this.book = book;
-            return this;
-        }
-
-        public HomeCollectionItemDtoBuilder withHomeCollection(HomeCollectionDto homeCollection) {
-            this.homeCollection = homeCollection;
             return this;
         }
 
@@ -71,7 +63,7 @@ public class HomeCollectionItemDto {
         }
 
         public HomeCollectionItemDto build() {
-            return new HomeCollectionItemDto(id, book, homeCollection, myScore, forms, langs);
+            return new HomeCollectionItemDto(id, book, myScore, forms, langs);
         }
     }
 }

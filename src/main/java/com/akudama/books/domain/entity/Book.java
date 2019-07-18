@@ -45,6 +45,18 @@ public class Book {
         this.genre = genre;
     }
 
+    public Book(Long id, int year, String titlePl, String titleEn, String series,
+            String genre, List<Author> authors, WorldScore worldScore) {
+        this.id = id;
+        this.year = year;
+        this.titlePl = titlePl;
+        this.titleEn = titleEn;
+        this.series = series;
+        this.genre = genre;
+        this.authors = authors;
+        this.worldScore = worldScore;
+    }
+
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
     @Column(name = "book_id", unique = true)

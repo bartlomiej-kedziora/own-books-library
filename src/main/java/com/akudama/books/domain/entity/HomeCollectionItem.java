@@ -40,6 +40,15 @@ public class HomeCollectionItem {
         this.langs = langs;
     }
 
+    public HomeCollectionItem(Long id, Book book, MyScore myScore,
+            List<Form> forms, List<Lang> langs) {
+        this.id = id;
+        this.book = book;
+        this.myScore = myScore;
+        this.forms = forms;
+        this.langs = langs;
+    }
+
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
     @Column(name = "homecollectionitem_id", unique = true)

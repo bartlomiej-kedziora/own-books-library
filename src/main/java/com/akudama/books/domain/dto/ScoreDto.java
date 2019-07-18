@@ -1,13 +1,15 @@
 package com.akudama.books.domain.dto;
 
 import lombok.Getter;
+import lombok.NoArgsConstructor;
 
+@NoArgsConstructor
 @Getter
 public class ScoreDto {
-    private final Long id;
-    private final int value;
+    private Long id;
+    private int value;
 
-    private ScoreDto(Long id, int value) {
+    public ScoreDto(Long id, int value) {
         this.id = id;
         this.value = value;
     }

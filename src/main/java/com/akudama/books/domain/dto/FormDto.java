@@ -11,18 +11,15 @@ import lombok.Setter;
 public class FormDto {
     private Long id;
     private BookKind value;
-    private HomeCollectionItemDto homeCollectionItem;
 
-    public FormDto(Long id, BookKind value, HomeCollectionItemDto homeCollectionItem) {
+    public FormDto(Long id, BookKind value) {
         this.id = id;
         this.value = value;
-        this.homeCollectionItem = homeCollectionItem;
     }
 
     public static final class FormDtoBuilder {
         private Long id;
         private BookKind value;
-        private HomeCollectionItemDto homeCollectionItem;
 
         private FormDtoBuilder() {
         }
@@ -41,13 +38,8 @@ public class FormDto {
             return this;
         }
 
-        public FormDtoBuilder withHomeCollectionItem(HomeCollectionItemDto homeCollectionItem) {
-            this.homeCollectionItem = homeCollectionItem;
-            return this;
-        }
-
         public FormDto build() {
-            return new FormDto(id, value, homeCollectionItem);
+            return new FormDto(id, value);
         }
     }
 }

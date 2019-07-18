@@ -1,17 +1,19 @@
 package com.akudama.books.domain.dto;
 
 import lombok.Getter;
+import lombok.NoArgsConstructor;
 
+@NoArgsConstructor
 @Getter
 public class BookDto {
-    private final Long id;
-    private final int year;
-    private final String titlePl;
-    private final String titleEn;
-    private final String series;
-    private final String genre;
+    private Long id;
+    private int year;
+    private String titlePl;
+    private String titleEn;
+    private String series;
+    private String genre;
 
-    private BookDto(Long id, int year, String titlePl, String titleEn, String series, String genre) {
+    public BookDto(Long id, int year, String titlePl, String titleEn, String series, String genre) {
         this.id = id;
         this.year = year;
         this.titlePl = titlePl;

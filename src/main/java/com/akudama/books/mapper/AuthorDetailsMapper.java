@@ -1,37 +1,39 @@
 package com.akudama.books.mapper;
 
 import com.akudama.books.domain.dto.AuthorDetailsDto;
+import com.akudama.books.domain.dto.AuthorDto;
 import com.akudama.books.domain.dto.BookDto;
 import com.akudama.books.domain.entity.Author;
 import com.akudama.books.domain.entity.Book;
-import org.springframework.stereotype.Component;
-
 import java.util.List;
 import java.util.stream.Collectors;
+import org.springframework.stereotype.Component;
 
 @Component
 public class AuthorDetailsMapper {
 
     public Author mapToAuthor(final AuthorDetailsDto authorDetailsDto) {
         return new Author(
-                authorDetailsDto.getId(),
-                authorDetailsDto.getYearOfBirth(),
-                authorDetailsDto.getName(),
-                authorDetailsDto.getSurname(),
-                authorDetailsDto.getCity(),
-                authorDetailsDto.getCountry(),
+                authorDetailsDto.getAuthorDto().getId(),
+                authorDetailsDto.getAuthorDto().getYearOfBirth(),
+                authorDetailsDto.getAuthorDto().getName(),
+                authorDetailsDto.getAuthorDto().getSurname(),
+                authorDetailsDto.getAuthorDto().getCity(),
+                authorDetailsDto.getAuthorDto().getCountry(),
                 mapToBook(authorDetailsDto.getBooks())
         );
     }
 
     public AuthorDetailsDto mapToAuthorDetailsDto(final Author author) {
         return AuthorDetailsDto.AuthorDetailsDtoBuilder.aAuthorDetailsDtoBuilder()
-                .withId(author.getId())
-                .withYearOfBirth(author.getYearOfBirth())
-                .withName(author.getName())
-                .withSurname(author.getSurname())
-                .withCity(author.getCity())
-                .withCountry(author.getCountry())
+                .withAuthorDto(AuthorDto.AuthorDtoBuilder.aAuthorDtoBuilder()
+                        .withId(author.getId())
+                        .withYearOfBirth(author.getYearOfBirth())
+                        .withName(author.getName())
+                        .withSurname(author.getSurname())
+                        .withCity(author.getCity())
+                        .withCountry(author.getCountry())
+                        .build())
                 .withBooks(mapToBooksDto(author.getBooks()))
                 .build();
     }

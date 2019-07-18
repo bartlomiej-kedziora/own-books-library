@@ -3,14 +3,16 @@ package com.akudama.books.domain.dto;
 import lombok.Getter;
 
 import java.util.List;
+import lombok.NoArgsConstructor;
 
+@NoArgsConstructor
 @Getter
 public class HomeCollectionDto {
-    private final Long id;
-    private final UserDto user;
-    private final List<HomeCollectionItemDto> homeCollectionItems;
+    private Long id;
+    private UserDto user;
+    private List<HomeCollectionItemDto> homeCollectionItems;
 
-    private HomeCollectionDto(Long id, UserDto user, List<HomeCollectionItemDto> homeCollectionItems) {
+    public HomeCollectionDto(Long id, UserDto user, List<HomeCollectionItemDto> homeCollectionItems) {
         this.id = id;
         this.user = user;
         this.homeCollectionItems = homeCollectionItems;
