@@ -8,6 +8,7 @@ import com.akudama.books.service.FormDbService;
 import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.CrossOrigin;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
@@ -30,6 +31,24 @@ public class FormController {
     @RequestMapping(method = RequestMethod.GET)
     public List<FormDto> getForms() {
         return formMapper.mapToFormDtoList(service.getAllForms());
+    }
+
+    @RequestMapping(method = RequestMethod.GET, value = "/{formId}")
+    public FormDto getForm(@PathVariable long formId) {
+        return formMapper
+                .mapToFormDto(service.getForm(formId).orElseThrow(ItemNotFoundException::new));
+    }
+
+    @RequestMapping(method = RequestMethod.DELETE, value = "{formId}")
+    public void deleteForm(@PathVariable long formId) {
+        service.deleteForm(formId);
+    }
+
+    @RequestMapping(method = RequestMethod.PUT)
+    public FormDto updateForm(@RequestBody FormDto formDto) {
+        return formMapper.mapToFormDto(
+                service.saveForm(formMapper.mapToForm(formDto))
+        );
     }
 
     @RequestMapping(method = RequestMethod.POST, consumes = APPLICATION_JSON_VALUE)
