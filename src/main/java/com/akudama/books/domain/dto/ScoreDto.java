@@ -6,6 +6,7 @@ import lombok.NoArgsConstructor;
 @NoArgsConstructor
 @Getter
 public class ScoreDto {
+
     private Long id;
     private int value;
 
@@ -15,6 +16,7 @@ public class ScoreDto {
     }
 
     public static final class ScoreDtoBuilder {
+
         private Long id;
         private int value;
 

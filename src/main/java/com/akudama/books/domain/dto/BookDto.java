@@ -6,6 +6,7 @@ import lombok.NoArgsConstructor;
 @NoArgsConstructor
 @Getter
 public class BookDto {
+
     private Long id;
     private int year;
     private String titlePl;
@@ -23,6 +24,7 @@ public class BookDto {
     }
 
     public static final class BookDtoBuilder {
+
         private Long id;
         private int year;
         private String titlePl;

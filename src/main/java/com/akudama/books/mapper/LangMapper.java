@@ -1,12 +1,12 @@
 package com.akudama.books.mapper;
 
+import static com.akudama.books.domain.dto.LangDto.LangDtoBuilder.alangDtoBuilder;
+
 import com.akudama.books.domain.dto.LangDto;
 import com.akudama.books.domain.entity.Lang;
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.stereotype.Component;
-
 import java.util.List;
 import java.util.stream.Collectors;
+import org.springframework.stereotype.Component;
 
 @Component
 public class LangMapper {
@@ -25,7 +25,7 @@ public class LangMapper {
     }
 
     public LangDto mapToLangDto(final Lang lang) {
-        return LangDto.LangDtoBuilder.alangDtoBuilder()
+        return alangDtoBuilder()
                 .withId(lang.getId())
                 .withValue(lang.getValue())
                 .build();

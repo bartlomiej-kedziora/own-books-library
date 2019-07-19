@@ -6,6 +6,7 @@ import lombok.NoArgsConstructor;
 @NoArgsConstructor
 @Getter
 public class AuthorDto {
+
     private Long id;
     private int yearOfBirth;
     private String name;
@@ -13,7 +14,8 @@ public class AuthorDto {
     private String city;
     private String country;
 
-    public AuthorDto(Long id, int yearOfBirth, String name, String surname, String city, String country) {
+    public AuthorDto(Long id, int yearOfBirth, String name, String surname, String city,
+            String country) {
         this.id = id;
         this.yearOfBirth = yearOfBirth;
         this.name = name;
@@ -23,6 +25,7 @@ public class AuthorDto {
     }
 
     public static final class AuthorDtoBuilder {
+
         private Long id;
         private int yearOfBirth;
         private String name;

@@ -2,16 +2,20 @@ package com.akudama.books.service;
 
 import com.akudama.books.domain.entity.Author;
 import com.akudama.books.repository.AuthorRepository;
+import java.util.List;
+import java.util.Optional;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-import java.util.List;
-import java.util.Optional;
-
 @Service
 public class AuthorDbService {
-    @Autowired
+
     private AuthorRepository repository;
+
+    @Autowired
+    public AuthorDbService(AuthorRepository repository) {
+        this.repository = repository;
+    }
 
     public List<Author> getAllAuthors() {
         return repository.findAll();

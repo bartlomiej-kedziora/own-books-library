@@ -1,12 +1,12 @@
 package com.akudama.books.mapper;
 
+import static com.akudama.books.domain.dto.FormDto.FormDtoBuilder.aFormDtoBuilder;
+
 import com.akudama.books.domain.dto.FormDto;
 import com.akudama.books.domain.entity.Form;
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.stereotype.Component;
-
 import java.util.List;
 import java.util.stream.Collectors;
+import org.springframework.stereotype.Component;
 
 @Component
 public class FormMapper {
@@ -25,7 +25,7 @@ public class FormMapper {
     }
 
     public FormDto mapToFormDto(final Form form) {
-        return FormDto.FormDtoBuilder.aFormDtoBuilder()
+        return aFormDtoBuilder()
                 .withId(form.getId())
                 .withValue(form.getValue())
                 .build();

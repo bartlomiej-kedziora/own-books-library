@@ -1,9 +1,9 @@
 package com.akudama.books.mapper;
 
-import com.akudama.books.domain.dto.BookDetailsDto;
-import com.akudama.books.domain.dto.BookDto;
+import static com.akudama.books.domain.dto.HomeCollectionItemDto.HomeCollectionItemDtoBuilder.aHomeCollectionItemDtoBuilder;
+
 import com.akudama.books.domain.dto.HomeCollectionItemDto;
-import com.akudama.books.domain.entity.Book;
+import com.akudama.books.domain.dto.HomeCollectionItemDto.HomeCollectionItemDtoBuilder;
 import com.akudama.books.domain.entity.HomeCollectionItem;
 import java.util.List;
 import java.util.stream.Collectors;
@@ -13,14 +13,20 @@ import org.springframework.stereotype.Component;
 @Component
 public class HomeCollectionItemMapper {
 
-    @Autowired
     private BookDetailsMapper bookMapper;
-    @Autowired
     private MyScoreMapper myScoreMapper;
-    @Autowired
     private FormMapper formMapper;
-    @Autowired
     private LangMapper langMapper;
+
+    @Autowired
+    public HomeCollectionItemMapper(BookDetailsMapper bookMapper,
+            MyScoreMapper myScoreMapper, FormMapper formMapper,
+            LangMapper langMapper) {
+        this.bookMapper = bookMapper;
+        this.myScoreMapper = myScoreMapper;
+        this.formMapper = formMapper;
+        this.langMapper = langMapper;
+    }
 
     public HomeCollectionItem mapToHomeCollectionItem(
             final HomeCollectionItemDto homeCollectionItemDto) {
@@ -42,12 +48,8 @@ public class HomeCollectionItemMapper {
 
     public HomeCollectionItemDto mapToHomeCollectionItemDto(
             final HomeCollectionItem homeCollectionItem) {
-        return HomeCollectionItemDto.HomeCollectionItemDtoBuilder.aHomeCollectionItemDtoBuilder()
-                .withId(homeCollectionItem.getId())
-                .withBook(mapToBookDto(homeCollectionItem.getBook()))
-                .withMyScore(myScoreMapper.mapToMyScoreDto(homeCollectionItem.getMyScore()))
-                .withForms(formMapper.mapToFormDtoList(homeCollectionItem.getForms()))
-                .withLangs(langMapper.mapToLangDtoList(homeCollectionItem.getLangs()))
+        return mapToHomeCollectionItemDtoBuilder(homeCollectionItem)
+                .withBook(bookMapper.mapToBookDto(homeCollectionItem.getBook()))
                 .build();
     }
 
@@ -58,35 +60,26 @@ public class HomeCollectionItemMapper {
                 .collect(Collectors.toList());
     }
 
-    private BookDetailsDto mapToBookDto(Book book) {
-        return BookDetailsDto.BookDetailsDtoBuilder.aBookDetailsDtoBuilder()
-                .withBookDto(
-                        BookDto.BookDtoBuilder.aBookDtoBuilder()
-                                .withId(book.getId())
-                                .withYear(book.getYear())
-                                .withTitlePl(book.getTitlePl())
-                                .withTitleEn(book.getTitleEn())
-                                .withSeries(book.getSeries())
-                                .withGenre(book.getGenre())
-                                .build())
+    public HomeCollectionItemDto mapToHomeCollectionItemDetailsDto(
+            final HomeCollectionItem homeCollectionItem) {
+        return mapToHomeCollectionItemDtoBuilder(homeCollectionItem)
+                .withBook(bookMapper.mapToBookDetailsDto(homeCollectionItem.getBook()))
                 .build();
-
     }
 
-    private List<BookDetailsDto> mapToBooksDto(List<Book> books) {
-        return books.stream()
-                .map(this::mapToBookDto)
+    public List<HomeCollectionItemDto> mapToHomeCollectionItemDetailsDtoList(
+            final List<HomeCollectionItem> homeCollectionItemList) {
+        return homeCollectionItemList.stream()
+                .map(this::mapToHomeCollectionItemDetailsDto)
                 .collect(Collectors.toList());
     }
 
-    private List<Book> mapToBook(List<BookDto> bookDtos) {
-        return bookDtos.stream()
-                .map(bookDto -> new Book(bookDto.getId(),
-                        bookDto.getYear(),
-                        bookDto.getTitlePl(),
-                        bookDto.getTitleEn(),
-                        bookDto.getSeries(),
-                        bookDto.getGenre()))
-                .collect(Collectors.toList());
+    private HomeCollectionItemDtoBuilder mapToHomeCollectionItemDtoBuilder(
+            final HomeCollectionItem homeCollectionItem) {
+        return aHomeCollectionItemDtoBuilder()
+                .withId(homeCollectionItem.getId())
+                .withMyScore(myScoreMapper.mapToMyScoreDto(homeCollectionItem.getMyScore()))
+                .withForms(formMapper.mapToFormDtoList(homeCollectionItem.getForms()))
+                .withLangs(langMapper.mapToLangDtoList(homeCollectionItem.getLangs()));
     }
 }

@@ -8,6 +8,7 @@ import org.springframework.data.repository.CrudRepository;
 
 @Transactional
 public interface FormRepository extends CrudRepository<Form, Long> {
+
     @Override
     List<Form> findAll();
 

@@ -8,8 +8,13 @@ import org.springframework.stereotype.Service;
 
 @Service
 public class HomeCollectionDbService {
-    @Autowired
+
     private HomeCollectionRepository repository;
+
+    @Autowired
+    public HomeCollectionDbService(HomeCollectionRepository repository) {
+        this.repository = repository;
+    }
 
     public Optional<HomeCollection> getCollection(final long id) {
         return repository.findByUserId(id);

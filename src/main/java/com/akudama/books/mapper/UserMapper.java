@@ -1,5 +1,7 @@
 package com.akudama.books.mapper;
 
+import static com.akudama.books.domain.dto.UserDto.UserDtoBuilder.aUserDtoBuilder;
+
 import com.akudama.books.domain.dto.UserDto;
 import com.akudama.books.domain.entity.User;
 import org.springframework.stereotype.Component;
@@ -17,7 +19,7 @@ public class UserMapper {
     }
 
     public UserDto mapToUserDto(final User user) {
-        return UserDto.UserDtoBuilder.aUserDtoBuilder()
+        return aUserDtoBuilder()
                 .withId(user.getId())
                 .withFirstName(user.getFirstName())
                 .withLastName(user.getLastName())

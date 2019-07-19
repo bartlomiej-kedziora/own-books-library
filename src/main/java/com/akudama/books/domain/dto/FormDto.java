@@ -1,14 +1,13 @@
 package com.akudama.books.domain.dto;
 
 import com.akudama.books.domain.BookKind;
-import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
-import lombok.Setter;
 
 @NoArgsConstructor
 @Getter
 public class FormDto {
+
     private Long id;
     private BookKind value;
 
@@ -18,6 +17,7 @@ public class FormDto {
     }
 
     public static final class FormDtoBuilder {
+
         private Long id;
         private BookKind value;
 

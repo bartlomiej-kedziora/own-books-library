@@ -6,6 +6,7 @@ import lombok.NoArgsConstructor;
 @NoArgsConstructor
 @Getter
 public class UserDto {
+
     private Long id;
     private String firstName;
     private String lastName;
@@ -19,6 +20,7 @@ public class UserDto {
     }
 
     public static final class UserDtoBuilder {
+
         private Long id;
         private String firstName;
         private String lastName;

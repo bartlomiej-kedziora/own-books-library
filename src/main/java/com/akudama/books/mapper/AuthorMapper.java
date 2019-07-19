@@ -1,15 +1,17 @@
 package com.akudama.books.mapper;
 
 
-import com.akudama.books.domain.entity.Author;
-import com.akudama.books.domain.dto.AuthorDto;
-import org.springframework.stereotype.Component;
+import static com.akudama.books.domain.dto.AuthorDto.AuthorDtoBuilder.aAuthorDtoBuilder;
 
+import com.akudama.books.domain.dto.AuthorDto;
+import com.akudama.books.domain.entity.Author;
 import java.util.List;
 import java.util.stream.Collectors;
+import org.springframework.stereotype.Component;
 
 @Component
 public class AuthorMapper {
+
     public Author mapToAuthor(final AuthorDto authorDto) {
         return new Author(
                 authorDto.getId(),
@@ -21,8 +23,14 @@ public class AuthorMapper {
         );
     }
 
+    public List<Author> mapToAuthorList(final List<AuthorDto> authorDtoList) {
+        return authorDtoList.stream()
+                .map(this::mapToAuthor)
+                .collect(Collectors.toList());
+    }
+
     public AuthorDto mapToAuthorDto(final Author author) {
-        return AuthorDto.AuthorDtoBuilder.aAuthorDtoBuilder()
+        return aAuthorDtoBuilder()
                 .withId(author.getId())
                 .withYearOfBirth(author.getYearOfBirth())
                 .withName(author.getName())

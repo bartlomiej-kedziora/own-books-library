@@ -1,21 +1,21 @@
 package com.akudama.books.domain.dto;
 
-import lombok.Getter;
-
 import java.util.List;
+import lombok.Getter;
 import lombok.NoArgsConstructor;
-import lombok.Setter;
 
 @NoArgsConstructor
 @Getter
 public class HomeCollectionItemDto {
+
     private Long id;
     private BookDetailsDto book;
     private ScoreDto myScore;
     private List<FormDto> forms;
     private List<LangDto> langs;
 
-    public HomeCollectionItemDto(Long id, BookDetailsDto book, ScoreDto myScore, List<FormDto> forms, List<LangDto> langs) {
+    public HomeCollectionItemDto(Long id, BookDetailsDto book, ScoreDto myScore,
+            List<FormDto> forms, List<LangDto> langs) {
         this.id = id;
         this.book = book;
         this.myScore = myScore;
@@ -24,6 +24,7 @@ public class HomeCollectionItemDto {
     }
 
     public static final class HomeCollectionItemDtoBuilder {
+
         private Long id;
         private BookDetailsDto book;
         private ScoreDto myScore;

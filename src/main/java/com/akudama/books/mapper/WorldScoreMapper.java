@@ -1,14 +1,16 @@
 package com.akudama.books.mapper;
 
+import static com.akudama.books.domain.dto.ScoreDto.ScoreDtoBuilder.aScoreDtoBuilder;
+
 import com.akudama.books.domain.dto.ScoreDto;
 import com.akudama.books.domain.entity.WorldScore;
-import org.springframework.stereotype.Component;
-
 import java.util.List;
 import java.util.stream.Collectors;
+import org.springframework.stereotype.Component;
 
 @Component
 public class WorldScoreMapper {
+
     public WorldScore mapToWorldScore(final ScoreDto scoreDto) {
         return new WorldScore(
                 scoreDto.getId(),
@@ -17,7 +19,7 @@ public class WorldScoreMapper {
     }
 
     public ScoreDto mapToWorldScoreDto(final WorldScore myScore) {
-        return ScoreDto.ScoreDtoBuilder.aScoreDtoBuilder()
+        return aScoreDtoBuilder()
                 .withId(myScore.getId())
                 .withValue(myScore.getValue())
                 .build();

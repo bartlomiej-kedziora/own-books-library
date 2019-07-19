@@ -7,8 +7,10 @@ import lombok.NoArgsConstructor;
 @NoArgsConstructor
 @Getter
 public class LangDto {
+
     private Long id;
-    private LangKind value;;
+    private LangKind value;
+    ;
 
     public LangDto(Long id, LangKind value) {
         this.id = id;
@@ -16,6 +18,7 @@ public class LangDto {
     }
 
     public static final class LangDtoBuilder {
+
         private Long id;
         private LangKind value;
 

@@ -1,14 +1,16 @@
 package com.akudama.books.mapper;
 
-import com.akudama.books.domain.entity.Book;
-import com.akudama.books.domain.dto.BookDto;
-import org.springframework.stereotype.Component;
+import static com.akudama.books.domain.dto.BookDto.BookDtoBuilder.aBookDtoBuilder;
 
+import com.akudama.books.domain.dto.BookDto;
+import com.akudama.books.domain.entity.Book;
 import java.util.List;
 import java.util.stream.Collectors;
+import org.springframework.stereotype.Component;
 
 @Component
 public class BookMapper {
+
     public Book mapToBook(final BookDto bookDto) {
         return new Book(
                 bookDto.getId(),
@@ -20,8 +22,14 @@ public class BookMapper {
         );
     }
 
+    public List<Book> mapToBookList(final List<BookDto> bookDtoList) {
+        return bookDtoList.stream()
+                .map(this::mapToBook)
+                .collect(Collectors.toList());
+    }
+
     public BookDto mapToBookDto(final Book book) {
-        return BookDto.BookDtoBuilder.aBookDtoBuilder()
+        return aBookDtoBuilder()
                 .withId(book.getId())
                 .withYear(book.getYear())
                 .withTitlePl(book.getTitlePl())
