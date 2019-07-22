@@ -1,5 +1,6 @@
 package com.akudama.books.controller;
 
+import com.akudama.books.controller.exceptions.ItemNotFoundException;
 import com.akudama.books.domain.dto.HomeCollectionDto;
 import com.akudama.books.mapper.HomeCollectionMapper;
 import com.akudama.books.service.HomeCollectionDbService;

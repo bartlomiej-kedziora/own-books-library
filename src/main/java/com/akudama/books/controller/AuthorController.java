@@ -2,6 +2,7 @@ package com.akudama.books.controller;
 
 import static org.springframework.http.MediaType.APPLICATION_JSON_VALUE;
 
+import com.akudama.books.controller.exceptions.ItemNotFoundException;
 import com.akudama.books.domain.dto.AuthorDetailsDto;
 import com.akudama.books.domain.dto.AuthorDto;
 import com.akudama.books.mapper.AuthorDetailsMapper;

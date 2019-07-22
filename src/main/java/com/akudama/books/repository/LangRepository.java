@@ -24,5 +24,4 @@ public interface LangRepository extends CrudRepository<Lang, Long> {
 
     @Override
     long count();
-
 }

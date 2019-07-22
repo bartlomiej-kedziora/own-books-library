@@ -1,4 +1,4 @@
-package com.akudama.books.controller;
+package com.akudama.books.controller.exceptions;
 
 public class ItemNotFoundException extends RuntimeException {
 }

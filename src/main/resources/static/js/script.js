@@ -124,10 +124,10 @@ $(document).ready(function () {
                     console.log(task);
                 })
                 },
-                error: function() {
-                    alert("Item not found!");
-                    window.location.href = document.referrer;
-                }
+                // error: function() {
+                //     alert("Item not found!");
+                //     window.location.href = document.referrer;
+                // }
             });
         }
 
@@ -195,11 +195,11 @@ $(document).ready(function () {
                         createData(task, ++counter).appendTo($tasksContainer);
                     console.log(task);
                 })
-                },
-                error: function() {
-                    alert("Item not found!");
-                    window.location.href = document.referrer;
                 }
+                // error: function() {
+                //     alert("Item not found!");
+                //     window.location.href = document.referrer;
+                // }
             });
         }
 
