@@ -25,6 +25,10 @@ public class BookDbService {
         return repository.findById(id);
     }
 
+    public Optional<List<Book>> getBooksByAuthor(final long id) {
+        return repository.findByAuthorsId(id);
+    }
+
     public Book saveBook(final Book book) {
         return repository.save(book);
     }

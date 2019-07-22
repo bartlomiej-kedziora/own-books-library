@@ -4,9 +4,16 @@ $(document).ready(function () {
     const datatableRowTemplate = $('[data-datatable-row-template]');//.children()[0];
     const $tasksContainer = $('[data-tasks-container]');
 
-    // init
-    if (window.location.href.indexOf("authors") != -1) {
-        var urlType = "authors";
+    if (window.location.href.indexOf("authors") != -1 || /authors\/\d+$/.test(window.location.href)) {
+        if (document.referrer.indexOf("books") != -1) {
+            url = window.location.href;
+            id = url.substring(url.lastIndexOf('/') + 1);
+            var urlType = "authors/" + id + "/book";
+        }
+        else {
+            var urlType = "authors";
+        }
+
         function createData(data, counter) {
             const element = $(datatableRowTemplate).clone();
 
@@ -18,13 +25,28 @@ $(document).ready(function () {
             element.find('[data-task-city-section] [data-task-city-paragraph]').text(data.city);
             element.find('[data-task-birth-section] [data-task-birth-paragraph]').text(data.yearOfBirth);
             element.find('[data-task-books-section]').click(function () {
+                linkRender(
+                    "books/" + data.id + "/author",
+                    "/books/" + data.id
+                )
             });
 
             return element;
         }
+
+        getAll(urlType);
+        $tasksContainer.on('click','[data-task-delete-button]', {urlType: urlType},handleDeleteRequest);
     }
-    if (window.location.href.indexOf("books") != -1) {
-        var urlType = "books";
+    if (window.location.href.indexOf("books") != -1 || /books\/\d+$/.test(window.location.href)) {
+        if (document.referrer.indexOf("authors") != -1) {
+            url = window.location.href;
+            id = url.substring(url.lastIndexOf('/') + 1);
+            var urlType = "books/" + id + "/author";
+        }
+        else {
+            var urlType = "books";
+        }
+
         function createData(data, counter) {
             const element = $(datatableRowTemplate).clone();
 
@@ -36,10 +58,17 @@ $(document).ready(function () {
             element.find('[data-task-genre-section] [data-task-genre-paragraph]').text(data.genre);
             element.find('[data-task-year-section] [data-task-year-paragraph]').text(data.year);
             element.find('[data-task-authors-section]').click(function () {
+                linkRender(
+                    "authors/" + data.id + "/book",
+                    "/authors/" + data.id
+                )
             });
 
             return element;
         }
+
+        getAll(urlType);
+        $tasksContainer.on('click','[data-task-delete-button]', {urlType: urlType},handleDeleteRequest);
     }
     if (window.location.href.indexOf("forms") != -1) {
         var urlType = "forms";
@@ -55,6 +84,8 @@ $(document).ready(function () {
             return element;
         };
 
+        getAll(urlType);
+        $tasksContainer.on('click','[data-task-delete-button]', {urlType: urlType},handleDeleteRequest);
         $('[data-task-add-form]').on('submit', {urlType: urlType}, handleFormOrLangSubmitRequest);
     }
     if (window.location.href.indexOf("langs") != -1) {
@@ -71,9 +102,84 @@ $(document).ready(function () {
             return element;
         };
 
+        getAll(urlType);
+        $tasksContainer.on('click','[data-task-delete-button]', {urlType: urlType},handleDeleteRequest);
         $('[data-task-add-form]').on('submit', {urlType: urlType}, handleFormOrLangSubmitRequest);
     }
+// ADD SECTION
+    if (window.location.href.indexOf("author") != 1) {
+        var urlType = "books";
+        function getBooks(urlType) {
+            const requestUrl = apiRoot + urlType;
 
+            $.ajax({
+                url: requestUrl,
+                method: 'GET',
+                contentType: "application/json",
+                success: function (tasks) {
+                    counter = 0;
+                    tasks.forEach(task => {
+                        //availableTasks[task.id] = task;
+                        prepareBooksSelectOptions(task).appendTo($tasksContainer);
+                    console.log(task);
+                })
+                },
+                error: function() {
+                    alert("Item not found!");
+                    window.location.href = document.referrer;
+                }
+            });
+        }
+
+        function prepareBooksSelectOptions(availableChoices) {
+            const element = $(datatableRowTemplate).clone();
+            element.find('[data-list-name-select]').append(
+                $('<option>')
+                    .addClass('crud-select__option')
+                    .val(availableChoices.id)
+                    .text(availableChoices.titlePl + " / " + availableChoices.titleEn || 'Unknown name')
+            );
+            element.find('[data-task-add-button]').click(function () {
+                alert("ok")});
+            console.log(element);
+            return element;
+        }
+
+        function handleTaskUpdateRequest() {
+            var parentEl = $(this).parents('[data-task-id]');
+            var taskId = parentEl.attr('data-task-id');
+            var taskTitle = parentEl.find('[data-task-name-input]').val();
+            var taskContent = parentEl.find('[data-task-content-input]').val();
+            var requestUrl = apiRoot;
+
+            $.ajax({
+                url: requestUrl,
+                method: "PUT",
+                processData: false,
+                contentType: "application/json; charset=utf-8",
+                dataType: 'json',
+                data: JSON.stringify({
+                    id: taskId,
+                    yearOfBirth: taskTitle,
+                    name: taskContent,
+                    surname: taskContent,
+                    city: taskContent,
+                    country: taskContent,
+                    books: taskContent
+
+                }),
+                success: function(data) {
+                    parentEl.attr('data-task-id', data.id).toggleClass('datatable__row--editing');
+                    parentEl.find('[data-task-name-paragraph]').text(taskTitle);
+                    parentEl.find('[data-task-content-paragraph]').text(taskContent);
+                }
+            });
+        }
+
+
+        getBooks(urlType);
+    }
+    // END ADD SECTION
         function getAll(urlType) {
             $tasksContainer.empty();
             const requestUrl = apiRoot + urlType;
@@ -89,10 +195,41 @@ $(document).ready(function () {
                         createData(task, ++counter).appendTo($tasksContainer);
                     console.log(task);
                 })
-                    ;
+                },
+                error: function() {
+                    alert("Item not found!");
+                    window.location.href = document.referrer;
                 }
             });
         }
+
+    function isData(urlType) {
+        const requestUrl = apiRoot + urlType;
+        var status = false;
+
+        $.ajax({
+            url: requestUrl,
+            method: 'GET',
+            contentType: "application/json",
+            async: false,
+            success: function (tasks) {
+                status = tasks.length > 0;
+            },
+            error: function() {
+                status = false;
+            }
+        });
+        return status;
+    }
+
+    function linkRender(ajaxUrl, hrefUrl) {
+        if(isData(ajaxUrl)) {
+            window.location.href = hrefUrl;
+        }
+        else {
+            alert("No items found!");
+        }
+    }
 
     function handleFormOrLangSubmitRequest(event) {
         event.preventDefault();
@@ -130,7 +267,4 @@ $(document).ready(function () {
             }
         })
     }
-
-    getAll(urlType);
-    $tasksContainer.on('click','[data-task-delete-button]', {urlType: urlType},handleDeleteRequest);
 });

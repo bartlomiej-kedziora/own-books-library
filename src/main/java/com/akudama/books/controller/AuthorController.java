@@ -51,6 +51,13 @@ public class AuthorController {
                 service.getAuthor(authorId).orElseThrow(ItemNotFoundException::new));
     }
 
+    @RequestMapping(method = RequestMethod.GET, value = "/{bookId}/book")
+    public List<AuthorDto> getBooksByAuthor(@PathVariable long bookId) {
+        return authorMapper.mapToAuthorDtoList(
+                service.getAuthorsByBook(bookId).orElseThrow(ItemNotFoundException::new)
+        );
+    }
+
     @RequestMapping(method = RequestMethod.DELETE, value = "/{authorId}")
     public void deleteAuthor(@PathVariable long authorId) {
         service.deleteAuthor(authorId);

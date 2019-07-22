@@ -50,6 +50,13 @@ public class BookController {
                 service.getBook(bookId).orElseThrow(ItemNotFoundException::new));
     }
 
+    @RequestMapping(method = RequestMethod.GET, value = "/{authorId}/author")
+    public List<BookDto> getBooksByAuthor(@PathVariable long authorId) {
+        return bookMapper.mapToBookDtoList(
+                service.getBooksByAuthor(authorId).orElseThrow(ItemNotFoundException::new)
+        );
+    }
+
     @RequestMapping(method = RequestMethod.DELETE, value = "/{bookId}")
     public void deleteBook(@PathVariable long bookId) {
         service.deleteBook(bookId);

@@ -14,6 +14,8 @@ public interface BookRepository extends CrudRepository<Book, Long> {
 
     Optional<Book> findById(long id);
 
+    Optional<List<Book>> findByAuthorsId(long id);
+
     @Override
     Book save(Book book);
 

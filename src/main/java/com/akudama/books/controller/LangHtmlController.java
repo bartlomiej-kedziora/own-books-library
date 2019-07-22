@@ -13,6 +13,6 @@ public class LangHtmlController {
 
     @GetMapping
     public String getLangsPage(Model model) {
-        return "langs";
+        return "admin/langs";
     }
 }

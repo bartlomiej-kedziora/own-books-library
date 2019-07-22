@@ -8,11 +8,11 @@ import org.springframework.web.bind.annotation.RequestMapping;
 
 @CrossOrigin(origins = "*")
 @Controller
-@RequestMapping("/forms")
-public class FormHtmlController {
+@RequestMapping("page-not-found")
+public class PageNotFoundController {
 
     @GetMapping
-    public String getFormsPage(Model model) {
-        return "admin/forms";
+    public String getPageNotFound(Model model) {
+        return "page-not-found";
     }
 }
