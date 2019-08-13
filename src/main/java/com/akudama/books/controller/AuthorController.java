@@ -10,6 +10,7 @@ import com.akudama.books.mapper.AuthorMapper;
 import com.akudama.books.service.AuthorDbService;
 import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestBody;
@@ -18,6 +19,7 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RestController;
 
 @CrossOrigin(origins = "*")
+@PreAuthorize("hasRole('ROLE_ADMIN')")
 @RestController
 @RequestMapping("/v1/authors")
 public class AuthorController {
@@ -35,6 +37,7 @@ public class AuthorController {
         this.authorDetailsMapper = authorDetailsMapper;
     }
 
+    @PreAuthorize("hasRole('ROLE_ADMIN')")
     @RequestMapping(method = RequestMethod.GET)
     public List<AuthorDto> getAuthors() {
         return authorMapper.mapToAuthorDtoList(service.getAllAuthors());

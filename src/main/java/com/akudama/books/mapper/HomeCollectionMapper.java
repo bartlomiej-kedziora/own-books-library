@@ -1,13 +1,15 @@
 package com.akudama.books.mapper;
 
-import static com.akudama.books.domain.dto.HomeCollectionDto.HomeCollectionDtoBuilder.aHomeCollectionDtoBuilder;
-
+import com.akudama.books.auth.user.UserMapper;
 import com.akudama.books.domain.dto.HomeCollectionDto;
 import com.akudama.books.domain.entity.HomeCollection;
-import java.util.List;
-import java.util.stream.Collectors;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
+
+import java.util.List;
+import java.util.stream.Collectors;
+
+import static com.akudama.books.domain.dto.HomeCollectionDto.HomeCollectionDtoBuilder.aHomeCollectionDtoBuilder;
 
 @Component
 public class HomeCollectionMapper {
@@ -17,7 +19,7 @@ public class HomeCollectionMapper {
 
     @Autowired
     public HomeCollectionMapper(UserMapper userMapper,
-            HomeCollectionItemMapper homeCollectionItemMapper) {
+                                HomeCollectionItemMapper homeCollectionItemMapper) {
         this.userMapper = userMapper;
         this.homeCollectionItemMapper = homeCollectionItemMapper;
     }
@@ -34,7 +36,7 @@ public class HomeCollectionMapper {
     public HomeCollectionDto mapToHomeCollectionDto(final HomeCollection homeCollection) {
         return aHomeCollectionDtoBuilder()
                 .withId(homeCollection.getId())
-                .withUser(userMapper.mapToUserDto(homeCollection.getUser()))
+                .withUser(userMapper.mapToUserDetailsDto(homeCollection.getUser()))
                 .withHomeCollectionItems(
                         homeCollectionItemMapper.mapToHomeCollectionItemDetailsDtoList(
                                 homeCollection.getHomeCollectionItems())
