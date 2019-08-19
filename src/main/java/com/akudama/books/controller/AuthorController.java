@@ -56,7 +56,7 @@ public class AuthorController {
     }
 
     @RequestMapping(method = RequestMethod.GET, value = "/{bookId}/book")
-    public List<AuthorDto> getBooksByAuthor(@PathVariable long bookId) {
+    public List<AuthorDto> getAuthorsByBook(@PathVariable long bookId) {
         return authorMapper.mapToAuthorDtoList(
                 service.getAuthorsByBook(bookId).orElseThrow(ItemNotFoundException::new)
         );
