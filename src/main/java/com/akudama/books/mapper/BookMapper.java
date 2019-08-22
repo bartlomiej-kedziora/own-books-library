@@ -13,7 +13,7 @@ public class BookMapper {
 
     public Book mapToBook(final BookDto bookDto) {
         return new Book(
-                bookDto.getId(),
+//                bookDto.getId(),
                 bookDto.getYear(),
                 bookDto.getTitlePl(),
                 bookDto.getTitleEn(),

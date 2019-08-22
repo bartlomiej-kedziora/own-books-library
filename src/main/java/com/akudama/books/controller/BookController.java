@@ -1,14 +1,11 @@
 package com.akudama.books.controller;
 
-import static org.springframework.http.MediaType.APPLICATION_JSON_VALUE;
-
 import com.akudama.books.controller.exceptions.ItemNotFoundException;
 import com.akudama.books.domain.dto.BookDetailsDto;
 import com.akudama.books.domain.dto.BookDto;
 import com.akudama.books.mapper.BookDetailsMapper;
 import com.akudama.books.mapper.BookMapper;
 import com.akudama.books.service.BookDbService;
-import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.CrossOrigin;
@@ -17,6 +14,10 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RestController;
+
+import java.util.List;
+
+import static org.springframework.http.MediaType.APPLICATION_JSON_VALUE;
 
 @CrossOrigin(origins = "*")
 @RestController
@@ -29,7 +30,7 @@ public class BookController {
 
     @Autowired
     public BookController(BookDbService service, BookMapper bookMapper,
-            BookDetailsMapper bookDetailsMapper) {
+                          BookDetailsMapper bookDetailsMapper) {
         this.service = service;
         this.bookMapper = bookMapper;
         this.bookDetailsMapper = bookDetailsMapper;
@@ -74,8 +75,13 @@ public class BookController {
         );
     }
 
+//    @RequestMapping(method = RequestMethod.POST, consumes = APPLICATION_JSON_VALUE)
+//    public void createBook(@RequestBody BookDto bookDto) {
+//        service.saveBook(bookMapper.mapToBook(bookDto));
+//    }
+
     @RequestMapping(method = RequestMethod.POST, consumes = APPLICATION_JSON_VALUE)
-    public void createBook(@RequestBody BookDetailsDto bookDetailsDto) {
+    public void createBookWithDetails(@RequestBody BookDetailsDto bookDetailsDto) {
         service.saveBook(bookDetailsMapper.mapToBook(bookDetailsDto));
     }
 }

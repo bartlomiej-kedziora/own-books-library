@@ -36,8 +36,7 @@ public class Book {
     private WorldScore worldScore;
     private List<HomeCollectionItem> homeCollectionItems = new ArrayList<>();
 
-    public Book(long id, int year, String titlePl, String titleEn, String series, String genre) {
-        this.id = id;
+    public Book(int year, String titlePl, String titleEn, String series, String genre) {
         this.year = year;
         this.titlePl = titlePl;
         this.titleEn = titleEn;
@@ -45,9 +44,8 @@ public class Book {
         this.genre = genre;
     }
 
-    public Book(Long id, int year, String titlePl, String titleEn, String series,
+    public Book(int year, String titlePl, String titleEn, String series,
             String genre, List<Author> authors, WorldScore worldScore) {
-        this.id = id;
         this.year = year;
         this.titlePl = titlePl;
         this.titleEn = titleEn;

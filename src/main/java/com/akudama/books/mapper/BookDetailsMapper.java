@@ -26,7 +26,7 @@ public class BookDetailsMapper {
 
     public Book mapToBook(final BookDetailsDto bookDetailsDto) {
         return new Book(
-                bookDetailsDto.getBookDto().getId(),
+//                bookDetailsDto.getBookDto().getId(),
                 bookDetailsDto.getBookDto().getYear(),
                 bookDetailsDto.getBookDto().getTitlePl(),
                 bookDetailsDto.getBookDto().getTitleEn(),
