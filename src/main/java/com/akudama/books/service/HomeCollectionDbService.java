@@ -20,4 +20,16 @@ public class HomeCollectionDbService {
         return repository.findByUserId(id);
     }
 
+    public Optional<HomeCollection> getCollectionByUsername(final String username) {
+        return repository.findByUserUsername(username);
+    }
+
+    public HomeCollection saveCollection(final HomeCollection homeCollection) {
+        return repository.save(homeCollection);
+    }
+
+    public void deleteCollection(final long id) {
+        repository.deleteById(id);
+    }
+
 }

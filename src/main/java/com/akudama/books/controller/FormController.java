@@ -8,6 +8,7 @@ import com.akudama.books.mapper.FormMapper;
 import com.akudama.books.service.FormDbService;
 import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestBody;
@@ -40,11 +41,13 @@ public class FormController {
                 .mapToFormDto(service.getForm(formId).orElseThrow(ItemNotFoundException::new));
     }
 
+    @PreAuthorize("hasRole('ROLE_ADMIN')")
     @RequestMapping(method = RequestMethod.DELETE, value = "{formId}")
     public void deleteForm(@PathVariable long formId) {
         service.deleteForm(formId);
     }
 
+    @PreAuthorize("hasRole('ROLE_ADMIN')")
     @RequestMapping(method = RequestMethod.PUT)
     public FormDto updateForm(@RequestBody FormDto formDto) {
         return formMapper.mapToFormDto(
@@ -52,6 +55,7 @@ public class FormController {
         );
     }
 
+    @PreAuthorize("hasRole('ROLE_ADMIN')")
     @RequestMapping(method = RequestMethod.POST, consumes = APPLICATION_JSON_VALUE)
     public void createForm(@RequestBody FormDto formDto) {
         service.saveForm(formMapper.mapToForm(formDto));

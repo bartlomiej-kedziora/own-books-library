@@ -38,6 +38,10 @@ public class UserService implements UserDetailsService {
         return userRepository.findAll();
     }
 
+    public User getByName(String username) {
+        return userRepository.findByUsername(username);
+    }
+
     public User saveUser(final User user) {
         user.setPassword(new BcryptGenerator(user.getPassword()).encrypt());
         System.out.println(user.getPassword());

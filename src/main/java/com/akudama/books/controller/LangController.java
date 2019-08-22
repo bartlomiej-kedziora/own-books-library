@@ -8,6 +8,7 @@ import com.akudama.books.mapper.LangMapper;
 import com.akudama.books.service.LangDbService;
 import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestBody;
@@ -40,11 +41,13 @@ public class LangController {
                 .mapToLangDto(service.getLang(langId).orElseThrow(ItemNotFoundException::new));
     }
 
+    @PreAuthorize("hasRole('ROLE_ADMIN')")
     @RequestMapping(method = RequestMethod.DELETE, value = "{langId}")
     public void deleteLang(@PathVariable long langId) {
         service.deleteLang(langId);
     }
 
+    @PreAuthorize("hasRole('ROLE_ADMIN')")
     @RequestMapping(method = RequestMethod.PUT)
     public LangDto updateLang(@RequestBody LangDto langDto) {
         return langMapper.mapToLangDto(
@@ -52,6 +55,7 @@ public class LangController {
         );
     }
 
+    @PreAuthorize("hasRole('ROLE_ADMIN')")
     @RequestMapping(method = RequestMethod.POST, consumes = APPLICATION_JSON_VALUE)
     public void createLang(@RequestBody LangDto langDto) {
         service.saveLang(langMapper.mapToLang(langDto));

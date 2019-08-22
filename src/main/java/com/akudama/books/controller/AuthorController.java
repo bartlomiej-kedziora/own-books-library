@@ -19,7 +19,6 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RestController;
 
 @CrossOrigin(origins = "*")
-@PreAuthorize("hasRole('ROLE_ADMIN')")
 @RestController
 @RequestMapping("/v1/authors")
 public class AuthorController {
@@ -37,7 +36,6 @@ public class AuthorController {
         this.authorDetailsMapper = authorDetailsMapper;
     }
 
-    @PreAuthorize("hasRole('ROLE_ADMIN')")
     @RequestMapping(method = RequestMethod.GET)
     public List<AuthorDto> getAuthors() {
         return authorMapper.mapToAuthorDtoList(service.getAllAuthors());
@@ -62,6 +60,7 @@ public class AuthorController {
         );
     }
 
+    @PreAuthorize("hasRole('ROLE_ADMIN')")
     @RequestMapping(method = RequestMethod.DELETE, value = "/{authorId}")
     public void deleteAuthor(@PathVariable long authorId) {
         service.deleteAuthor(authorId);

@@ -1,23 +1,13 @@
 <!DOCTYPE html>
 <html lang="en" xmlns:th="http://www.thymeleaf.org">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
-    <meta http-equiv="X-UA-Compatible" content="ie=edge">
-    <title>Homepage</title>
-    <link th:href="@{css/style.css}" rel="stylesheet">
-    <link href="https://fonts.googleapis.com/css?family=Roboto:400,400i,500,500i,700,700i&subset=latin-ext" rel="stylesheet">
-</head>
+<head th:replace="fragments/header :: header"></head>
 <body>
+<div th:replace="fragments/menu :: menu"></div>
 <h1 class="bk-heading bk-heading--main">Own-library</h1>
 
 <main class="crud container">
     <section class="datatable">
-        <div><a href="/authors">show Authors</a></div>
-        <div><a href="/books">show Books</a></div>
-        <div><a href="/forms">show Forms</a></div>
-        <div><a href="/langs">show Languages</a></div>
-        <div><a href="/collections">show Collection</a></div>
+        <div><h1>Welcome to home book library :)</h1></div>
     </section>
 </main>
 

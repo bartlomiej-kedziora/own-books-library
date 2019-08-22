@@ -107,7 +107,7 @@ $(document).ready(function () {
         $('[data-task-add-form]').on('submit', {urlType: urlType}, handleFormOrLangSubmitRequest);
     }
 // ADD SECTION
-    if (window.location.href.indexOf("author") != 1) {
+    if (window.location.href.search("author$") != -1) {
         var urlType = "books";
         function getBooks(urlType) {
             const requestUrl = apiRoot + urlType;
@@ -193,7 +193,7 @@ $(document).ready(function () {
                     tasks.forEach(task => {
                         //availableTasks[task.id] = task;
                         createData(task, ++counter).appendTo($tasksContainer);
-                    console.log(task);
+                    console.log("TASK: " + task);
                 })
                 }
                 // error: function() {

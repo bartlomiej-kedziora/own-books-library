@@ -8,4 +8,14 @@ public interface HomeCollectionRepository extends CrudRepository<HomeCollection,
 
     Optional<HomeCollection> findByUserId(long id);
 
+    Optional<HomeCollection> findByUserUsername(String username);
+
+    @Override
+    HomeCollection save(HomeCollection homeCollection);
+
+    @Override
+    void delete(HomeCollection homeCollection);
+
+    void deleteById(long id);
+
 }
