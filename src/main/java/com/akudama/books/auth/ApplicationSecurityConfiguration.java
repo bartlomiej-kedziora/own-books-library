@@ -13,11 +13,25 @@ import org.springframework.security.config.annotation.web.configuration.WebSecur
 import org.springframework.security.core.authority.mapping.GrantedAuthoritiesMapper;
 import org.springframework.security.core.authority.mapping.SimpleAuthorityMapper;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
+import org.springframework.security.web.authentication.www.BasicAuthenticationEntryPoint;
 
 @Configuration
 @EnableWebSecurity
 @EnableGlobalMethodSecurity(prePostEnabled = true)
 public class ApplicationSecurityConfiguration extends WebSecurityConfigurerAdapter {
+
+    private static final String[] AUTH_LIST = {
+            // -- swagger ui
+            "**/swagger-resources/**",
+            "/swagger-ui.html",
+            "/v2/api-docs",
+            "/webjars/**",
+            "/index",
+            "/css/*",
+            "/js/*",
+            "/img/*",
+            "/"
+    };
 
     private UserService service;
 
@@ -53,8 +67,7 @@ public class ApplicationSecurityConfiguration extends WebSecurityConfigurerAdapt
     protected void configure(HttpSecurity http) throws Exception {
         http
                 .csrf().disable()
-                .authorizeRequests()
-                .antMatchers("/", "/index", "/css/*", "/js/*", "/img/*").permitAll()
+                .authorizeRequests().antMatchers(AUTH_LIST).permitAll()
                 .anyRequest().authenticated()
                 .and()
                 .httpBasic();
