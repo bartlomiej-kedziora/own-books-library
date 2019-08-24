@@ -1,11 +1,6 @@
 package com.akudama.books.controller;
 
-import com.akudama.books.domain.dto.AuthorDetailsDto;
-import com.akudama.books.domain.dto.AuthorDto;
-import com.akudama.books.domain.dto.BookDto;
 import com.akudama.books.domain.entity.Author;
-import com.akudama.books.mapper.AuthorDetailsMapper;
-import com.akudama.books.mapper.AuthorMapper;
 import com.akudama.books.service.AuthorDbService;
 import com.google.gson.Gson;
 import org.junit.Test;

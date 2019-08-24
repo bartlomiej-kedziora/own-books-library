@@ -10,7 +10,6 @@ public class LangDto {
 
     private Long id;
     private LangKind value;
-    ;
 
     public LangDto(Long id, LangKind value) {
         this.id = id;

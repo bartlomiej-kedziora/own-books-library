@@ -3,7 +3,6 @@ package com.akudama.books.mapper;
 import com.akudama.books.domain.BookKind;
 import com.akudama.books.domain.LangKind;
 import com.akudama.books.domain.Numbers;
-import com.akudama.books.domain.dto.BookDto;
 import com.akudama.books.domain.dto.FormDto;
 import com.akudama.books.domain.dto.HomeCollectionDto;
 import com.akudama.books.domain.dto.HomeCollectionItemDto;

@@ -32,15 +32,6 @@ public class HomeCollectionItem {
     private List<Form> forms = new ArrayList<>();
     private List<Lang> langs = new ArrayList<>();
 
-    public HomeCollectionItem(Long id, Book book, MyScore myScore,
-            List<Form> forms, List<Lang> langs) {
-        this.id = id;
-        this.book = book;
-        this.myScore = myScore;
-        this.forms = forms;
-        this.langs = langs;
-    }
-
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
     @Column(name = "homecollectionitem_id", unique = true)

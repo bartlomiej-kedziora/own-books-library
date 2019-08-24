@@ -1,7 +1,9 @@
 package com.akudama.books.domain.entity;
 
 import java.util.ArrayList;
+import java.util.HashSet;
 import java.util.List;
+import java.util.Set;
 import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
@@ -29,18 +31,8 @@ public class Author {
     private String country;
     private List<Book> books = new ArrayList<>();
 
-    public Author(long id, int yearOfBirth, String name, String surname, String city,
-            String country) {
-        this.id = id;
-        this.yearOfBirth = yearOfBirth;
-        this.name = name;
-        this.surname = surname;
-        this.city = city;
-        this.country = country;
-    }
-
     @Id
-    @GeneratedValue(strategy = GenerationType.AUTO)
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "author_id", unique = true)
     public Long getId() {
         return id;

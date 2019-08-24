@@ -1,8 +1,6 @@
 package com.akudama.books.mapper;
 
 import com.akudama.books.domain.Numbers;
-import com.akudama.books.domain.dto.AuthorDto;
-import com.akudama.books.domain.dto.BookDetailsDto;
 import com.akudama.books.domain.dto.ScoreDto;
 import com.akudama.books.domain.entity.Author;
 import com.akudama.books.domain.entity.Book;

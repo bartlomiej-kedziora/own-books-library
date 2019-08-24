@@ -1,7 +1,9 @@
 package com.akudama.books.domain.entity;
 
 import java.util.ArrayList;
+import java.util.HashSet;
 import java.util.List;
+import java.util.Set;
 import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
@@ -35,25 +37,6 @@ public class Book {
     private List<Author> authors = new ArrayList<>();
     private WorldScore worldScore;
     private List<HomeCollectionItem> homeCollectionItems = new ArrayList<>();
-
-    public Book(int year, String titlePl, String titleEn, String series, String genre) {
-        this.year = year;
-        this.titlePl = titlePl;
-        this.titleEn = titleEn;
-        this.series = series;
-        this.genre = genre;
-    }
-
-    public Book(int year, String titlePl, String titleEn, String series,
-            String genre, List<Author> authors, WorldScore worldScore) {
-        this.year = year;
-        this.titlePl = titlePl;
-        this.titleEn = titleEn;
-        this.series = series;
-        this.genre = genre;
-        this.authors = authors;
-        this.worldScore = worldScore;
-    }
 
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)

@@ -4,7 +4,8 @@ import static org.springframework.http.MediaType.APPLICATION_JSON_VALUE;
 
 import com.akudama.books.controller.exceptions.ItemNotFoundException;
 import com.akudama.books.domain.dto.LangDto;
-import com.akudama.books.mapper.LangMapper;
+import com.akudama.books.domain.entity.Lang;
+import com.akudama.books.mapper.ModelConverter;
 import com.akudama.books.service.LangDbService;
 import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -22,23 +23,23 @@ import org.springframework.web.bind.annotation.RestController;
 public class LangController {
 
     private final LangDbService service;
-    private final LangMapper langMapper;
+    private final ModelConverter modelConverter;
 
     @Autowired
-    public LangController(LangDbService service, LangMapper langMapper) {
+    public LangController(LangDbService service, ModelConverter modelConverter) {
         this.service = service;
-        this.langMapper = langMapper;
+        this.modelConverter = modelConverter;
     }
 
     @RequestMapping(method = RequestMethod.GET)
     public List<LangDto> getLangs() {
-        return langMapper.mapToLangDtoList(service.getAllLangs());
+        return modelConverter.convertToDtoList(service.getAllLangs(), LangDto.class);
     }
 
     @RequestMapping(method = RequestMethod.GET, value = "{langId}")
     public LangDto getLang(@PathVariable long langId) {
-        return langMapper
-                .mapToLangDto(service.getLang(langId).orElseThrow(ItemNotFoundException::new));
+        return modelConverter
+                .convertToDto(service.getLang(langId).orElseThrow(ItemNotFoundException::new), LangDto.class);
     }
 
     @PreAuthorize("hasRole('ROLE_ADMIN')")
@@ -50,14 +51,14 @@ public class LangController {
     @PreAuthorize("hasRole('ROLE_ADMIN')")
     @RequestMapping(method = RequestMethod.PUT)
     public LangDto updateLang(@RequestBody LangDto langDto) {
-        return langMapper.mapToLangDto(
-                service.saveLang(langMapper.mapToLang(langDto))
+        return modelConverter.convertToDto(
+                service.saveLang(modelConverter.convertToEntity(langDto, Lang.class)), LangDto.class
         );
     }
 
     @PreAuthorize("hasRole('ROLE_ADMIN')")
     @RequestMapping(method = RequestMethod.POST, consumes = APPLICATION_JSON_VALUE)
     public void createLang(@RequestBody LangDto langDto) {
-        service.saveLang(langMapper.mapToLang(langDto));
+        service.saveLang(modelConverter.convertToEntity(langDto, Lang.class));
     }
 }

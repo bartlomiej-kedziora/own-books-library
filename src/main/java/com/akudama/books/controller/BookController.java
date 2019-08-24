@@ -1,10 +1,9 @@
 package com.akudama.books.controller;
 
 import com.akudama.books.controller.exceptions.ItemNotFoundException;
-import com.akudama.books.domain.dto.BookDetailsDto;
 import com.akudama.books.domain.dto.BookDto;
-import com.akudama.books.mapper.BookDetailsMapper;
-import com.akudama.books.mapper.BookMapper;
+import com.akudama.books.domain.entity.Book;
+import com.akudama.books.mapper.ModelConverter;
 import com.akudama.books.service.BookDbService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.access.prepost.PreAuthorize;
@@ -25,38 +24,38 @@ import static org.springframework.http.MediaType.APPLICATION_JSON_VALUE;
 public class BookController {
 
     private final BookDbService service;
-    private final BookMapper bookMapper;
-    private final BookDetailsMapper bookDetailsMapper;
+    private final ModelConverter modelConverter;
 
     @Autowired
-    public BookController(BookDbService service, BookMapper bookMapper,
-                          BookDetailsMapper bookDetailsMapper) {
+    public BookController(BookDbService service, ModelConverter modelConverter) {
         this.service = service;
-        this.bookMapper = bookMapper;
-        this.bookDetailsMapper = bookDetailsMapper;
+        this.modelConverter = modelConverter;
     }
 
     @RequestMapping(method = RequestMethod.GET)
     public List<BookDto> getBooks() {
-        return bookMapper.mapToBookDtoList(service.getAllBooks());
+        return modelConverter.convertToDtoList(service.getAllBooks(), BookDto.class);
     }
 
     @RequestMapping(method = RequestMethod.GET, value = "/{bookId}")
     public BookDto getBook(@PathVariable long bookId) {
-        return bookMapper
-                .mapToBookDto(service.getBook(bookId).orElseThrow(ItemNotFoundException::new));
+        return modelConverter.convertToDto(
+                service.getBook(bookId).orElseThrow(ItemNotFoundException::new),
+                BookDto.class
+        );
     }
-
-    @RequestMapping(method = RequestMethod.GET, value = "/{bookId}/details")
-    public BookDetailsDto getBookWithDetails(@PathVariable long bookId) {
-        return bookDetailsMapper.mapToBookDetailsDto(
-                service.getBook(bookId).orElseThrow(ItemNotFoundException::new));
-    }
-
+//
+//    @RequestMapping(method = RequestMethod.GET, value = "/{bookId}/details")
+//    public BookDetailsDto getBookWithDetails(@PathVariable long bookId) {
+//        return bookDetailsMapper.mapToBookDetailsDto(
+//                service.getBook(bookId).orElseThrow(ItemNotFoundException::new));
+//    }
+//
     @RequestMapping(method = RequestMethod.GET, value = "/{authorId}/author")
     public List<BookDto> getBooksByAuthor(@PathVariable long authorId) {
-        return bookMapper.mapToBookDtoList(
-                service.getBooksByAuthor(authorId).orElseThrow(ItemNotFoundException::new)
+        return modelConverter.convertToDtoList(
+                service.getBooksByAuthor(authorId).orElseThrow(ItemNotFoundException::new),
+                BookDto.class
         );
     }
 
@@ -67,21 +66,18 @@ public class BookController {
     }
 
     @RequestMapping(method = RequestMethod.PUT)
-    public BookDetailsDto updateBook(@RequestBody BookDetailsDto bookDetailsDto) {
-        return bookDetailsMapper.mapToBookDetailsDto(
+    public BookDto updateBook(@RequestBody BookDto bookDto) {
+        return modelConverter.convertToDto(
                 service.saveBook(
-                        bookDetailsMapper.mapToBook(bookDetailsDto)
-                )
+                        modelConverter.convertToEntity(bookDto, Book.class)
+                ),
+                BookDto.class
         );
     }
 
-//    @RequestMapping(method = RequestMethod.POST, consumes = APPLICATION_JSON_VALUE)
-//    public void createBook(@RequestBody BookDto bookDto) {
-//        service.saveBook(bookMapper.mapToBook(bookDto));
-//    }
-
     @RequestMapping(method = RequestMethod.POST, consumes = APPLICATION_JSON_VALUE)
-    public void createBookWithDetails(@RequestBody BookDetailsDto bookDetailsDto) {
-        service.saveBook(bookDetailsMapper.mapToBook(bookDetailsDto));
+    public void createBookWithDetails(@RequestBody BookDto bookDto) {
+        service.saveBook(
+                modelConverter.convertToEntity(bookDto, Book.class));
     }
 }

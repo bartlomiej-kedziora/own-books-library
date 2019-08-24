@@ -1,8 +1,6 @@
 package com.akudama.books.mapper;
 
 import com.akudama.books.domain.Numbers;
-import com.akudama.books.domain.dto.AuthorDetailsDto;
-import com.akudama.books.domain.dto.BookDto;
 import com.akudama.books.domain.entity.Author;
 import com.akudama.books.domain.entity.Book;
 import org.junit.Test;

@@ -41,6 +41,7 @@ dependencies {
     compile group: 'io.springfox', name: 'springfox-swagger2', version: '2.9.2'
     compile group: 'io.springfox', name: 'springfox-swagger-ui', version: '2.9.2'
     compile group: 'com.google.guava', name: 'guava', version: '28.0-jre'
+    compile group: 'org.modelmapper', name: 'modelmapper', version: '2.3.5'
     runtimeOnly('mysql:mysql-connector-java')
     compileOnly('org.projectlombok:lombok:1.18.8')
     annotationProcessor('org.projectlombok:lombok:1.18.8')

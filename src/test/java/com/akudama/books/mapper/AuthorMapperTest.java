@@ -1,7 +1,6 @@
 package com.akudama.books.mapper;
 
 import com.akudama.books.domain.Numbers;
-import com.akudama.books.domain.dto.AuthorDto;
 import com.akudama.books.domain.entity.Author;
 import org.junit.Test;
 import org.junit.runner.RunWith;
