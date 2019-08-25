@@ -1,7 +1,8 @@
 package com.akudama.books.controller;
 
-import com.akudama.books.auth.user.User;
-import com.akudama.books.auth.user.UserService;
+import com.akudama.books.controller.exceptions.ItemNotFoundException;
+import com.akudama.books.domain.entity.HomeCollection;
+import com.akudama.books.service.HomeCollectionDbService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.Authentication;
 import org.springframework.stereotype.Controller;
@@ -16,12 +17,14 @@ import org.springframework.web.bind.annotation.RequestMapping;
 public class BookHtmlController {
 
     @Autowired
-    UserService service;
+    HomeCollectionDbService collectionDbService;
 
     @GetMapping
     public String getBooksPage(Model model, Authentication authentication) {
-        User user = service.getByName(authentication.getName());
-        model.addAttribute("user", user);
+        HomeCollection collection = collectionDbService
+                .getCollectionByUsername(authentication.getName())
+                .orElseThrow(ItemNotFoundException::new);
+        model.addAttribute("collection", collection);
 
         return "books";
     }

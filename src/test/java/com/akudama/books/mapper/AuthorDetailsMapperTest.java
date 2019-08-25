@@ -57,8 +57,8 @@ public class AuthorDetailsMapperTest {
         assertEquals(1, author.getBooks().size());
         assertEquals(Numbers.ONE, author.getBooks().get(0).getId());
         assertEquals(1975, author.getBooks().get(0).getYear());
-        assertEquals("Manitu", author.getBooks().get(0).getTitlePl());
-        assertEquals("Manitou", author.getBooks().get(0).getTitleEn());
+        assertEquals("Manitu", author.getBooks().get(0).getTitle());
+        assertEquals("Manitou", author.getBooks().get(0).getTitleEng());
         assertEquals("manitou", author.getBooks().get(0).getSeries());
         assertEquals("horror", author.getBooks().get(0).getGenre());
     }

@@ -1,6 +1,7 @@
 package com.akudama.books.controller;
 
 import com.akudama.books.controller.exceptions.ItemNotFoundException;
+import com.akudama.books.domain.dto.BookDetailsDto;
 import com.akudama.books.domain.dto.BookDto;
 import com.akudama.books.domain.entity.Book;
 import com.akudama.books.mapper.ModelConverter;
@@ -44,13 +45,13 @@ public class BookController {
                 BookDto.class
         );
     }
-//
-//    @RequestMapping(method = RequestMethod.GET, value = "/{bookId}/details")
-//    public BookDetailsDto getBookWithDetails(@PathVariable long bookId) {
-//        return bookDetailsMapper.mapToBookDetailsDto(
-//                service.getBook(bookId).orElseThrow(ItemNotFoundException::new));
-//    }
-//
+
+    @RequestMapping(method = RequestMethod.GET, value = "/{bookId}/details")
+    public BookDetailsDto getBookWithDetails(@PathVariable long bookId) {
+        return modelConverter.convertToDto(
+                service.getBook(bookId).orElseThrow(ItemNotFoundException::new), BookDetailsDto.class);
+    }
+
     @RequestMapping(method = RequestMethod.GET, value = "/{authorId}/author")
     public List<BookDto> getBooksByAuthor(@PathVariable long authorId) {
         return modelConverter.convertToDtoList(
@@ -66,18 +67,18 @@ public class BookController {
     }
 
     @RequestMapping(method = RequestMethod.PUT)
-    public BookDto updateBook(@RequestBody BookDto bookDto) {
+    public BookDetailsDto updateBook(@RequestBody BookDetailsDto book) {
         return modelConverter.convertToDto(
                 service.saveBook(
-                        modelConverter.convertToEntity(bookDto, Book.class)
+                        modelConverter.convertToEntity(book, Book.class)
                 ),
-                BookDto.class
+                BookDetailsDto.class
         );
     }
 
     @RequestMapping(method = RequestMethod.POST, consumes = APPLICATION_JSON_VALUE)
-    public void createBookWithDetails(@RequestBody BookDto bookDto) {
+    public void createBookWithDetails(@RequestBody BookDetailsDto book) {
         service.saveBook(
-                modelConverter.convertToEntity(bookDto, Book.class));
+                modelConverter.convertToEntity(book, Book.class));
     }
 }

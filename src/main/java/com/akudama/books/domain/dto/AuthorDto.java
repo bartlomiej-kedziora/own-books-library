@@ -14,11 +14,11 @@ import java.util.Set;
 @Setter
 public class AuthorDto {
 
-    private Long id;
-    private int yearOfBirth;
-    private String name;
-    private String surname;
-    private String city;
-    private String country;
-    private List<BookDto> books;
+    protected Long id;
+    protected int yearOfBirth;
+    protected String name;
+    protected String surname;
+    protected String city;
+    protected String country;
+    protected List<BookDto> books;
 }

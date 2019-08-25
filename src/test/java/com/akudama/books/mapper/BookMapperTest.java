@@ -38,8 +38,8 @@ public class BookMapperTest {
         //Then
         assertEquals(Numbers.ONE, book.getId());
         assertEquals(1976, book.getYear());
-        assertEquals("Manitu", book.getTitlePl());
-        assertEquals("Manitou", book.getTitleEn());
+        assertEquals("Manitu", book.getTitle());
+        assertEquals("Manitou", book.getTitleEng());
         assertEquals("Manitou", book.getSeries());
         assertEquals("horror", book.getGenre());
     }

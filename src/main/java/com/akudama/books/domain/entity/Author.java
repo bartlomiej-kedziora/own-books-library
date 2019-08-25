@@ -1,9 +1,9 @@
 package com.akudama.books.domain.entity;
 
-import java.util.ArrayList;
-import java.util.HashSet;
-import java.util.List;
-import java.util.Set;
+import lombok.AllArgsConstructor;
+import lombok.NoArgsConstructor;
+import lombok.Setter;
+
 import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
@@ -12,15 +12,22 @@ import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.ManyToMany;
 import javax.persistence.Table;
-import lombok.AllArgsConstructor;
-import lombok.NoArgsConstructor;
-import lombok.Setter;
+import javax.persistence.UniqueConstraint;
+import java.util.ArrayList;
+import java.util.List;
+import java.util.Objects;
 
 @AllArgsConstructor
 @NoArgsConstructor
 @Setter
 @Entity
-@Table(name = "AUTHORS")
+@Table(
+        name = "AUTHORS",
+        uniqueConstraints = {@UniqueConstraint(
+                columnNames = {"name", "surname", "year", "city"},
+                name = "uk_author"
+        )}
+)
 public class Author {
 
     private Long id;
@@ -62,6 +69,23 @@ public class Author {
     @ManyToMany(cascade = CascadeType.ALL, mappedBy = "authors")
     public List<Book> getBooks() {
         return books;
+    }
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+        Author author = (Author) o;
+        return yearOfBirth == author.yearOfBirth &&
+                Objects.equals(name, author.name) &&
+                Objects.equals(surname, author.surname) &&
+                Objects.equals(city, author.city) &&
+                Objects.equals(country, author.country);
+    }
+
+    @Override
+    public int hashCode() {
+        return Objects.hash(yearOfBirth, name, surname, city, country);
     }
 }
 

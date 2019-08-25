@@ -50,15 +50,15 @@ public class LangController {
 
     @PreAuthorize("hasRole('ROLE_ADMIN')")
     @RequestMapping(method = RequestMethod.PUT)
-    public LangDto updateLang(@RequestBody LangDto langDto) {
+    public LangDto updateLang(@RequestBody LangDto lang) {
         return modelConverter.convertToDto(
-                service.saveLang(modelConverter.convertToEntity(langDto, Lang.class)), LangDto.class
+                service.saveLang(modelConverter.convertToEntity(lang, Lang.class)), LangDto.class
         );
     }
 
     @PreAuthorize("hasRole('ROLE_ADMIN')")
     @RequestMapping(method = RequestMethod.POST, consumes = APPLICATION_JSON_VALUE)
-    public void createLang(@RequestBody LangDto langDto) {
-        service.saveLang(modelConverter.convertToEntity(langDto, Lang.class));
+    public void createLang(@RequestBody LangDto lang) {
+        service.saveLang(modelConverter.convertToEntity(lang, Lang.class));
     }
 }

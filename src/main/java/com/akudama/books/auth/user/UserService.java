@@ -44,7 +44,6 @@ public class UserService implements UserDetailsService {
 
     public User saveUser(final User user) {
         user.setPassword(new BcryptGenerator(user.getPassword()).encrypt());
-        System.out.println(user.getPassword());
         user.getAuthGroups().get(0).setUsername(user.getUsername());
         user.getAuthGroups().get(0).setUser(user);
         return userRepository.save(user);

@@ -53,16 +53,16 @@ public class FormController {
 
     @PreAuthorize("hasRole('ROLE_ADMIN')")
     @RequestMapping(method = RequestMethod.PUT)
-    public FormDto updateForm(@RequestBody FormDto formDto) {
+    public FormDto updateForm(@RequestBody FormDto form) {
         return modelConverter.convertToDto(
-                service.saveForm(modelConverter.convertToEntity(formDto, Form.class)),
+                service.saveForm(modelConverter.convertToEntity(form, Form.class)),
                 FormDto.class
         );
     }
 
     @PreAuthorize("hasRole('ROLE_ADMIN')")
     @RequestMapping(method = RequestMethod.POST, consumes = APPLICATION_JSON_VALUE)
-    public void createForm(@RequestBody FormDto formDto) {
-        service.saveForm(modelConverter.convertToEntity(formDto, Form.class));
+    public void createForm(@RequestBody FormDto form) {
+        service.saveForm(modelConverter.convertToEntity(form, Form.class));
     }
 }

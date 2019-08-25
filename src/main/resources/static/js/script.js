@@ -50,10 +50,10 @@ $(document).ready(function () {
         function createData(data, counter) {
             const element = $(datatableRowTemplate).clone();
 
-            element.attr('data-task-id', data.id);
+            element.attr('data-book-id', data.id);
             element.find('[data-task-counter] [data-task-counter-paragraph]').text(counter);
-            element.find('[data-task-titlePL-section] [data-task-titlePL-paragraph]').text(data.titlePl);
-            element.find('[data-task-titleEN-section] [data-task-titleEN-paragraph]').text(data.titleEn);
+            element.find('[data-task-title-section] [data-task-title-paragraph]').text(data.title);
+            element.find('[data-task-titleENG-section] [data-task-titleENG-paragraph]').text(data.titleEng);
             element.find('[data-task-series-section] [data-task-series-paragraph]').text(data.series);
             element.find('[data-task-genre-section] [data-task-genre-paragraph]').text(data.genre);
             element.find('[data-task-year-section] [data-task-year-paragraph]').text(data.year);
@@ -62,6 +62,12 @@ $(document).ready(function () {
                     "authors/" + data.id + "/book",
                     "/authors/" + data.id
                 )
+            });
+            element.find('[data-task-addtocollection-section]').click(function () {
+                addToCollection();
+            });
+            element.find('[data-task-removefromcollection-section]').click(function () {
+                removeFromCollection();
             });
 
             return element;
@@ -229,6 +235,33 @@ $(document).ready(function () {
         else {
             alert("No items found!");
         }
+    }
+
+    function addToCollection(event) {
+        event.preventDefault();
+
+        var userId = $(this).find('[name="data-task-id"]').val();
+
+        var requestUrl = apiRoot + event.data.urlType;
+        $.ajax({
+            url: requestUrl,
+            method: 'POST',
+            processData: false,
+            contentType: "application/json; charset=utf-8",
+            dataType: 'json',
+            data: JSON.stringify({
+                value: formTitle
+            }),
+            complete: function(data) {
+                if(data.status === 200) {
+                    alert("Item added to collection");
+                }
+            }
+        });
+    }
+
+    function removeFromCollection() {
+        alert("Item removed from collection");
     }
 
     function handleFormOrLangSubmitRequest(event) {

@@ -115,8 +115,8 @@ public class AuthorControllerTest {
                 .andExpect(jsonPath("$.country", is("Scotland")))
                 .andExpect(jsonPath("$.books", hasSize(1)))
                 .andExpect(jsonPath("$.books[0].id", is(1)))
-                .andExpect(jsonPath("$.books[0].titlePl", is("Manitu")))
-                .andExpect(jsonPath("$.books[0].titleEn", is("Manitou")));
+                .andExpect(jsonPath("$.books[0].title", is("Manitu")))
+                .andExpect(jsonPath("$.books[0].titleEng", is("Manitou")));
     }
 
     @Test
@@ -151,8 +151,8 @@ public class AuthorControllerTest {
                 .andExpect(jsonPath("$.country", is("Scotland")))
                 .andExpect(jsonPath("$.books", hasSize(1)))
                 .andExpect(jsonPath("$.books[0].id", is(1)))
-                .andExpect(jsonPath("$.books[0].titlePl", is("Manitu")))
-                .andExpect(jsonPath("$.books[0].titleEn", is("Manitou")));
+                .andExpect(jsonPath("$.books[0].title", is("Manitu")))
+                .andExpect(jsonPath("$.books[0].titleEng", is("Manitou")));
     }
 
     @Captor

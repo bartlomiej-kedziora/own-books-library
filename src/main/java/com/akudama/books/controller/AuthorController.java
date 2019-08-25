@@ -1,6 +1,7 @@
 package com.akudama.books.controller;
 
 import com.akudama.books.controller.exceptions.ItemNotFoundException;
+import com.akudama.books.domain.dto.AuthorDetailsDto;
 import com.akudama.books.domain.dto.AuthorDto;
 import com.akudama.books.domain.entity.Author;
 import com.akudama.books.mapper.ModelConverter;
@@ -44,13 +45,13 @@ public class AuthorController {
                 service.getAuthor(authorId).orElseThrow(ItemNotFoundException::new), AuthorDto.class);
     }
 
-    //
-//    @RequestMapping(method = RequestMethod.GET, value = "/{authorId}/details")
-//    public AuthorDetailsDto getAuthorWithDetails(@PathVariable long authorId) {
-//        return authorDetailsMapper.mapToAuthorDetailsDto(
-//                service.getAuthor(authorId).orElseThrow(ItemNotFoundException::new));
-//    }
-//
+
+    @RequestMapping(method = RequestMethod.GET, value = "/{authorId}/details")
+    public AuthorDetailsDto getAuthorWithDetails(@PathVariable long authorId) {
+        return modelConverter.convertToDto(
+                service.getAuthor(authorId).orElseThrow(ItemNotFoundException::new), AuthorDetailsDto.class);
+    }
+
     @RequestMapping(method = RequestMethod.GET, value = "/{bookId}/book")
     public List<AuthorDto> getAuthorsByBook(@PathVariable long bookId) {
         return modelConverter.convertToDtoList(
@@ -66,17 +67,17 @@ public class AuthorController {
     }
 
     @RequestMapping(method = RequestMethod.PUT)
-    public AuthorDto updateAuthor(@RequestBody AuthorDto authorDto) {
+    public AuthorDetailsDto updateAuthor(@RequestBody AuthorDetailsDto authorDto) {
         return modelConverter.convertToDto(
                 service.saveAuthor(
                         modelConverter.convertToEntity(authorDto, Author.class)
                 ),
-                AuthorDto.class
+                AuthorDetailsDto.class
         );
     }
 
     @RequestMapping(method = RequestMethod.POST, consumes = APPLICATION_JSON_VALUE)
-    public void createAuthor(@RequestBody AuthorDto author) {
+    public void createAuthor(@RequestBody AuthorDetailsDto author) {
         service.saveAuthor(modelConverter.convertToEntity(author, Author.class));
     }
 }

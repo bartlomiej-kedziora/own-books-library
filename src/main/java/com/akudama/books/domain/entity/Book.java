@@ -1,9 +1,9 @@
 package com.akudama.books.domain.entity;
 
-import java.util.ArrayList;
-import java.util.HashSet;
-import java.util.List;
-import java.util.Set;
+import lombok.AllArgsConstructor;
+import lombok.NoArgsConstructor;
+import lombok.Setter;
+
 import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
@@ -17,21 +17,26 @@ import javax.persistence.ManyToMany;
 import javax.persistence.OneToMany;
 import javax.persistence.OneToOne;
 import javax.persistence.Table;
-import lombok.AllArgsConstructor;
-import lombok.NoArgsConstructor;
-import lombok.Setter;
+import javax.persistence.UniqueConstraint;
+import java.util.ArrayList;
+import java.util.List;
+import java.util.Objects;
 
 @AllArgsConstructor
 @NoArgsConstructor
 @Setter
 @Entity
-@Table(name = "BOOKS")
+@Table(name = "BOOKS", uniqueConstraints = {@UniqueConstraint(
+        columnNames = {"year", "title", "titleEng", "series", "genre"},
+        name = "uk_book"
+    )}
+)
 public class Book {
 
     private Long id;
     private int year;
-    private String titlePl;
-    private String titleEn;
+    private String title;
+    private String titleEng;
     private String series;
     private String genre;
     private List<Author> authors = new ArrayList<>();
@@ -39,7 +44,7 @@ public class Book {
     private List<HomeCollectionItem> homeCollectionItems = new ArrayList<>();
 
     @Id
-    @GeneratedValue(strategy = GenerationType.AUTO)
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "book_id", unique = true)
     public Long getId() {
         return id;
@@ -49,12 +54,12 @@ public class Book {
         return year;
     }
 
-    public String getTitlePl() {
-        return titlePl;
+    public String getTitle() {
+        return title;
     }
 
-    public String getTitleEn() {
-        return titleEn;
+    public String getTitleEng() {
+        return titleEng;
     }
 
     public String getSeries() {
@@ -67,7 +72,7 @@ public class Book {
 
     @ManyToMany(cascade = CascadeType.ALL)
     @JoinTable(
-            name = "join_author_book",
+            name = "author_book",
             joinColumns = {@JoinColumn(name = "book_id", referencedColumnName = "book_id")},
             inverseJoinColumns = {
                     @JoinColumn(name = "author_id", referencedColumnName = "author_id")}
@@ -85,5 +90,22 @@ public class Book {
     @OneToMany(targetEntity = HomeCollectionItem.class, mappedBy = "book", cascade = CascadeType.ALL, fetch = FetchType.LAZY)
     public List<HomeCollectionItem> getHomeCollectionItems() {
         return homeCollectionItems;
+    }
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+        Book book = (Book) o;
+        return year == book.year &&
+                Objects.equals(title, book.title) &&
+                Objects.equals(titleEng, book.titleEng) &&
+                Objects.equals(series, book.series) &&
+                Objects.equals(genre, book.genre);
+    }
+
+    @Override
+    public int hashCode() {
+        return Objects.hash(year, title, titleEng, series, genre);
     }
 }

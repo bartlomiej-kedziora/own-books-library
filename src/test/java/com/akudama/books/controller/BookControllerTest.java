@@ -80,8 +80,8 @@ public class BookControllerTest {
                 .andExpect(jsonPath("$", hasSize(1)))
                 .andExpect(jsonPath("$[0].id", is(1)))
                 .andExpect(jsonPath("$[0].year", is(1976)))
-                .andExpect(jsonPath("$[0].titlePl", is("Manitu")))
-                .andExpect(jsonPath("$[0].titleEn", is("Manitou")))
+                .andExpect(jsonPath("$[0].title", is("Manitu")))
+                .andExpect(jsonPath("$[0].titleEng", is("Manitou")))
                 .andExpect(jsonPath("$[0].series", is("Manitou")))
                 .andExpect(jsonPath("$[0].genre", is("horror")));
     }
@@ -97,8 +97,8 @@ public class BookControllerTest {
                 .andExpect(status().isOk())
                 .andExpect(jsonPath("$.id", is(1)))
                 .andExpect(jsonPath("$.year", is(1976)))
-                .andExpect(jsonPath("$.titlePl", is("Manitu")))
-                .andExpect(jsonPath("$.titleEn", is("Manitou")))
+                .andExpect(jsonPath("$.title", is("Manitu")))
+                .andExpect(jsonPath("$.titleEng", is("Manitou")))
                 .andExpect(jsonPath("$.series", is("Manitou")))
                 .andExpect(jsonPath("$.genre", is("horror")));
     }
@@ -114,8 +114,8 @@ public class BookControllerTest {
                 .andExpect(status().isOk())
                 .andExpect(jsonPath("$.id", is(1)))
                 .andExpect(jsonPath("$.year", is(1976)))
-                .andExpect(jsonPath("$.titlePl", is("Manitu")))
-                .andExpect(jsonPath("$.titleEn", is("Manitou")))
+                .andExpect(jsonPath("$.title", is("Manitu")))
+                .andExpect(jsonPath("$.titleEng", is("Manitou")))
                 .andExpect(jsonPath("$.series", is("Manitou")))
                 .andExpect(jsonPath("$.genre", is("horror")))
                 .andExpect(jsonPath("$.authors[0].id", is(1)))
@@ -159,8 +159,8 @@ public class BookControllerTest {
                 .content(jsonContent))
                 .andExpect(jsonPath("$.id", is(1)))
                 .andExpect(jsonPath("$.year", is(1976)))
-                .andExpect(jsonPath("$.titlePl", is("Manitu")))
-                .andExpect(jsonPath("$.titleEn", is("Manitou")))
+                .andExpect(jsonPath("$.title", is("Manitu")))
+                .andExpect(jsonPath("$.titleEng", is("Manitou")))
                 .andExpect(jsonPath("$.series", is("Manitou")))
                 .andExpect(jsonPath("$.genre", is("horror")))
                 .andExpect(jsonPath("$.authors[0].id", is(1)))

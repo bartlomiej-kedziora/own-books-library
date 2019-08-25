@@ -5,16 +5,13 @@ import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
 
+import java.util.List;
+
 @AllArgsConstructor
 @NoArgsConstructor
 @Getter
 @Setter
-public class BookDto {
+public class AuthorDetailsDto extends AuthorDto {
 
-    protected Long id;
-    protected int year;
-    protected String title;
-    protected String titleEng;
-    protected String series;
-    protected String genre;
+    private List<BookDto> books;
 }
