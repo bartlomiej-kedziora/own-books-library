@@ -1,8 +1,5 @@
 package com.akudama.books.auth.user;
 
-import com.akudama.books.domain.dto.HomeCollectionDto;
-import com.akudama.books.domain.entity.HomeCollection;
-import com.akudama.books.service.HomeCollectionDbService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.RequestBody;

@@ -19,5 +19,10 @@ public class BookDetailsDto extends BookDto {
 
     private List<AuthorDto> authors = new ArrayList<>();
     private WorldScore worldScore;
-    private List<HomeCollectionItem> homeCollectionItems = new ArrayList<>();
+
+    public BookDetailsDto(Long id, int year, String title, String titleEng, String series, String genre, List<AuthorDto> authors, WorldScore worldScore) {
+        super(id, year, title, titleEng, series, genre);
+        this.authors = authors;
+        this.worldScore = worldScore;
+    }
 }

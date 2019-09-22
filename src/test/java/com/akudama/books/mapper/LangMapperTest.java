@@ -4,8 +4,8 @@ import com.akudama.books.domain.BookKind;
 import com.akudama.books.domain.LangKind;
 import com.akudama.books.domain.Numbers;
 import com.akudama.books.domain.dto.FormDto;
-import com.akudama.books.domain.dto.HomeCollectionDto;
-import com.akudama.books.domain.dto.HomeCollectionItemDto;
+import com.akudama.books.domain.dto.HomeCollectionDetailsDto;
+import com.akudama.books.domain.dto.HomeCollectionItemDetailsDto;
 import com.akudama.books.domain.dto.LangDto;
 import com.akudama.books.domain.dto.ScoreDto;
 import com.akudama.books.domain.entity.Book;
@@ -98,7 +98,7 @@ public class LangMapperTest {
         return new HomeCollectionItem(1L, book, homeCollection, myScore, forms, langs);
     }
 
-    private HomeCollectionItemDto createHomeCollectionItemDto() {
+    private HomeCollectionItemDetailsDto createHomeCollectionItemDto() {
         BookDto bookDto = BookDto.BookDtoBuilder.aBookDtoBuilder()
                 .withId(1L)
                 .withYear(1976)
@@ -108,7 +108,7 @@ public class LangMapperTest {
                 .withGenre("horror")
                 .build();
         UserDto userDto = UserDto.UserDtoBuilder.aUserDtoBuilder().build();
-        HomeCollectionDto homeCollectionDto = HomeCollectionDto.HomeCollectionDtoBuilder.aHomeCollectionDtoBuilder()
+        HomeCollectionDetailsDto homeCollectionDetailsDto = HomeCollectionDetailsDto.HomeCollectionDtoBuilder.aHomeCollectionDtoBuilder()
                 .withId(1L)
                 .withUser(userDto)
                 .withHomeCollectionItems(new ArrayList<>())
@@ -117,7 +117,7 @@ public class LangMapperTest {
                 .withId(1L)
                 .withValue(5)
                 .build();
-        HomeCollectionItemDto homeCollectionItemDto = HomeCollectionItemDto.HomeCollectionItemDtoBuilder
+        HomeCollectionItemDetailsDto homeCollectionItemDto = HomeCollectionItemDetailsDto.HomeCollectionItemDtoBuilder
                 .aHomeCollectionItemDtoBuilder().build();
         List<FormDto> formDtos = Arrays.asList(FormDto.FormDtoBuilder.aFormDtoBuilder()
                 .withId(1L)
@@ -130,10 +130,10 @@ public class LangMapperTest {
                 .withHomeCollectionItem(homeCollectionItemDto)
                 .build());
 
-        return HomeCollectionItemDto.HomeCollectionItemDtoBuilder.aHomeCollectionItemDtoBuilder()
+        return HomeCollectionItemDetailsDto.HomeCollectionItemDtoBuilder.aHomeCollectionItemDtoBuilder()
                 .withId(1L)
                 .withBook(bookDto)
-                .withHomeCollection(homeCollectionDto)
+                .withHomeCollection(homeCollectionDetailsDto)
                 .withMyScore(myScoreDto)
                 .withForms(formDtos)
                 .withLangs(langDtos)

@@ -1,5 +1,6 @@
 $(document).ready(function () {
 
+    // const apiRoot = 'http://bam.akudama.pl:8080/v1/';
     const apiRoot = 'http://localhost:8080/v1/';
     const datatableRowTemplate = $('[data-datatable-row-template]');//.children()[0];
     const $tasksContainer = $('[data-tasks-container]');
@@ -11,7 +12,7 @@ $(document).ready(function () {
             var urlType = "authors/" + id + "/book";
         }
         else {
-            var urlType = "authors";
+            var urlType = "authors/details";
         }
 
         function createData(data, counter) {
@@ -30,7 +31,9 @@ $(document).ready(function () {
                     "/books/" + data.id
                 )
             });
-
+            element.find('[data-task-edit-button]').click(function () {
+                window.location.href = "author?edit";
+            });
             return element;
         }
 
@@ -64,10 +67,10 @@ $(document).ready(function () {
                 )
             });
             element.find('[data-task-addtocollection-section]').click(function () {
-                addToCollection();
+                addToCollection(data.id);
             });
             element.find('[data-task-removefromcollection-section]').click(function () {
-                removeFromCollection();
+                removeFromCollection(data.id);
             });
 
             return element;
@@ -112,6 +115,26 @@ $(document).ready(function () {
         $tasksContainer.on('click','[data-task-delete-button]', {urlType: urlType},handleDeleteRequest);
         $('[data-task-add-form]').on('submit', {urlType: urlType}, handleFormOrLangSubmitRequest);
     }
+
+    if (window.location.href.indexOf("collections") != -1) {
+        var urlType = "collections/user";
+        function createData(data, counter) {
+            const element = $(datatableRowTemplate).clone();
+
+            element.attr('data-task-id', data.id);
+            element.find('[data-task-counter] [data-task-counter-paragraph]').text(counter);
+            element.find('[data-task-year-section] [data-task-year-paragraph]').text(data.value);
+            element.find('[data-task-title-section] [data-task-title-paragraph]').text(data.value);
+            element.find('[data-task-edit-section]').click(function () {
+            });
+
+            return element;
+        };
+
+        getAll(urlType);
+        // $tasksContainer.on('click','[data-task-delete-button]', {urlType: urlType},handleDeleteRequest);
+        // $('[data-task-add-form]').on('submit', {urlType: urlType}, handleFormOrLangSubmitRequest);
+    }
 // ADD SECTION
     if (window.location.href.search("author$") != -1) {
         var urlType = "books";
@@ -124,11 +147,7 @@ $(document).ready(function () {
                 contentType: "application/json",
                 success: function (tasks) {
                     counter = 0;
-                    tasks.forEach(task => {
-                        //availableTasks[task.id] = task;
-                        prepareBooksSelectOptions(task).appendTo($tasksContainer);
-                    console.log(task);
-                })
+                    prepareBooksSelectOptions(tasks).appendTo($tasksContainer);
                 },
                 // error: function() {
                 //     alert("Item not found!");
@@ -137,18 +156,25 @@ $(document).ready(function () {
             });
         }
 
-        function prepareBooksSelectOptions(availableChoices) {
+        function prepareBooksSelectOptions(tasks) {
             const element = $(datatableRowTemplate).clone();
-            element.find('[data-list-name-select]').append(
-                $('<option>')
-                    .addClass('crud-select__option')
-                    .val(availableChoices.id)
-                    .text(availableChoices.titlePl + " / " + availableChoices.titleEn || 'Unknown name')
-            );
+                tasks.forEach(task => {
+                    element.find('[data-list-name-select]').append(prepareBookOption(task))});
+               
             element.find('[data-task-add-button]').click(function () {
                 alert("ok")});
+            if(element.find('[data-list-name-select]').is(':selected')) {
+                alert("wybrany")
+            }
             console.log(element);
             return element;
+        }
+
+        function prepareBookOption(task) {
+                return $('<option>')
+                    .addClass('crud-select__option')
+                    .val(task.id)
+                    .text(task.title + " / " + task.titleEng || 'Unknown name')
         }
 
         function handleTaskUpdateRequest() {
@@ -189,6 +215,7 @@ $(document).ready(function () {
         function getAll(urlType) {
             $tasksContainer.empty();
             const requestUrl = apiRoot + urlType;
+            alert(requestUrl);
 
             $.ajax({
                 url: requestUrl,
@@ -237,12 +264,10 @@ $(document).ready(function () {
         }
     }
 
-    function addToCollection(event) {
-        event.preventDefault();
+    function addToCollection(bookId) {
+        //event.preventDefault();
 
-        var userId = $(this).find('[name="data-task-id"]').val();
-
-        var requestUrl = apiRoot + event.data.urlType;
+        var requestUrl = apiRoot + "items-collection/book";
         $.ajax({
             url: requestUrl,
             method: 'POST',
@@ -250,7 +275,7 @@ $(document).ready(function () {
             contentType: "application/json; charset=utf-8",
             dataType: 'json',
             data: JSON.stringify({
-                value: formTitle
+                id: bookId
             }),
             complete: function(data) {
                 if(data.status === 200) {
@@ -260,7 +285,7 @@ $(document).ready(function () {
         });
     }
 
-    function removeFromCollection() {
+    function removeFromCollection(bookId) {
         alert("Item removed from collection");
     }
 

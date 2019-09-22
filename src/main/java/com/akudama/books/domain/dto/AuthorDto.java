@@ -20,5 +20,4 @@ public class AuthorDto {
     protected String surname;
     protected String city;
     protected String country;
-    protected List<BookDto> books;
 }

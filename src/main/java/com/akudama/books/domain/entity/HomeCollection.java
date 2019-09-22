@@ -11,6 +11,7 @@ import javax.persistence.Id;
 import javax.persistence.OneToMany;
 import javax.persistence.OneToOne;
 import javax.persistence.Table;
+import javax.persistence.UniqueConstraint;
 import javax.validation.constraints.NotNull;
 
 import com.akudama.books.auth.user.User;
@@ -22,7 +23,12 @@ import lombok.Setter;
 @NoArgsConstructor
 @Setter
 @Entity
-@Table(name = "HOMECOLLECTIONS")
+@Table(
+        name = "HOMECOLLECTIONS",
+        uniqueConstraints = {@UniqueConstraint(
+        columnNames = {"user_user_id"},
+        name = "user"
+)})
 public class HomeCollection {
 
     private Long id;
@@ -42,7 +48,7 @@ public class HomeCollection {
         return user;
     }
 
-    @OneToMany(targetEntity = HomeCollectionItem.class, mappedBy = "homeCollection")
+    @OneToMany(targetEntity = HomeCollectionItem.class, mappedBy = "homeCollection", cascade = CascadeType.ALL, fetch = FetchType.LAZY)
     public List<HomeCollectionItem> getHomeCollectionItems() {
         return homeCollectionItems;
     }

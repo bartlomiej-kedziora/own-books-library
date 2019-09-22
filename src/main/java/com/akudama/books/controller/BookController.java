@@ -77,7 +77,7 @@ public class BookController {
     }
 
     @RequestMapping(method = RequestMethod.POST, consumes = APPLICATION_JSON_VALUE)
-    public void createBookWithDetails(@RequestBody BookDetailsDto book) {
+    public void createBook(@RequestBody BookDto book) {
         service.saveBook(
                 modelConverter.convertToEntity(book, Book.class));
     }

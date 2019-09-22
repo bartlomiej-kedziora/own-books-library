@@ -39,6 +39,11 @@ public class AuthorController {
         return modelConverter.convertToDtoList(service.getAllAuthors(), AuthorDto.class);
     }
 
+    @RequestMapping(method = RequestMethod.GET, value = "/details")
+    public List<AuthorDetailsDto> getAuthorsWithDetails() {
+        return modelConverter.convertToDtoList(service.getAllAuthors(), AuthorDetailsDto.class);
+    }
+
     @RequestMapping(method = RequestMethod.GET, value = "/{authorId}")
     public AuthorDto getAuthor(@PathVariable long authorId) {
         return modelConverter.convertToDto(
@@ -77,7 +82,7 @@ public class AuthorController {
     }
 
     @RequestMapping(method = RequestMethod.POST, consumes = APPLICATION_JSON_VALUE)
-    public void createAuthor(@RequestBody AuthorDetailsDto author) {
+    public void createAuthor(@RequestBody AuthorDto author) {
         service.saveAuthor(modelConverter.convertToEntity(author, Author.class));
     }
 }

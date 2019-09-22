@@ -20,11 +20,13 @@ public class BookHtmlController {
     HomeCollectionDbService collectionDbService;
 
     @GetMapping
-    public String getBooksPage(Model model, Authentication authentication) {
-        HomeCollection collection = collectionDbService
-                .getCollectionByUsername(authentication.getName())
-                .orElseThrow(ItemNotFoundException::new);
-        model.addAttribute("collection", collection);
+    public String getBooksPage(Model model){//}, Authentication authentication) {
+//        HomeCollection collection = collectionDbService
+//                .getCollectionByUsername(authentication.getName()).get();
+////                .orElseThrow(ItemNotFoundException::new);
+//        if (collection != null) {
+//            model.addAttribute("collection", collection);
+//        }
 
         return "books";
     }

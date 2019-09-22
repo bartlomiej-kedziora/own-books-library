@@ -4,8 +4,8 @@ import com.akudama.books.domain.BookKind;
 import com.akudama.books.domain.LangKind;
 import com.akudama.books.domain.Numbers;
 import com.akudama.books.domain.dto.FormDto;
-import com.akudama.books.domain.dto.HomeCollectionDto;
-import com.akudama.books.domain.dto.HomeCollectionItemDto;
+import com.akudama.books.domain.dto.HomeCollectionDetailsDto;
+import com.akudama.books.domain.dto.HomeCollectionItemDetailsDto;
 import com.akudama.books.domain.dto.LangDto;
 import com.akudama.books.domain.dto.ScoreDto;
 import com.akudama.books.domain.entity.Book;
@@ -35,7 +35,7 @@ public class HomeCollectionMapperTest {
     @Test
     public void shouldMapToHomeCollection() {
         //Given
-        HomeCollectionItemDto homeCollectionItemDto = createHomeCollectionItemDto();
+        HomeCollectionItemDetailsDto homeCollectionItemDto = createHomeCollectionItemDto();
 
         //When
         HomeCollectionItem homeCollectionItem = homeCollectionItemMapper.mapToHomeCollectionItem(homeCollectionItemDto);
@@ -54,7 +54,7 @@ public class HomeCollectionMapperTest {
         HomeCollectionItem homeCollectionItem = createHomeCollectionItem();
 
         //When
-        HomeCollectionItemDto homeCollectionItemDto = homeCollectionItemMapper.mapToHomeCollectionItemDto(homeCollectionItem);
+        HomeCollectionItemDetailsDto homeCollectionItemDto = homeCollectionItemMapper.mapToHomeCollectionItemDto(homeCollectionItem);
 
         //Then
         assertEquals(Numbers.ONE, homeCollectionItemDto.getId());
@@ -72,17 +72,17 @@ public class HomeCollectionMapperTest {
         List<HomeCollectionItem> homeCollectionItems = Arrays.asList(createHomeCollectionItem());
 
         //When
-        List<HomeCollectionItemDto> homeCollectionItemDtos = homeCollectionItemMapper.mapToHomeCollectionItemDtoList(homeCollectionItems);
+        List<HomeCollectionItemDetailsDto> homeCollectionItemDetailsDtos = homeCollectionItemMapper.mapToHomeCollectionItemDtoList(homeCollectionItems);
 
         //Then
-        assertEquals(1, homeCollectionItemDtos.size());
-        assertEquals(Numbers.ONE, homeCollectionItemDtos.get(0).getId());
-        assertEquals(1, homeCollectionItemDtos.get(0).getForms().size());
-        assertEquals(Numbers.ONE, homeCollectionItemDtos.get(0).getForms().get(0).getId());
-        assertEquals(BookKind.EBOOK, homeCollectionItemDtos.get(0).getForms().get(0).getValue());
-        assertEquals(1, homeCollectionItemDtos.get(0).getLangs().size());
-        assertEquals(Numbers.ONE, homeCollectionItemDtos.get(0).getLangs().get(0).getId());
-        assertEquals(LangKind.EN, homeCollectionItemDtos.get(0).getLangs().get(0).getValue());
+        assertEquals(1, homeCollectionItemDetailsDtos.size());
+        assertEquals(Numbers.ONE, homeCollectionItemDetailsDtos.get(0).getId());
+        assertEquals(1, homeCollectionItemDetailsDtos.get(0).getForms().size());
+        assertEquals(Numbers.ONE, homeCollectionItemDetailsDtos.get(0).getForms().get(0).getId());
+        assertEquals(BookKind.EBOOK, homeCollectionItemDetailsDtos.get(0).getForms().get(0).getValue());
+        assertEquals(1, homeCollectionItemDetailsDtos.get(0).getLangs().size());
+        assertEquals(Numbers.ONE, homeCollectionItemDetailsDtos.get(0).getLangs().get(0).getId());
+        assertEquals(LangKind.EN, homeCollectionItemDetailsDtos.get(0).getLangs().get(0).getValue());
     }
 
     private HomeCollectionItem createHomeCollectionItem() {
@@ -95,8 +95,8 @@ public class HomeCollectionMapperTest {
         return new HomeCollectionItem(1L, new Book(), new HomeCollection(), myScore, forms, langs);
     }
 
-    private HomeCollectionItemDto createHomeCollectionItemDto() {
-        HomeCollectionItemDto homeCollectionItemDto = HomeCollectionItemDto.HomeCollectionItemDtoBuilder.aHomeCollectionItemDtoBuilder()
+    private HomeCollectionItemDetailsDto createHomeCollectionItemDto() {
+        HomeCollectionItemDetailsDto homeCollectionItemDto = HomeCollectionItemDetailsDto.HomeCollectionItemDtoBuilder.aHomeCollectionItemDtoBuilder()
                 .build();
         List<FormDto> formDtos = Arrays.asList(FormDto.FormDtoBuilder.aFormDtoBuilder()
                 .withId(1L)
@@ -113,11 +113,11 @@ public class HomeCollectionMapperTest {
                 .withValue(5)
                 .build();
         BookDto bookDto = BookDto.BookDtoBuilder.aBookDtoBuilder().build();
-        HomeCollectionDto homeCollectionDto = HomeCollectionDto.HomeCollectionDtoBuilder.aHomeCollectionDtoBuilder().build();
+        HomeCollectionDetailsDto homeCollectionDetailsDto = HomeCollectionDetailsDto.HomeCollectionDtoBuilder.aHomeCollectionDtoBuilder().build();
 
-        return HomeCollectionItemDto.HomeCollectionItemDtoBuilder.aHomeCollectionItemDtoBuilder().withId(1L)
+        return HomeCollectionItemDetailsDto.HomeCollectionItemDtoBuilder.aHomeCollectionItemDtoBuilder().withId(1L)
                 .withBook(bookDto)
-                .withHomeCollection(homeCollectionDto)
+                .withHomeCollection(homeCollectionDetailsDto)
                 .withMyScore(myScoreDto)
                 .withForms(formDtos)
                 .withLangs(langDtos)

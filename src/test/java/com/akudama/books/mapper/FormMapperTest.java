@@ -3,10 +3,8 @@ package com.akudama.books.mapper;
 import com.akudama.books.domain.BookKind;
 import com.akudama.books.domain.Numbers;
 import com.akudama.books.domain.dto.FormDto;
-import com.akudama.books.domain.dto.HomeCollectionDto;
-import com.akudama.books.domain.dto.HomeCollectionItemDto;
+import com.akudama.books.domain.dto.HomeCollectionItemDetailsDto;
 import com.akudama.books.domain.entity.Form;
-import com.akudama.books.domain.entity.HomeCollection;
 import com.akudama.books.domain.entity.HomeCollectionItem;
 import org.junit.Test;
 import org.junit.runner.RunWith;
@@ -25,7 +23,7 @@ public class FormMapperTest {
     private FormDto formDto = FormDto.FormDtoBuilder.aFormDtoBuilder()
             .withId(1L)
             .withValue(BookKind.EBOOK)
-            .withHomeCollectionItem(HomeCollectionItemDto.HomeCollectionItemDtoBuilder.aHomeCollectionItemDtoBuilder()
+            .withHomeCollectionItem(HomeCollectionItemDetailsDto.HomeCollectionItemDtoBuilder.aHomeCollectionItemDtoBuilder()
                     .build())
             .build();
     private Form form = new Form(1L, BookKind.EBOOK, new HomeCollectionItem());

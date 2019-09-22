@@ -1,11 +1,14 @@
 package com.akudama.books.controller;
 
+import com.akudama.books.auth.user.UserService;
 import com.akudama.books.controller.exceptions.ItemNotFoundException;
+import com.akudama.books.domain.dto.HomeCollectionDetailsDto;
 import com.akudama.books.domain.dto.HomeCollectionDto;
 import com.akudama.books.domain.entity.HomeCollection;
 import com.akudama.books.mapper.ModelConverter;
 import com.akudama.books.service.HomeCollectionDbService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.core.Authentication;
 import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestBody;
@@ -35,20 +38,27 @@ public class HomeCollectionController {
                 service.getCollection(collectionId).orElseThrow(ItemNotFoundException::new), HomeCollectionDto.class);
     }
 
+    @RequestMapping(method = RequestMethod.GET, value = "/user")
+    public HomeCollectionDto getCollectionByUser(Authentication authentication) {
+        return modelConverter.convertToDto(
+                service.getCollectionByUsername(authentication.getName())
+                        .orElseThrow(ItemNotFoundException::new), HomeCollectionDto.class);
+    }
+
     @RequestMapping(method = RequestMethod.DELETE, value = "/{collectionId}")
     public void deleteCollection(@PathVariable long collectionId) {
         service.deleteCollection(collectionId);
     }
 //
 //    @RequestMapping(method = RequestMethod.PUT)
-//    public HomeCollectionDto updateCollection(@RequestBody HomeCollectionDto homeCollectionDto) {
+//    public HomeCollectionDetailsDto updateCollection(@RequestBody HomeCollectionDetailsDto homeCollectionDto) {
 //        return homeCollectionMapper.mapToHomeCollectionDto(
 //                service.saveCollection(homeCollectionMapper.mapToHomeCollection(homeCollectionDto))
 //        );
 //    }
 
     @RequestMapping(method = RequestMethod.POST, consumes = APPLICATION_JSON_VALUE)
-    public void createBookWithDetails(@RequestBody HomeCollectionDto collection) {
+    public void createBookWithDetails(@RequestBody HomeCollectionDetailsDto collection) {
         service.saveCollection(
                 modelConverter.convertToEntity(collection, HomeCollection.class));
     }
