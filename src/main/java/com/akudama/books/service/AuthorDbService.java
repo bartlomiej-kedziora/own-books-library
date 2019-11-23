@@ -1,7 +1,9 @@
 package com.akudama.books.service;
 
 import com.akudama.books.domain.entity.Author;
+import com.akudama.books.domain.entity.Book;
 import com.akudama.books.repository.AuthorRepository;
+import com.akudama.books.repository.BookRepository;
 import java.util.List;
 import java.util.Optional;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -11,10 +13,12 @@ import org.springframework.stereotype.Service;
 public class AuthorDbService {
 
     private AuthorRepository repository;
+    private BookRepository bookRepository;
 
     @Autowired
-    public AuthorDbService(AuthorRepository repository) {
+    public AuthorDbService(AuthorRepository repository, BookRepository bookRepository) {
         this.repository = repository;
+        this.bookRepository = bookRepository;
     }
 
     public List<Author> getAllAuthors() {
@@ -34,7 +38,13 @@ public class AuthorDbService {
     }
 
     public void deleteAuthor(final long id) {
+        Optional<List<Book>> byAuthorsId = bookRepository.findByAuthorsId(id);
+        byAuthorsId.ifPresent(books -> books.forEach(b -> {
+            b.removeAuthorById(id);
+            bookRepository.save(b);
+        }));
         repository.deleteById(id);
     }
+
 
 }

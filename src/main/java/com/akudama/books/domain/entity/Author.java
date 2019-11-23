@@ -38,7 +38,7 @@ public class Author {
     private String surname;
     private String city;
     private String country;
-    @ManyToMany(cascade = CascadeType.ALL, mappedBy = "authors")
+    @ManyToMany(cascade = {CascadeType.PERSIST, CascadeType.REFRESH, CascadeType.MERGE}, mappedBy = "authors")
     private List<Book> books = new ArrayList<>();
 }
 

@@ -2,6 +2,7 @@ package com.akudama.books.domain.entity;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.stream.Collectors;
 import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
@@ -40,7 +41,7 @@ public class Book {
     private String titleEng;
     private String series;
     private String genre;
-    @ManyToMany(cascade = CascadeType.ALL)
+    @ManyToMany(cascade = {CascadeType.PERSIST, CascadeType.REFRESH, CascadeType.MERGE})
     @JoinTable(
             name = "author_book",
             joinColumns = {@JoinColumn(name = "book_id", referencedColumnName = "book_id")},
@@ -54,4 +55,12 @@ public class Book {
     @OneToMany(targetEntity = HomeCollectionItem.class, mappedBy = "book", cascade = CascadeType.ALL,
             fetch = FetchType.LAZY)
     private List<HomeCollectionItem> homeCollectionItems = new ArrayList<>();
+
+    public void removeAuthorById(long id) {
+        List<Author> updatedAuthors = getAuthors()
+                .stream()
+                .filter(a -> !a.getId().equals(id))
+                .collect(Collectors.toList());
+        setAuthors(updatedAuthors);
+    }
 }
