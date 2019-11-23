@@ -1,10 +1,10 @@
 package com.akudama.books.domain.dto;
 
-import lombok.Getter;
+import lombok.Data;
 import lombok.NoArgsConstructor;
 
 @NoArgsConstructor
-@Getter
+@Data
 public class ScoreDto {
 
     private Long id;

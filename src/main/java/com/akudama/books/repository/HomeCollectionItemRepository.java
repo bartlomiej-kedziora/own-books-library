@@ -1,11 +1,10 @@
 package com.akudama.books.repository;
 
 import com.akudama.books.domain.entity.HomeCollectionItem;
+import java.util.Optional;
+import javax.transaction.Transactional;
 import org.springframework.data.repository.CrudRepository;
 import org.springframework.stereotype.Repository;
-
-import javax.transaction.Transactional;
-import java.util.Optional;
 
 @Transactional
 @Repository

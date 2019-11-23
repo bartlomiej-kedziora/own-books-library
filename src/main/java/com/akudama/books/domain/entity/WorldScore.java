@@ -8,28 +8,20 @@ import javax.persistence.Id;
 import javax.persistence.Table;
 import javax.validation.constraints.NotNull;
 import lombok.AllArgsConstructor;
+import lombok.Data;
 import lombok.NoArgsConstructor;
-import lombok.Setter;
 
 @AllArgsConstructor
 @NoArgsConstructor
-@Setter
+@Data
 @Entity
 @Table(name = "WORLDSCORE")
 public class WorldScore {
-
-    private Long id;
-    private int value;
 
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
     @NotNull
     @Column(name = "worldscore_id", unique = true)
-    public Long getId() {
-        return id;
-    }
-
-    public int getValue() {
-        return value;
-    }
+    private Long id;
+    private int value;
 }

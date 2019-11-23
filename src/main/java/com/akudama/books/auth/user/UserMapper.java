@@ -1,13 +1,12 @@
 package com.akudama.books.auth.user;
 
-import com.akudama.books.auth.group.AuthGroupMapper;
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.stereotype.Component;
+import static com.akudama.books.auth.user.UserDto.UserDtoBuilder.anUserDtoBuilder;
 
+import com.akudama.books.auth.group.AuthGroupMapper;
 import java.util.List;
 import java.util.stream.Collectors;
-
-import static com.akudama.books.auth.user.UserDto.UserDtoBuilder.anUserDtoBuilder;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Component;
 
 @Component
 public class UserMapper {

@@ -1,11 +1,11 @@
 package com.akudama.books.domain.dto;
 
 import com.akudama.books.domain.LangKind;
-import lombok.Getter;
+import lombok.Data;
 import lombok.NoArgsConstructor;
 
 @NoArgsConstructor
-@Getter
+@Data
 public class LangDto {
 
     private Long id;

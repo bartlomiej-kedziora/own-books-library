@@ -1,6 +1,7 @@
 package com.akudama.books.controller;
 
-import com.akudama.books.auth.user.UserService;
+import static org.springframework.http.MediaType.APPLICATION_JSON_VALUE;
+
 import com.akudama.books.controller.exceptions.ItemNotFoundException;
 import com.akudama.books.domain.dto.HomeCollectionDetailsDto;
 import com.akudama.books.domain.dto.HomeCollectionDto;
@@ -15,8 +16,6 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RestController;
-
-import static org.springframework.http.MediaType.APPLICATION_JSON_VALUE;
 
 @CrossOrigin(origins = "*")
 @RestController

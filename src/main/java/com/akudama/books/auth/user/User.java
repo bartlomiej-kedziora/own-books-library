@@ -1,11 +1,7 @@
 package com.akudama.books.auth.user;
 
 import com.akudama.books.auth.group.AuthGroup;
-import lombok.AllArgsConstructor;
-import lombok.Getter;
-import lombok.NoArgsConstructor;
-import lombok.Setter;
-
+import java.util.List;
 import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
@@ -16,15 +12,17 @@ import javax.persistence.Id;
 import javax.persistence.OneToMany;
 import javax.persistence.SequenceGenerator;
 import javax.persistence.Table;
-import java.util.List;
+import lombok.AllArgsConstructor;
+import lombok.Data;
+import lombok.NoArgsConstructor;
 
 @AllArgsConstructor
 @NoArgsConstructor
-@Setter
-@Getter
+@Data
 @Entity
 @Table(name = "USER")
 public class User {
+
     @Id
     @Column(name = "USER_ID")
     @GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "id")
@@ -41,7 +39,7 @@ public class User {
     private List<AuthGroup> authGroups;
 
     public User(String username, String password,
-                List<AuthGroup> authGroups) {
+            List<AuthGroup> authGroups) {
         this.username = username;
         this.password = password;
         this.authGroups = authGroups;

@@ -1,13 +1,12 @@
 package com.akudama.books.auth.user;
 
 import com.akudama.books.auth.group.AuthGroupDto;
-import lombok.Getter;
+import java.util.List;
+import lombok.Data;
 import lombok.NoArgsConstructor;
 
-import java.util.List;
-
 @NoArgsConstructor
-@Getter
+@Data
 public class UserDto {
 
     private long id;
@@ -23,6 +22,7 @@ public class UserDto {
     }
 
     public static final class UserDtoBuilder {
+
         private long id;
         private String username;
         private String password;

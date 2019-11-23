@@ -1,5 +1,7 @@
 package com.akudama.books.controller;
 
+import static org.springframework.http.MediaType.APPLICATION_JSON_VALUE;
+
 import com.akudama.books.auth.user.User;
 import com.akudama.books.auth.user.UserService;
 import com.akudama.books.controller.exceptions.ItemNotFoundException;
@@ -20,10 +22,6 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RestController;
 
-import java.util.function.Supplier;
-
-import static org.springframework.http.MediaType.APPLICATION_JSON_VALUE;
-
 @CrossOrigin(origins = "*")
 @RestController
 @RequestMapping("/v1/items-collection")
@@ -36,7 +34,8 @@ public class HomeCollectionItemController {
     private final ModelConverter modelConverter;
 
     @Autowired
-    public HomeCollectionItemController(HomeCollectionItemDbService service, BookDbService bookDbService, HomeCollectionDbService homeCollectionDbService, UserService userService, ModelConverter modelConverter) {
+    public HomeCollectionItemController(HomeCollectionItemDbService service, BookDbService bookDbService,
+            HomeCollectionDbService homeCollectionDbService, UserService userService, ModelConverter modelConverter) {
         this.service = service;
         this.bookDbService = bookDbService;
         this.homeCollectionDbService = homeCollectionDbService;
@@ -47,13 +46,15 @@ public class HomeCollectionItemController {
     @RequestMapping(method = RequestMethod.GET, value = "/{collectionId}")
     public HomeCollectionItemDetailsDto getCollectionByCollection(@PathVariable long collectionId) {
         return modelConverter.convertToDto(
-                service.getItemCollectionByCollection(collectionId).orElseThrow(ItemNotFoundException::new), HomeCollectionItemDetailsDto.class);
+                service.getItemCollectionByCollection(collectionId).orElseThrow(ItemNotFoundException::new),
+                HomeCollectionItemDetailsDto.class);
     }
 
     @RequestMapping(method = RequestMethod.GET, value = "/{bookId}/book")
     public HomeCollectionItemDetailsDto getCollectionByBook(@PathVariable long bookId) {
         return modelConverter.convertToDto(
-                service.getItemCollectionByBook(bookId).orElseThrow(ItemNotFoundException::new), HomeCollectionItemDetailsDto.class);
+                service.getItemCollectionByBook(bookId).orElseThrow(ItemNotFoundException::new),
+                HomeCollectionItemDetailsDto.class);
     }
 
     @RequestMapping(method = RequestMethod.DELETE, value = "/{itemCollectionId}")

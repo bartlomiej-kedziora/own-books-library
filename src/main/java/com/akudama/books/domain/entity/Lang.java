@@ -11,29 +11,21 @@ import javax.persistence.Id;
 import javax.persistence.Table;
 import javax.validation.constraints.NotNull;
 import lombok.AllArgsConstructor;
+import lombok.Data;
 import lombok.NoArgsConstructor;
-import lombok.Setter;
 
 @AllArgsConstructor
 @NoArgsConstructor
-@Setter
+@Data
 @Entity
 @Table(name = "LANGS")
 public class Lang {
-
-    private Long id;
-    private LangKind value;
 
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
     @NotNull
     @Column(name = "lang_id")
-    public Long getId() {
-        return id;
-    }
-
+    private Long id;
     @Enumerated(EnumType.STRING)
-    public LangKind getValue() {
-        return value;
-    }
+    private LangKind value;
 }

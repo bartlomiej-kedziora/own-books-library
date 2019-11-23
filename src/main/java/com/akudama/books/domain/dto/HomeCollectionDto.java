@@ -1,17 +1,14 @@
 package com.akudama.books.domain.dto;
 
 import com.akudama.books.auth.user.UserDetailsDto;
-import lombok.AllArgsConstructor;
-import lombok.Getter;
-import lombok.NoArgsConstructor;
-import lombok.Setter;
-
 import java.util.List;
+import lombok.AllArgsConstructor;
+import lombok.Data;
+import lombok.NoArgsConstructor;
 
 @AllArgsConstructor
 @NoArgsConstructor
-@Getter
-@Setter
+@Data
 public class HomeCollectionDto {
 
     private Long id;

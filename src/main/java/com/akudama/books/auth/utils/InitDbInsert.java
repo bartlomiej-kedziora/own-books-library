@@ -3,13 +3,12 @@ package com.akudama.books.auth.utils;
 import com.akudama.books.auth.group.AuthGroup;
 import com.akudama.books.auth.user.User;
 import com.akudama.books.auth.user.UserRepository;
+import java.util.ArrayList;
+import java.util.List;
+import javax.annotation.PostConstruct;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Component;
-
-import javax.annotation.PostConstruct;
-import java.util.ArrayList;
-import java.util.List;
 
 @Component
 public class InitDbInsert {

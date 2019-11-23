@@ -1,9 +1,7 @@
 package com.akudama.books.domain.entity;
 
-import lombok.AllArgsConstructor;
-import lombok.NoArgsConstructor;
-import lombok.Setter;
-
+import java.util.ArrayList;
+import java.util.List;
 import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
@@ -13,13 +11,13 @@ import javax.persistence.Id;
 import javax.persistence.ManyToMany;
 import javax.persistence.Table;
 import javax.persistence.UniqueConstraint;
-import java.util.ArrayList;
-import java.util.List;
-import java.util.Objects;
+import lombok.AllArgsConstructor;
+import lombok.Data;
+import lombok.NoArgsConstructor;
 
 @AllArgsConstructor
 @NoArgsConstructor
-@Setter
+@Data
 @Entity
 @Table(
         name = "AUTHORS",
@@ -30,62 +28,17 @@ import java.util.Objects;
 )
 public class Author {
 
+    @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @Column(name = "author_id", unique = true)
     private Long id;
+    @Column(name = "year")
     private int yearOfBirth;
     private String name;
     private String surname;
     private String city;
     private String country;
-    private List<Book> books = new ArrayList<>();
-
-    @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
-    @Column(name = "author_id", unique = true)
-    public Long getId() {
-        return id;
-    }
-
-    @Column(name = "year")
-    public int getYearOfBirth() {
-        return yearOfBirth;
-    }
-
-    public String getName() {
-        return name;
-    }
-
-    public String getSurname() {
-        return surname;
-    }
-
-    public String getCity() {
-        return city;
-    }
-
-    public String getCountry() {
-        return country;
-    }
-
     @ManyToMany(cascade = CascadeType.ALL, mappedBy = "authors")
-    public List<Book> getBooks() {
-        return books;
-    }
-
-    @Override
-    public boolean equals(Object o) {
-        if (this == o) return true;
-        if (o == null || getClass() != o.getClass()) return false;
-        Author author = (Author) o;
-        return yearOfBirth == author.yearOfBirth &&
-                Objects.equals(name, author.name) &&
-                Objects.equals(surname, author.surname) &&
-                Objects.equals(city, author.city) &&
-                Objects.equals(country, author.country);
-    }
-
-    @Override
-    public int hashCode() {
-        return Objects.hash(yearOfBirth, name, surname, city, country);
-    }
+    private List<Book> books = new ArrayList<>();
 }
 
