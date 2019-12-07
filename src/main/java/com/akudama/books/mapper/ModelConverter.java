@@ -1,6 +1,7 @@
 package com.akudama.books.mapper;
 
 import java.util.List;
+import java.util.Set;
 import java.util.stream.Collectors;
 import org.modelmapper.ModelMapper;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -34,5 +35,11 @@ public class ModelConverter {
         return entity.stream()
                 .map(e -> convertToDto(e, dtoClass))
                 .collect(Collectors.toList());
+    }
+
+    public <T, E> Set<T> convertToDtoList(final Set<E> entity, Class<T> dtoClass) {
+        return entity.stream()
+                .map(e -> convertToDto(e, dtoClass))
+                .collect(Collectors.toSet());
     }
 }

@@ -9,6 +9,7 @@ import com.akudama.books.domain.entity.Author;
 import com.akudama.books.mapper.ModelConverter;
 import com.akudama.books.service.AuthorDbService;
 import java.util.List;
+import java.util.Set;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.CrossOrigin;
@@ -34,12 +35,12 @@ public class AuthorController {
     }
 
     @RequestMapping(method = RequestMethod.GET)
-    public List<AuthorDto> getAuthors() {
+    public Set<AuthorDto> getAuthors() {
         return modelConverter.convertToDtoList(service.getAllAuthors(), AuthorDto.class);
     }
 
     @RequestMapping(method = RequestMethod.GET, value = "/details")
-    public List<AuthorDetailsDto> getAuthorsWithDetails() {
+    public Set<AuthorDetailsDto> getAuthorsWithDetails() {
         return modelConverter.convertToDtoList(service.getAllAuthors(), AuthorDetailsDto.class);
     }
 
@@ -57,7 +58,7 @@ public class AuthorController {
     }
 
     @RequestMapping(method = RequestMethod.GET, value = "/{bookId}/book")
-    public List<AuthorDto> getAuthorsByBook(@PathVariable long bookId) {
+    public Set<AuthorDto> getAuthorsByBook(@PathVariable long bookId) {
         return modelConverter.convertToDtoList(
                 service.getAuthorsByBook(bookId).orElseThrow(ItemNotFoundException::new),
                 AuthorDto.class

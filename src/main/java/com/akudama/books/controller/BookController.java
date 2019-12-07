@@ -9,10 +9,12 @@ import com.akudama.books.domain.entity.Book;
 import com.akudama.books.mapper.ModelConverter;
 import com.akudama.books.service.BookDbService;
 import java.util.List;
+import java.util.Set;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
@@ -33,7 +35,7 @@ public class BookController {
     }
 
     @RequestMapping(method = RequestMethod.GET)
-    public List<BookDto> getBooks() {
+    public Set<BookDto> getBooks() {
         return modelConverter.convertToDtoList(service.getAllBooks(), BookDto.class);
     }
 
@@ -52,7 +54,7 @@ public class BookController {
     }
 
     @RequestMapping(method = RequestMethod.GET, value = "/{authorId}/author")
-    public List<BookDto> getBooksByAuthor(@PathVariable long authorId) {
+    public Set<BookDto> getBooksByAuthor(@PathVariable long authorId) {
         return modelConverter.convertToDtoList(
                 service.getBooksByAuthor(authorId).orElseThrow(ItemNotFoundException::new),
                 BookDto.class
@@ -77,6 +79,12 @@ public class BookController {
 
     @RequestMapping(method = RequestMethod.POST, consumes = APPLICATION_JSON_VALUE)
     public void createBook(@RequestBody BookDto book) {
+        service.saveBook(
+                modelConverter.convertToEntity(book, Book.class));
+    }
+
+    @PostMapping(consumes = APPLICATION_JSON_VALUE, value = "/details")
+    public void createBook(@RequestBody BookDetailsDto book) {
         service.saveBook(
                 modelConverter.convertToEntity(book, Book.class));
     }
