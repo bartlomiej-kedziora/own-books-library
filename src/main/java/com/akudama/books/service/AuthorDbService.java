@@ -4,6 +4,7 @@ import com.akudama.books.domain.entity.Author;
 import com.akudama.books.domain.entity.Book;
 import com.akudama.books.repository.AuthorRepository;
 import com.akudama.books.repository.BookRepository;
+import java.util.Collection;
 import java.util.Optional;
 import java.util.Set;
 import java.util.stream.Collectors;
@@ -62,7 +63,7 @@ public class AuthorDbService {
                         author.getCountry(),
                         Stream.of(a.getBooks(),
                                 author.getBooks())
-                                .flatMap(l -> l.stream())
+                                .flatMap(Collection::stream)
                                 .collect(Collectors.toSet())
                 ))
                 .orElseGet(() -> author);

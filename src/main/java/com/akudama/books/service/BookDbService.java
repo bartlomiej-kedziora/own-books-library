@@ -1,7 +1,10 @@
 package com.akudama.books.service;
 
+import com.akudama.books.domain.entity.Author;
 import com.akudama.books.domain.entity.Book;
+import com.akudama.books.repository.AuthorRepository;
 import com.akudama.books.repository.BookRepository;
+import java.util.Collection;
 import java.util.Optional;
 import java.util.Set;
 import java.util.stream.Collectors;
@@ -13,10 +16,12 @@ import org.springframework.stereotype.Service;
 public class BookDbService {
 
     private BookRepository repository;
+    private AuthorRepository authorRepository;
 
     @Autowired
-    public BookDbService(BookRepository repository) {
+    public BookDbService(BookRepository repository, AuthorRepository authorRepository) {
         this.repository = repository;
+        this.authorRepository = authorRepository;
     }
 
     public Set<Book> getAllBooks() {
@@ -40,6 +45,7 @@ public class BookDbService {
     }
 
     private Book findBookIfExistsOrGetCurrent(final Book book) {
+        book.setAuthors(findAuthorIfExistsOrGetCurrent(book.getAuthors()));
         return repository.findByTitleAndTitleEngAndSeriesAndGenreAndYear(
                 book.getTitle(), book.getTitleEng(), book.getSeries(), book.getGenre(), book.getYear())
                 .map(b -> new Book(b.getId(),
@@ -48,12 +54,23 @@ public class BookDbService {
                         book.getTitleEng(),
                         book.getSeries(),
                         book.getGenre(),
-                        Stream.of(b.getAuthors(),
-                                book.getAuthors())
-                                .flatMap(l -> l.stream())
+                        Stream.of(b.getAuthors(), book.getAuthors())
+                                .flatMap(Collection::stream)
                                 .collect(Collectors.toSet()
                                 ),
                         book.getHomeCollectionItems()))
                 .orElseGet(() -> book);
+    }
+
+    private Set<Author> findAuthorIfExistsOrGetCurrent(Set<Author> authors) {
+        return authors.stream()
+                .map(this::getAuthorWithIdIfExists)
+                .collect(Collectors.toSet());
+    }
+
+    private Author getAuthorWithIdIfExists(Author author) {
+        return authorRepository.findByNameAndSurnameAndYearOfBirthAndCountryAndCity(
+                author.getName(), author.getSurname(), author.getYearOfBirth(), author.getCountry(), author.getCity()
+        ).orElse(author);
     }
 }
