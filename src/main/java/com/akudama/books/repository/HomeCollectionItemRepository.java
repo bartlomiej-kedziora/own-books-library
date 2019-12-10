@@ -1,6 +1,7 @@
 package com.akudama.books.repository;
 
 import com.akudama.books.domain.entity.HomeCollectionItem;
+import java.util.List;
 import java.util.Optional;
 import javax.transaction.Transactional;
 import org.springframework.data.repository.CrudRepository;
@@ -12,7 +13,7 @@ public interface HomeCollectionItemRepository extends CrudRepository<HomeCollect
 
     Optional<HomeCollectionItem> findByBookId(long id);
 
-    Optional<HomeCollectionItem> findByHomeCollectionId(long id);
+    Optional<List<HomeCollectionItem>> findByHomeCollectionId(long id);
 
     @Override
     HomeCollectionItem save(HomeCollectionItem homeCollectionItem);

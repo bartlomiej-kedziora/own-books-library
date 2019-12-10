@@ -2,8 +2,8 @@ package com.akudama.books.service;
 
 import com.akudama.books.domain.entity.Lang;
 import com.akudama.books.repository.LangRepository;
-import java.util.List;
 import java.util.Optional;
+import java.util.Set;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -17,7 +17,7 @@ public class LangDbService {
         this.repository = repository;
     }
 
-    public List<Lang> getAllLangs() {
+    public Set<Lang> getAllLangs() {
         return repository.findAll();
     }
 

@@ -7,7 +7,7 @@ import com.akudama.books.domain.dto.FormDto;
 import com.akudama.books.domain.entity.Form;
 import com.akudama.books.mapper.ModelConverter;
 import com.akudama.books.service.FormDbService;
-import java.util.List;
+import java.util.Set;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.CrossOrigin;
@@ -19,7 +19,7 @@ import org.springframework.web.bind.annotation.RestController;
 
 @CrossOrigin(origins = "*")
 @RestController
-@RequestMapping("v1/forms")
+@RequestMapping("/v1/forms")
 public class FormController {
 
     private final FormDbService service;
@@ -32,8 +32,8 @@ public class FormController {
     }
 
     @RequestMapping(method = RequestMethod.GET)
-    public List<FormDto> getForms() {
-        return modelConverter.convertToDtoList(service.getAllForms(), FormDto.class);
+    public Set<FormDto> getForms() {
+        return modelConverter.convertToDtoSet(service.getAllForms(), FormDto.class);
     }
 
     @RequestMapping(method = RequestMethod.GET, value = "/{formId}")
@@ -59,7 +59,7 @@ public class FormController {
         );
     }
 
-    @PreAuthorize("hasRole('ROLE_ADMIN')")
+    //    @PreAuthorize("hasRole('ROLE_ADMIN')")
     @RequestMapping(method = RequestMethod.POST, consumes = APPLICATION_JSON_VALUE)
     public void createForm(@RequestBody FormDto form) {
         service.saveForm(modelConverter.convertToEntity(form, Form.class));

@@ -2,8 +2,8 @@ package com.akudama.books.service;
 
 import com.akudama.books.domain.entity.Form;
 import com.akudama.books.repository.FormRepository;
-import java.util.List;
 import java.util.Optional;
+import java.util.Set;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -17,7 +17,7 @@ public class FormDbService {
         this.repository = repository;
     }
 
-    public List<Form> getAllForms() {
+    public Set<Form> getAllForms() {
         return repository.findAll();
     }
 

@@ -1,7 +1,6 @@
 package com.akudama.books.service;
 
 import com.akudama.books.domain.entity.Author;
-import com.akudama.books.domain.entity.Book;
 import com.akudama.books.repository.AuthorRepository;
 import com.akudama.books.repository.BookRepository;
 import java.util.Collection;
@@ -41,11 +40,11 @@ public class AuthorDbService {
     }
 
     public void deleteAuthor(final long id) {
-        Optional<Set<Book>> byAuthorsId = bookRepository.findByAuthorsId(id);
-        byAuthorsId.ifPresent(books -> books.forEach(b -> {
-            b.removeAuthorById(id);
-            bookRepository.save(b);
-        }));
+        bookRepository.findByAuthorsId(id)
+                .ifPresent(books -> books.forEach(b -> {
+                    b.removeAuthorById(id);
+                    bookRepository.save(b);
+                }));
         repository.deleteById(id);
     }
 

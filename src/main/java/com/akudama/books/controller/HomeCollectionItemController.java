@@ -2,19 +2,17 @@ package com.akudama.books.controller;
 
 import static org.springframework.http.MediaType.APPLICATION_JSON_VALUE;
 
-import com.akudama.books.auth.user.User;
 import com.akudama.books.auth.user.UserService;
 import com.akudama.books.controller.exceptions.ItemNotFoundException;
 import com.akudama.books.domain.dto.HomeCollectionItemDetailsDto;
-import com.akudama.books.domain.entity.Book;
-import com.akudama.books.domain.entity.HomeCollection;
+import com.akudama.books.domain.dto.HomeCollectionItemDto;
 import com.akudama.books.domain.entity.HomeCollectionItem;
 import com.akudama.books.mapper.ModelConverter;
 import com.akudama.books.service.BookDbService;
 import com.akudama.books.service.HomeCollectionDbService;
 import com.akudama.books.service.HomeCollectionItemDbService;
+import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.security.core.Authentication;
 import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestBody;
@@ -44,8 +42,8 @@ public class HomeCollectionItemController {
     }
 
     @RequestMapping(method = RequestMethod.GET, value = "/{collectionId}")
-    public HomeCollectionItemDetailsDto getCollectionByCollection(@PathVariable long collectionId) {
-        return modelConverter.convertToDto(
+    public List<HomeCollectionItemDetailsDto> getCollectionByCollection(@PathVariable long collectionId) {
+        return modelConverter.convertToDtoList(
                 service.getItemCollectionByCollection(collectionId).orElseThrow(ItemNotFoundException::new),
                 HomeCollectionItemDetailsDto.class);
     }
@@ -70,24 +68,12 @@ public class HomeCollectionItemController {
 //    }
 
     @RequestMapping(method = RequestMethod.POST, consumes = APPLICATION_JSON_VALUE)
-    public void createBookWithDetails(@RequestBody HomeCollectionItemDetailsDto itemCollection) {
+    public void createBookWithDetails(@RequestBody HomeCollectionItemDto itemCollection) {
+        HomeCollectionItemDetailsDto homeCollectionItemDetailsDto = modelConverter.convertToDto(
+                itemCollection, HomeCollectionItemDetailsDto.class
+        );
+
         service.saveItemCollection(
-                modelConverter.convertToEntity(itemCollection, HomeCollectionItem.class));
-    }
-
-    @RequestMapping(method = RequestMethod.POST, value = "/book", consumes = APPLICATION_JSON_VALUE)
-    public void createHomeCollectionItemByBookId(@RequestBody Book bookId, Authentication authentication) {
-        Book book = bookDbService.getBook(bookId.getId()).orElseThrow(ItemNotFoundException::new);
-        String username = authentication.getName();
-        User user = userService.getByName(username);
-        HomeCollection newHomeCollection = new HomeCollection();
-        newHomeCollection.setUser(user);
-        HomeCollection homeCollection = homeCollectionDbService.getCollectionByUsername(username)
-                .orElseGet(() -> homeCollectionDbService.saveCollection(newHomeCollection));
-        HomeCollectionItem itemCollection = new HomeCollectionItem();
-        itemCollection.setBook(book);
-        itemCollection.setHomeCollection(homeCollection);
-
-        service.saveItemCollection(itemCollection);
+                modelConverter.convertToEntity(homeCollectionItemDetailsDto, HomeCollectionItem.class));
     }
 }

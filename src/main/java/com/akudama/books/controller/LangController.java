@@ -7,7 +7,7 @@ import com.akudama.books.domain.dto.LangDto;
 import com.akudama.books.domain.entity.Lang;
 import com.akudama.books.mapper.ModelConverter;
 import com.akudama.books.service.LangDbService;
-import java.util.List;
+import java.util.Set;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.CrossOrigin;
@@ -19,7 +19,7 @@ import org.springframework.web.bind.annotation.RestController;
 
 @CrossOrigin(origins = "*")
 @RestController
-@RequestMapping("v1/langs")
+@RequestMapping("/v1/langs")
 public class LangController {
 
     private final LangDbService service;
@@ -32,8 +32,8 @@ public class LangController {
     }
 
     @RequestMapping(method = RequestMethod.GET)
-    public List<LangDto> getLangs() {
-        return modelConverter.convertToDtoList(service.getAllLangs(), LangDto.class);
+    public Set<LangDto> getLangs() {
+        return modelConverter.convertToDtoSet(service.getAllLangs(), LangDto.class);
     }
 
     @RequestMapping(method = RequestMethod.GET, value = "{langId}")

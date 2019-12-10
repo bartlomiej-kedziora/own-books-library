@@ -19,8 +19,7 @@ import lombok.NoArgsConstructor;
 public class MyScore {
 
     @Id
-    @GeneratedValue(strategy = GenerationType.AUTO)
-    @NotNull
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "myscore_id", unique = true)
     private Long id;
     private int value;

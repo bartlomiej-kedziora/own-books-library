@@ -29,12 +29,7 @@ import lombok.Setter;
 @Getter
 @Setter
 @Entity
-@Table(name = "BOOKS"
-//        , uniqueConstraints = {@UniqueConstraint(
-//        columnNames = {"year", "title", "titleEng", "series", "genre"},
-//        name = "uk_book"
-//)}
-)
+@Table(name = "BOOKS")
 public class Book {
 
     @Id
@@ -50,8 +45,7 @@ public class Book {
     @JoinTable(
             name = "author_book",
             joinColumns = {@JoinColumn(name = "book_id", referencedColumnName = "book_id")},
-            inverseJoinColumns = {
-                    @JoinColumn(name = "author_id", referencedColumnName = "author_id")}
+            inverseJoinColumns = {@JoinColumn(name = "author_id", referencedColumnName = "author_id")}
     )
     private Set<Author> authors = new HashSet<>();
     @Transient

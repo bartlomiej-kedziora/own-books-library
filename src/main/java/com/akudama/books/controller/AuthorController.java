@@ -8,7 +8,6 @@ import com.akudama.books.domain.dto.AuthorDto;
 import com.akudama.books.domain.entity.Author;
 import com.akudama.books.mapper.ModelConverter;
 import com.akudama.books.service.AuthorDbService;
-import java.util.List;
 import java.util.Set;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.access.prepost.PreAuthorize;
@@ -36,12 +35,12 @@ public class AuthorController {
 
     @RequestMapping(method = RequestMethod.GET)
     public Set<AuthorDto> getAuthors() {
-        return modelConverter.convertToDtoList(service.getAllAuthors(), AuthorDto.class);
+        return modelConverter.convertToDtoSet(service.getAllAuthors(), AuthorDto.class);
     }
 
     @RequestMapping(method = RequestMethod.GET, value = "/details")
     public Set<AuthorDetailsDto> getAuthorsWithDetails() {
-        return modelConverter.convertToDtoList(service.getAllAuthors(), AuthorDetailsDto.class);
+        return modelConverter.convertToDtoSet(service.getAllAuthors(), AuthorDetailsDto.class);
     }
 
     @RequestMapping(method = RequestMethod.GET, value = "/{authorId}")
@@ -59,7 +58,7 @@ public class AuthorController {
 
     @RequestMapping(method = RequestMethod.GET, value = "/{bookId}/book")
     public Set<AuthorDto> getAuthorsByBook(@PathVariable long bookId) {
-        return modelConverter.convertToDtoList(
+        return modelConverter.convertToDtoSet(
                 service.getAuthorsByBook(bookId).orElseThrow(ItemNotFoundException::new),
                 AuthorDto.class
         );

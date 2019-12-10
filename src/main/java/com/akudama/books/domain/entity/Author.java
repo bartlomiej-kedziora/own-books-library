@@ -19,13 +19,7 @@ import lombok.NoArgsConstructor;
 @NoArgsConstructor
 @Data
 @Entity
-@Table(
-        name = "AUTHORS"//,
-//        uniqueConstraints = {@UniqueConstraint(
-//                columnNames = {"name", "surname", "year", "city"},
-//                name = "uk_author"
-//        )}
-)
+@Table(name = "AUTHORS")
 public class Author {
 
     @Id

@@ -13,12 +13,10 @@ import lombok.NoArgsConstructor;
 public class BookDetailsDto extends BookDto {
 
     private Set<AuthorDto> authors = new HashSet<>();
-    private WorldScore worldScore;
 
     public BookDetailsDto(Long id, int year, String title, String titleEng, String series, String genre,
-            Set<AuthorDto> authors, WorldScore worldScore) {
+            Set<AuthorDto> authors) {
         super(id, year, title, titleEng, series, genre);
         this.authors = authors;
-        this.worldScore = worldScore;
     }
 }

@@ -2,6 +2,7 @@ package com.akudama.books.service;
 
 import com.akudama.books.domain.entity.HomeCollection;
 import com.akudama.books.repository.HomeCollectionRepository;
+import java.util.List;
 import java.util.Optional;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -14,6 +15,10 @@ public class HomeCollectionDbService {
     @Autowired
     public HomeCollectionDbService(HomeCollectionRepository repository) {
         this.repository = repository;
+    }
+
+    public List<HomeCollection> getCollections() {
+        return repository.findAll();
     }
 
     public Optional<HomeCollection> getCollection(final long id) {

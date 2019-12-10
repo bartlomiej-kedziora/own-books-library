@@ -37,7 +37,7 @@ public class ModelConverter {
                 .collect(Collectors.toList());
     }
 
-    public <T, E> Set<T> convertToDtoList(final Set<E> entity, Class<T> dtoClass) {
+    public <T, E> Set<T> convertToDtoSet(final Set<E> entity, Class<T> dtoClass) {
         return entity.stream()
                 .map(e -> convertToDto(e, dtoClass))
                 .collect(Collectors.toSet());
