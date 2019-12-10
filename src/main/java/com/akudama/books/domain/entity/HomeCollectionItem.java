@@ -27,7 +27,7 @@ import lombok.NoArgsConstructor;
 @Table(name = "HOMECOLLECTIONITEMS",
         uniqueConstraints = {@UniqueConstraint(
                 columnNames = {"book_id", "homecollectionitem_id"},
-                name = "uk_homecollectionitem"
+                name = "uk_hci"
         )}
 )
 public class HomeCollectionItem {

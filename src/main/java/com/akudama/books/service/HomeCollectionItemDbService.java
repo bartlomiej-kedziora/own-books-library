@@ -54,27 +54,25 @@ public class HomeCollectionItemDbService {
     }
 
     public HomeCollectionItem saveItemCollection(final HomeCollectionItem homeCollectionItem) {
-        HomeCollectionItem hci = new HomeCollectionItem();
+        Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
+        String username = authentication.getName();
+
+        HomeCollection homeCollection = homeCollectionRepository.findByUserUsername(username)
+                .orElseThrow(ItemNotFoundException::new);
         Book bookFromHomeCollectionItem = homeCollectionItem.getBook();
 
-        bookRepository.findByTitleAndTitleEngAndSeriesAndGenreAndYear(
+        return repository.save(bookRepository.findByTitleAndTitleEngAndSeriesAndGenreAndYear(
                 bookFromHomeCollectionItem.getTitle(), bookFromHomeCollectionItem.getTitleEng(),
                 bookFromHomeCollectionItem.getSeries(), bookFromHomeCollectionItem.getGenre(),
-                bookFromHomeCollectionItem.getYear()).ifPresent(book -> {
-            Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
-            String username = authentication.getName();
-
-            HomeCollection homeCollection = homeCollectionRepository.findByUserUsername(username)
-                    .orElseThrow(ItemNotFoundException::new);
-
-            hci.setBook(book);
-            hci.setHomeCollection(homeCollection);
-            hci.setForms(findFormsWithId(homeCollectionItem.getForms()));
-            hci.setLangs(findLangsWithId(homeCollectionItem.getLangs()));
-            hci.setMyScore(homeCollectionItem.getMyScore());
-
-        });
-        return repository.save(hci);
+                bookFromHomeCollectionItem.getYear())
+                .map(book -> new HomeCollectionItem(
+                        homeCollectionItem.getId(),
+                        book,
+                        homeCollection,
+                        homeCollectionItem.getMyScore(),
+                        findFormsWithId(homeCollectionItem.getForms()),
+                        findLangsWithId(homeCollectionItem.getLangs())
+                )).orElseThrow(ItemNotFoundException::new));
     }
 
     private Set<Form> findFormsWithId(Set<Form> forms) {
