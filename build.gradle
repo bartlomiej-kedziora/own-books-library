@@ -34,9 +34,9 @@ dependencies {
     implementation('org.springframework.boot:spring-boot-starter-jdbc:2.1.7.RELEASE')
     implementation('org.springframework.boot:spring-boot-starter-validation:2.1.7.RELEASE')
     implementation('org.springframework.boot:spring-boot-starter-web:2.1.7.RELEASE')
-    implementation("org.springframework.boot:spring-boot-starter-thymeleaf:2.1.7.RELEASE")
     implementation("org.springframework.boot:spring-boot-starter-security:2.1.7.RELEASE")
     implementation('com.google.code.gson:gson:2.8.5')
+    compile group: 'org.springframework.boot', name: 'spring-boot-starter-thymeleaf', version: '2.2.2.RELEASE'
     compile('org.springframework.boot:spring-boot-starter-webflux:2.1.7.RELEASE')
     compile('org.projectreactor:reactor-spring:1.0.1.RELEASE')
     compile group: 'io.springfox', name: 'springfox-swagger2', version: '2.9.2'

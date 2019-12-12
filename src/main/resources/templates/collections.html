@@ -7,7 +7,7 @@
 
 <main class="crud container">
     <section class="datatable">
-        <h2>Home Collection</h2>
+        <h2><span th:text="${user.getUsername()}"></span>'s Home Collection</h2>
         <div data-task-authors><p class="datatable__field-value" data-task-authors-paragraph></p></div>
         <div class="grid-container header" data-datatable-row-header>
             <div class="grid-item">No</div>
@@ -51,7 +51,7 @@
 </div>
 <div th:replace="fragments/footer :: footer">&copy; 2019 The Static Templates</div>
 <script th:src="@{/js/jquery-3.3.1.min.js}"></script>
-<script th:src="@{/js/script.js}"></script>
+<!--<script th:src="@{/js/script.js}"></script>-->
 
 </body>
 </html>

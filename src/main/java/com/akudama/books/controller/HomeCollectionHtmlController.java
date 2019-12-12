@@ -22,6 +22,7 @@ public class HomeCollectionHtmlController {
     public String getFormsPage(Model model, Authentication authentication) {
         User user = service.getByName(authentication.getName());
         model.addAttribute("user", user);
+        model.addAttribute("username", user.getUsername());
 
         return "collections";
     }

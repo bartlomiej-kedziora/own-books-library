@@ -30,7 +30,4 @@ public class Form {
 
     @Enumerated(EnumType.STRING)
     private BookKind value;
-
-    @ManyToMany(cascade = {CascadeType.PERSIST, CascadeType.REFRESH, CascadeType.MERGE}, mappedBy = "forms")
-    private Set<HomeCollectionItem> homeCollectionItems;
 }

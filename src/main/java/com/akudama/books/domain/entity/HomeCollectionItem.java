@@ -13,6 +13,7 @@ import javax.persistence.JoinColumn;
 import javax.persistence.JoinTable;
 import javax.persistence.ManyToMany;
 import javax.persistence.ManyToOne;
+import javax.persistence.OneToMany;
 import javax.persistence.OneToOne;
 import javax.persistence.Table;
 import javax.persistence.UniqueConstraint;
@@ -49,19 +50,9 @@ public class HomeCollectionItem {
     @JoinColumn(name = "myscore_id")
     private MyScore myScore;
 
-    @ManyToMany(cascade = {CascadeType.PERSIST, CascadeType.REFRESH, CascadeType.MERGE})
-    @JoinTable(
-            name = "homecolitem_form",
-            joinColumns = {@JoinColumn(name = "homecollectionitem_id", referencedColumnName = "homecollectionitem_id")},
-            inverseJoinColumns = {@JoinColumn(name = "form_id", referencedColumnName = "form_id")}
-    )
+    @OneToMany
     private Set<Form> forms = new HashSet<>();
 
-    @ManyToMany(cascade = {CascadeType.PERSIST, CascadeType.REFRESH, CascadeType.MERGE})
-    @JoinTable(
-            name = "homecolitem_lang",
-            joinColumns = {@JoinColumn(name = "homecollectionitem_id", referencedColumnName = "homecollectionitem_id")},
-            inverseJoinColumns = {@JoinColumn(name = "lang_id", referencedColumnName = "lang_id")}
-    )
+    @OneToMany
     private Set<Lang> langs = new HashSet<>();
 }

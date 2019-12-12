@@ -8,6 +8,7 @@ import com.akudama.books.domain.dto.BookDto;
 import com.akudama.books.domain.entity.Book;
 import com.akudama.books.mapper.ModelConverter;
 import com.akudama.books.service.BookDbService;
+import java.util.HashSet;
 import java.util.Set;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.access.prepost.PreAuthorize;
@@ -55,7 +56,7 @@ public class BookController {
     @RequestMapping(method = RequestMethod.GET, value = "/{authorId}/author")
     public Set<BookDto> getBooksByAuthor(@PathVariable long authorId) {
         return modelConverter.convertToDtoSet(
-                service.getBooksByAuthor(authorId).orElseThrow(ItemNotFoundException::new),
+                new HashSet<>(service.getBooksByAuthor(authorId).orElseThrow(ItemNotFoundException::new)),
                 BookDto.class
         );
     }
