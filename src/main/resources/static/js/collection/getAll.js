@@ -5,7 +5,7 @@ if (window.location.href.indexOf("collections") != -1) {
 
             element.attr('data-task-id', data.id);
             element.find('[data-task-counter] [data-task-counter-paragraph]').text(counter);
-            element.find('[data-task-year-section] [data-task-year-paragraph]').text(data.value);
+            element.find('[data-task-year-section] [data-task-year-paragraph]').text(data.year);
             element.find('[data-task-title-section] [data-task-title-paragraph]').text(data.value);
             element.find('[data-task-edit-section]').click(function () {
             });

@@ -31,7 +31,4 @@ public class Lang {
 
     @Enumerated(EnumType.STRING)
     private LangKind value;
-
-    @ManyToMany(cascade = {CascadeType.PERSIST, CascadeType.REFRESH, CascadeType.MERGE}, mappedBy = "langs")
-    private Set<HomeCollectionItem> homeCollectionItems;
 }

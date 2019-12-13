@@ -50,9 +50,9 @@ public class HomeCollectionItem {
     @JoinColumn(name = "myscore_id")
     private MyScore myScore;
 
-    @OneToMany
+    @OneToMany(targetEntity = Form.class, mappedBy = "id", fetch = FetchType.LAZY)
     private Set<Form> forms = new HashSet<>();
 
-    @OneToMany
+    @OneToMany(targetEntity = Lang.class, mappedBy = "id", fetch = FetchType.LAZY)
     private Set<Lang> langs = new HashSet<>();
 }
