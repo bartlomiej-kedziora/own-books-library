@@ -8,11 +8,16 @@ import org.springframework.web.bind.annotation.RequestMapping;
 
 @CrossOrigin(origins = "*")
 @Controller
-@RequestMapping("/forms")
+@RequestMapping("/")
 public class FormHtmlController {
 
-    @GetMapping
+    @GetMapping("form")
+    public String getCreateFormPage(Model model) {
+        return "admin/form";
+    }
+
+    @GetMapping("forms")
     public String getFormsPage(Model model) {
-        return "admin/forms";
+        return "forms";
     }
 }

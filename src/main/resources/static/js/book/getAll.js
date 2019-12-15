@@ -34,7 +34,7 @@ if (window.location.href.indexOf("books") != -1 || /books\/\d+$/.test(window.loc
             element.find('[data-task-removefromcollection-section]').click(function () {
                 removeFromCollection(data.id);
             });
-
+            console.log(element);
             return element;
         }
 

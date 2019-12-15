@@ -8,11 +8,16 @@ import org.springframework.web.bind.annotation.RequestMapping;
 
 @CrossOrigin(origins = "*")
 @Controller
-@RequestMapping("/langs")
+@RequestMapping("/")
 public class LangHtmlController {
 
-    @GetMapping
+    @GetMapping("lang")
+    public String getCreateLangsPage(Model model) {
+        return "admin/lang";
+    }
+
+    @GetMapping("langs")
     public String getLangsPage(Model model) {
-        return "admin/langs";
+        return "langs";
     }
 }

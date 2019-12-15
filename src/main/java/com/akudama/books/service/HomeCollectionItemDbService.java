@@ -1,5 +1,7 @@
 package com.akudama.books.service;
 
+import static com.akudama.books.domain.entity.HomeCollectionItem.HomeCollectionItemBuilder.aHomeCollectionItem;
+
 import com.akudama.books.controller.exceptions.ItemNotFoundException;
 import com.akudama.books.controller.exceptions.ItemNotFoundWithMessageException;
 import com.akudama.books.domain.entity.Book;
@@ -54,25 +56,37 @@ public class HomeCollectionItemDbService {
     }
 
     public HomeCollectionItem saveItemCollection(final HomeCollectionItem homeCollectionItem) {
-        Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
-        String username = authentication.getName();
-
-        HomeCollection homeCollection = homeCollectionRepository.findByUserUsername(username)
-                .orElseThrow(ItemNotFoundException::new);
+        HomeCollection homeCollection = getHomeCollectionFromLoggedUser();
         Book bookFromHomeCollectionItem = homeCollectionItem.getBook();
-
-        return repository.save(bookRepository.findByTitleAndTitleEngAndSeriesAndGenreAndYear(
+        Book bookFromDb = bookRepository.findByTitleAndTitleEngAndSeriesAndGenreAndYear(
                 bookFromHomeCollectionItem.getTitle(), bookFromHomeCollectionItem.getTitleEng(),
                 bookFromHomeCollectionItem.getSeries(), bookFromHomeCollectionItem.getGenre(),
                 bookFromHomeCollectionItem.getYear())
-                .map(book -> new HomeCollectionItem(
-                        homeCollectionItem.getId(),
-                        book,
-                        homeCollection,
-                        homeCollectionItem.getMyScore(),
-                        findFormsWithId(homeCollectionItem.getForms()),
-                        findLangsWithId(homeCollectionItem.getLangs())
-                )).orElseThrow(ItemNotFoundException::new));
+                .orElseGet(() -> bookRepository.save(homeCollectionItem.getBook()));
+        SetIdToCurrentHomeCollectionItemIfExistsInDb(homeCollectionItem, bookFromDb);
+
+        return repository.save(aHomeCollectionItem()
+                .withId(homeCollectionItem.getId())
+                .withBook(bookFromDb)
+                .withHomeCollection(homeCollection)
+                .withMyScore(homeCollectionItem.getMyScore())
+                .withForms(findFormsWithId(homeCollectionItem.getForms()))
+                .withLangs(findLangsWithId(homeCollectionItem.getLangs()))
+                .build());
+    }
+
+    private void SetIdToCurrentHomeCollectionItemIfExistsInDb(HomeCollectionItem homeCollectionItem,
+            Book book) {
+        repository.findByBookId(book.getId())
+                .ifPresent(collectionItem -> homeCollectionItem.setId(collectionItem.getId()));
+    }
+
+    private HomeCollection getHomeCollectionFromLoggedUser() {
+        Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
+        String username = authentication.getName();
+
+        return homeCollectionRepository.findByUserUsername(username)
+                .orElseThrow(ItemNotFoundException::new);
     }
 
     private Set<Form> findFormsWithId(Set<Form> forms) {

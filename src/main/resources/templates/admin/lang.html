@@ -26,28 +26,6 @@
             </fieldset>
         </form>
     </section>
-    <section class="datatable">
-        <h2>Existed Languages</h2>
-        <div class="grid-container header" data-datatable-row-header>
-            <div class="grid-item">No</div>
-            <div class="grid-item">Name</div>
-            <div class="grid-item">Action</div>
-        </div>
-        <div class="datatable__tasks-container" data-tasks-container></div>
-    </section>
-</main>
-
-<div class="template">
-    <div class="grid-container" data-datatable-row-template>
-        <div class="grid-item" data-task-counter ><p class="datatable__field-value" data-task-counter-paragraph></p></div>
-        <div class="grid-item" data-task-title-section><p class="datatable__field-value" data-task-title-paragraph></p></div>
-        <div class="datatable__row-section-wrapper">
-        <fieldset class="datatable__row-section datatable__row-section--button-section">
-            <div class="grid-item"><button type="button" data-task-delete-button class="datatable__button">Delete</button></div>
-        </fieldset>
-        </div>
-    </div>
-</div>
 <div th:replace="fragments/footer :: footer">&copy; 2019 The Static Templates</div>
 <script th:src="@{/js/jquery-3.3.1.min.js}"></script>
 <script th:src="@{/js/script.js}"></script>

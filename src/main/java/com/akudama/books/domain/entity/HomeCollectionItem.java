@@ -90,4 +90,63 @@ public class HomeCollectionItem {
     public int hashCode() {
         return Objects.hash(book, homeCollection, myScore, forms, langs);
     }
+
+
+    public static final class HomeCollectionItemBuilder {
+
+        private Long id;
+        private Book book;
+        private HomeCollection homeCollection;
+        private MyScore myScore;
+        private Set<Form> forms = new HashSet<>();
+        private Set<Lang> langs = new HashSet<>();
+
+        private HomeCollectionItemBuilder() {
+        }
+
+        public static HomeCollectionItemBuilder aHomeCollectionItem() {
+            return new HomeCollectionItemBuilder();
+        }
+
+        public HomeCollectionItemBuilder withId(Long id) {
+            this.id = id;
+            return this;
+        }
+
+        public HomeCollectionItemBuilder withBook(Book book) {
+            this.book = book;
+            return this;
+        }
+
+        public HomeCollectionItemBuilder withHomeCollection(HomeCollection homeCollection) {
+            this.homeCollection = homeCollection;
+            return this;
+        }
+
+        public HomeCollectionItemBuilder withMyScore(MyScore myScore) {
+            this.myScore = myScore;
+            return this;
+        }
+
+        public HomeCollectionItemBuilder withForms(Set<Form> forms) {
+            this.forms = forms;
+            return this;
+        }
+
+        public HomeCollectionItemBuilder withLangs(Set<Lang> langs) {
+            this.langs = langs;
+            return this;
+        }
+
+        public HomeCollectionItem build() {
+            HomeCollectionItem homeCollectionItem = new HomeCollectionItem();
+            homeCollectionItem.setId(id);
+            homeCollectionItem.setBook(book);
+            homeCollectionItem.setHomeCollection(homeCollection);
+            homeCollectionItem.setMyScore(myScore);
+            homeCollectionItem.setForms(forms);
+            homeCollectionItem.setLangs(langs);
+            return homeCollectionItem;
+        }
+    }
 }

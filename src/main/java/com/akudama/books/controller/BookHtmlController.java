@@ -10,13 +10,18 @@ import org.springframework.web.bind.annotation.RequestMapping;
 
 @CrossOrigin(origins = "*")
 @Controller
-@RequestMapping(value = {"/books", "/books/{id}"})
+@RequestMapping("/")
 public class BookHtmlController {
 
     @Autowired
     HomeCollectionDbService collectionDbService;
 
-    @GetMapping
+    @GetMapping(value = {"book"})
+    public String getCreateBooksPage(Model model) {
+        return "admin/book";
+    }
+
+    @GetMapping(value = {"books", "books/{id}"})
     public String getBooksPage(Model model) {//}, Authentication authentication) {
 //        HomeCollection collection = collectionDbService
 //                .getCollectionByUsername(authentication.getName()).get();
