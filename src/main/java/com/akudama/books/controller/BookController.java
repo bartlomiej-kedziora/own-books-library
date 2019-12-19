@@ -9,6 +9,7 @@ import com.akudama.books.domain.entity.Book;
 import com.akudama.books.mapper.ModelConverter;
 import com.akudama.books.service.BookDbService;
 import java.util.HashSet;
+import java.util.List;
 import java.util.Set;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.access.prepost.PreAuthorize;
@@ -35,8 +36,8 @@ public class BookController {
     }
 
     @RequestMapping(method = RequestMethod.GET)
-    public Set<BookDto> getBooks() {
-        return modelConverter.convertToDtoSet(service.getAllBooks(), BookDto.class);
+    public List<BookDto> getBooks() {
+        return modelConverter.convertToDtoList(service.getAllBooks(), BookDto.class);
     }
 
     @RequestMapping(method = RequestMethod.GET, value = "/{bookId}")

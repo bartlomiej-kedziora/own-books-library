@@ -45,7 +45,7 @@ public class AuthGroupDetailsDto {
             return this;
         }
 
-        public AuthGroupDetailsDtoBuilder setUser(UserDetailsDto user) {
+        public AuthGroupDetailsDtoBuilder withUser(UserDetailsDto user) {
             this.user = user;
             return this;
         }

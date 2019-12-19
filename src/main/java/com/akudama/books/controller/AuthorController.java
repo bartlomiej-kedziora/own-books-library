@@ -9,6 +9,7 @@ import com.akudama.books.domain.entity.Author;
 import com.akudama.books.mapper.ModelConverter;
 import com.akudama.books.service.AuthorDbService;
 import java.util.HashSet;
+import java.util.List;
 import java.util.Set;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.access.prepost.PreAuthorize;
@@ -35,13 +36,13 @@ public class AuthorController {
     }
 
     @RequestMapping(method = RequestMethod.GET)
-    public Set<AuthorDto> getAuthors() {
-        return modelConverter.convertToDtoSet(service.getAllAuthors(), AuthorDto.class);
+    public List<AuthorDto> getAuthors() {
+        return modelConverter.convertToDtoList(service.getAllAuthors(), AuthorDto.class);
     }
 
     @RequestMapping(method = RequestMethod.GET, value = "/details")
-    public Set<AuthorDetailsDto> getAuthorsWithDetails() {
-        return modelConverter.convertToDtoSet(service.getAllAuthors(), AuthorDetailsDto.class);
+    public List<AuthorDetailsDto> getAuthorsWithDetails() {
+        return modelConverter.convertToDtoList(service.getAllAuthors(), AuthorDetailsDto.class);
     }
 
     @RequestMapping(method = RequestMethod.GET, value = "/{authorId}")
@@ -72,12 +73,12 @@ public class AuthorController {
     }
 
     @RequestMapping(method = RequestMethod.PUT)
-    public AuthorDetailsDto updateAuthor(@RequestBody AuthorDetailsDto authorDto) {
+    public AuthorDto updateAuthor(@RequestBody AuthorDto author) {
         return modelConverter.convertToDto(
                 service.saveAuthor(
-                        modelConverter.convertToEntity(authorDto, Author.class)
+                        modelConverter.convertToEntity(author, Author.class)
                 ),
-                AuthorDetailsDto.class
+                AuthorDto.class
         );
     }
 
