@@ -25,12 +25,13 @@ import org.springframework.web.filter.CorsFilter;
 public class ApplicationSecurityConfiguration extends WebSecurityConfigurerAdapter {
 
     private static final String[] AUTH_LIST = {
+            "/resources/**",
             "**/swagger-resources/**",
             "/swagger-ui.html",
             "/v2/api-docs",
             "/webjars/**",
             "/index",
-            "/css/*",
+            "/css/**",
             "/js/**",
             "/img/**",
             "/"
@@ -64,7 +65,6 @@ public class ApplicationSecurityConfiguration extends WebSecurityConfigurerAdapt
     protected void configure(AuthenticationManagerBuilder auth) throws Exception {
         auth.authenticationProvider(authenticationProvider());
     }
-
 
     @Override
     protected void configure(HttpSecurity http) throws Exception {

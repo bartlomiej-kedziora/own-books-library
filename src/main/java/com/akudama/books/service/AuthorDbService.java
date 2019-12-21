@@ -4,8 +4,8 @@ import com.akudama.books.domain.entity.Author;
 import com.akudama.books.repository.AuthorRepository;
 import com.akudama.books.repository.BookRepository;
 import java.util.Collection;
+import java.util.List;
 import java.util.Optional;
-import java.util.Set;
 import java.util.stream.Collectors;
 import java.util.stream.Stream;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -23,7 +23,7 @@ public class AuthorDbService {
         this.bookRepository = bookRepository;
     }
 
-    public Set<Author> getAllAuthors() {
+    public List<Author> getAllAuthors() {
         return repository.findAll();
     }
 
@@ -31,7 +31,7 @@ public class AuthorDbService {
         return repository.findById(id);
     }
 
-    public Optional<Set<Author>> getAuthorsByBook(final long id) {
+    public Optional<List<Author>> getAuthorsByBook(final long id) {
         return repository.findByBooksId(id);
     }
 
@@ -63,7 +63,7 @@ public class AuthorDbService {
                         Stream.of(a.getBooks(),
                                 author.getBooks())
                                 .flatMap(Collection::stream)
-                                .collect(Collectors.toSet())
+                                .collect(Collectors.toList())
                 ))
                 .orElseGet(() -> author);
     }

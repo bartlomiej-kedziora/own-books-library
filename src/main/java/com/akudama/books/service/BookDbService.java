@@ -5,6 +5,7 @@ import com.akudama.books.domain.entity.Book;
 import com.akudama.books.repository.AuthorRepository;
 import com.akudama.books.repository.BookRepository;
 import java.util.Collection;
+import java.util.List;
 import java.util.Optional;
 import java.util.Set;
 import java.util.stream.Collectors;
@@ -24,7 +25,7 @@ public class BookDbService {
         this.authorRepository = authorRepository;
     }
 
-    public Set<Book> getAllBooks() {
+    public List<Book> getAllBooks() {
         return repository.findAll();
     }
 
@@ -32,7 +33,7 @@ public class BookDbService {
         return repository.findById(id);
     }
 
-    public Optional<Set<Book>> getBooksByAuthor(final long id) {
+    public Optional<List<Book>> getBooksByAuthor(final long id) {
         return repository.findByAuthorsId(id);
     }
 
@@ -41,6 +42,11 @@ public class BookDbService {
     }
 
     public void deleteBook(final long id) {
+        authorRepository.findByBooksId(id)
+                .ifPresent(authors -> authors.forEach(a -> {
+                    a.removeBookById(id);
+                    authorRepository.save(a);
+                }));
         repository.deleteById(id);
     }
 
@@ -56,16 +62,16 @@ public class BookDbService {
                         book.getGenre(),
                         Stream.of(b.getAuthors(), book.getAuthors())
                                 .flatMap(Collection::stream)
-                                .collect(Collectors.toSet()
+                                .collect(Collectors.toList()
                                 ),
                         book.getHomeCollectionItems()))
                 .orElseGet(() -> book);
     }
 
-    private Set<Author> findAuthorIfExistsOrGetCurrent(Set<Author> authors) {
+    private List<Author> findAuthorIfExistsOrGetCurrent(List<Author> authors) {
         return authors.stream()
                 .map(this::getAuthorWithIdIfExists)
-                .collect(Collectors.toSet());
+                .collect(Collectors.toList());
     }
 
     private Author getAuthorWithIdIfExists(Author author) {

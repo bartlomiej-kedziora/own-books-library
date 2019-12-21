@@ -1,6 +1,7 @@
 package com.akudama.books.domain.entity;
 
 import com.akudama.books.domain.LangKind;
+import java.util.Objects;
 import java.util.Set;
 import javax.persistence.CascadeType;
 import javax.persistence.Column;
@@ -31,4 +32,24 @@ public class Lang {
 
     @Enumerated(EnumType.STRING)
     private LangKind value;
+
+    @ManyToMany(mappedBy = "langs")
+    private Set<HomeCollectionItem> homeCollectionItems;
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) {
+            return true;
+        }
+        if (o == null || getClass() != o.getClass()) {
+            return false;
+        }
+        Lang lang = (Lang) o;
+        return value == lang.value;
+    }
+
+    @Override
+    public int hashCode() {
+        return Objects.hash(value);
+    }
 }

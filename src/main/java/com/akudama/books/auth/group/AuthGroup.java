@@ -42,7 +42,7 @@ public class AuthGroup {
     private Role authGroup;
 
     @ManyToOne(cascade = CascadeType.ALL)
-    @JoinColumn(name = "USER_ID")
+    @JoinColumn(name = "user_id")
     private User user;
 
     public AuthGroup(Long id, String username, Role authGroup) {

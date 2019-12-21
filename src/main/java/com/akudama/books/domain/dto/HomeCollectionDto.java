@@ -12,6 +12,6 @@ import lombok.NoArgsConstructor;
 public class HomeCollectionDto {
 
     private Long id;
-    private UserDetailsDto user;
+    private BasicUserDto user;
     private List<HomeCollectionItemDto> homeCollectionItems;
 }

@@ -2,6 +2,10 @@ const apiRoot = 'http://localhost:8080/v1/';
     const datatableRowTemplate = $('[data-datatable-row-template]');//.children()[0];
     const $tasksContainer = $('[data-tasks-container]');
 
+function var_dump(object) {
+    return JSON.stringify(object);
+}
+
 // ADD SECTION
     if (window.location.href.search("author$") != -1) {
         var urlType = "books";
@@ -88,13 +92,23 @@ const apiRoot = 'http://localhost:8080/v1/';
                 url: requestUrl,
                 method: 'GET',
                 contentType: "application/json",
-                success: function (tasks) {
+                success: function (result) {
+                if(!(result instanceof Array)) {
+                    result = new Array(result);
+                }
+                console.log("DANE: " + var_dump(result));
                     counter = 0;
-                    tasks.forEach(task => {
+                    result.forEach(data => {
                         //availableTasks[task.id] = task;
-                        createData(task, ++counter).appendTo($tasksContainer);
-                    console.log("TASK: " + task);
-                })
+                        var obj = createData(data, ++counter);
+                            $.each(obj, function(k,v) {
+                                if(isNaN(k) && k.indexOf('key') !== -1) {
+                                    v.appendTo($tasksContainer);
+                                } else {
+                                    obj.appendTo($tasksContainer)
+                                }
+                            })
+                    })
                 }
                 // error: function() {
                 //     alert("Item not found!");

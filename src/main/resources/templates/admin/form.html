@@ -1,0 +1,34 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head th:replace="fragments/header :: header"></head>
+<body>
+<div th:replace="fragments/menu :: menu"></div>
+<h1 class="bk-heading bk-heading--main">Own-library</h1>
+
+<main class="crud container">
+    <section class="datatable">
+        <h2>Add a new form</h2>
+        <form
+                class="datatable__row datatable__row--add"
+                method="POST"
+                action="/v1/forms"
+                data-task-add-form
+        >
+            <fieldset class="datatable__row-section datatable__row-section--input-section">
+                <label class="datatable__input-label">
+                    Form name
+                </label>
+                <input type="text" name="title" placeholder="Insert a form type" required minlength="2">
+            </fieldset>
+
+            <fieldset class="datatable__row-section datatable__row-section--button-section">
+                <button type="submit" data-task-add-button class="datatable__button">Add a form</button>
+            </fieldset>
+        </form>
+    </section>
+<div th:replace="fragments/footer :: footer">&copy; 2019 The Static Templates</div>
+<script th:src="@{/js/jquery-3.3.1.min.js}"></script>
+<script th:src="@{/js/script.js}"></script>
+
+</body>
+</html>

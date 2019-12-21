@@ -27,31 +27,26 @@
 
 <div class="template">
     <div class="grid-container" data-datatable-row-template>
-        <div class="grid-item" data-task-series ><p class="datatable__field-value" data-task-series-paragraph></p></div> <!-- SERIES -->
+<!--        <div class="grid-item" data-task-series><p class="datatable__field-value" data-task-series-paragraph></p></div> &lt;!&ndash; SERIES &ndash;&gt;-->
 
-        <div class="grid-item" data-task-counter ><p class="datatable__field-value" data-task-counter-paragraph></p></div>
+        <div class="grid-item" data-task-counter><p class="datatable__field-value" data-task-counter-paragraph></p></div>
         <div class="grid-item" data-task-year-section><p class="datatable__field-value" data-task-year-paragraph></p></div>
         <div class="grid-item" data-task-title-section><p class="datatable__field-value" data-task-title-paragraph></p></div>
         <div class="grid-item" data-task-titleENG-section><p class="datatable__field-value" data-task-titleENG-paragraph></p></div>
-        <div class="grid-item" data-task-series-section><p class="datatable__field-value" data-task-series-paragraph></p></div>
+        <div class="grid-item" data-task-genre-section><p class="datatable__field-value" data-task-genre-paragraph></p></div>
         <div class="grid-item" data-task-worldscore-section><p class="datatable__field-value" data-task-worldscore-paragraph></p></div>
         <div class="grid-item" data-task-myscore-section><p class="datatable__field-value" data-task-myscore-paragraph></p></div>
         <div class="grid-item" data-task-languages-section><p class="datatable__field-value" data-task-languages-paragraph></p></div>
         <div class="grid-item" data-task-form-section>
-            <p class="datatable__field-value" data-task-form-paragraph>
-                <a th:href="${user.getId()}" data-task-authors-section data-task-id="0"><img th:src="@{/img/book.png}" height="22" width="22"/></a>
-                <a th:href="${user.getId()}" data-task-authors-section data-task-id="0"><img th:src="@{/img/ebook.png}" height="22" width="22"/></a>
-            </p>
+            <p class="datatable__field-value" data-task-form-paragraph></p>
         </div>
-        <fieldset class="datatable__row-section datatable__row-section--button-section">
-            <button type="button" data-task-edit-button class="datatable__button">Edit</button>
-            <div class="grid-item"><button type="button" data-task-delete-button class="datatable__button">Delete</button></div>
-        </fieldset>
-    </div>
+      <fieldset class="datatable__row-section datatable__row-section--button-section">
+        <div class="grid-item"><button type="button" data-task-delete-button class="datatable__button">Delete</button></div>
+      </fieldset>
 </div>
 <div th:replace="fragments/footer :: footer">&copy; 2019 The Static Templates</div>
 <script th:src="@{/js/jquery-3.3.1.min.js}"></script>
-<!--<script th:src="@{/js/script.js}"></script>-->
+<script th:src="@{/js/script.js}"></script>
 
 </body>
 </html>
