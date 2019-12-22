@@ -27,6 +27,7 @@ textarea {
     margin-bottom: 20px; }
 
 .container {
+    width: 100%;
     padding-right: 15px;
     padding-left: 15px;
     margin-right: auto;
@@ -43,6 +44,10 @@ textarea {
 @media (min-width: 1200px) {
     .container {
         width: 1170px; } }
+
+@media (min-width: 1220px) {
+    .container {
+        width: 70%; } }
 
 .bk-heading--main {
     margin: 20px auto;
@@ -99,7 +104,9 @@ textarea {
 /*.datatable__row-section--button-section {*/
     /*border: none;*/
 /*}*/
-
+.datatable__form {
+    width:50%;
+}
 .datatable__row--editing input,
 .datatable__row--editing textarea {
     display: block; }
@@ -124,6 +131,28 @@ textarea {
     font-weight: 500;
     letter-spacing: 0.6px; }
 
+.datatable__input[type=text], select, textarea {
+    width: 100%; /* Full width */
+      padding: 12px; /* Some padding */
+      border: 1px solid #ccc; /* Gray border */
+      border-radius: 4px; /* Rounded borders */
+      box-sizing: border-box; /* Make sure that padding and width stays in place */
+      margin-top: 6px; /* Add a top margin */
+      margin-bottom: 16px; /* Bottom margin */
+      resize: vertical /* Allow the user to vertically resize the textarea (not horizontally) */
+}
+
+.datatable__select {
+    width:80%;
+}
+
+.form_button {
+    border: 0;
+    width: 30px;
+    padding: 12px;
+    background-color: #fff;
+     margin-top: 6px;
+}
 .datatable__button {
     color: #fff;
     background-color: #28a745;
@@ -150,7 +179,7 @@ textarea {
     border: 1px solid #ccc;
     border-bottom: none;
     display: grid;
-    grid-template-columns: 2% 13% 13% 13% 13% 13% 10% 13%;
+    grid-template-columns: 2% 11% 11% 11% 11% 11% 10% 11% 6% 6%;
     padding: 2px;
 }
 .grid-item {
@@ -201,6 +230,53 @@ li a:hover:not(.active) {
 .active {
     background-color: #4CAF50;
 }
+/*DROP-DOWN MENU*/
+.menu {
+ margin: 0;
+ width: 100%;
+ background-color: #333;
+}
+ /* Dropdown Button */
+.dropbtn {
+  background-color: #333;
+  color: white;
+  padding: 16px;
+  font-size: 16px;
+  border: none;
+}
+
+/* The container <div> - needed to position the dropdown content */
+.dropdown {
+  position: relative;
+  display: inline-block;
+}
+
+/* Dropdown Content (Hidden by Default) */
+.dropdown-content {
+  display: none;
+  position: absolute;
+  background-color: #f1f1f1;
+  min-width: 100px;
+  box-shadow: 0px 8px 16px 0px rgba(0,0,0,0.2);
+  z-index: 1;
+}
+
+/* Links inside the dropdown */
+.dropdown-content a {
+  color: black;
+  padding: 12px 16px;
+  text-decoration: none;
+  display: block;
+}
+
+/* Change color of dropdown links on hover */
+.dropdown-content a:hover {background-color: #ddd;}
+
+/* Show the dropdown menu on hover */
+.dropdown:hover .dropdown-content {display: block;}
+
+/* Change the background color of the dropdown button when the dropdown content is shown */
+.dropdown:hover .dropbtn {background-color: #3e8e41;}
 /*FOOTER*/
 .footer {
     position: fixed;

@@ -29,8 +29,9 @@ function var_dump(object) {
 
         function prepareBooksSelectOptions(tasks) {
             const element = $(datatableRowTemplate).clone();
+            var counter = 0;
                 tasks.forEach(task => {
-                    element.find('[data-list-name-select]').append(prepareBookOption(task))});
+                    element.find('[data-list-name-select]').append(prepareBookOption(++counter,task))});
 
             element.find('[data-task-add-button]').click(function () {
                 alert("ok")});
@@ -41,11 +42,12 @@ function var_dump(object) {
             return element;
         }
 
-        function prepareBookOption(task) {
+        function prepareBookOption(counter, task) {
+
                 return $('<option>')
                     .addClass('crud-select__option')
                     .val(task.id)
-                    .text(task.title + " / " + task.titleEng || 'Unknown name')
+                    .text(counter + ". " + task.title + " | " + (task.titleEng || 'Unknown name') + " | " + task.series + " | " + task.genre + " | " + task.year)
         }
 
         function handleTaskUpdateRequest() {
@@ -147,8 +149,9 @@ function var_dump(object) {
 
     function addToCollection(bookId) {
         //event.preventDefault();
-
-        var requestUrl = apiRoot + "items-collection/book";
+        var book = getBookById(bookId);
+        console.log(var_dump(book));
+        var requestUrl = apiRoot + "items-collection";
         $.ajax({
             url: requestUrl,
             method: 'POST',
@@ -156,7 +159,7 @@ function var_dump(object) {
             contentType: "application/json; charset=utf-8",
             dataType: 'json',
             data: JSON.stringify({
-                id: bookId
+                book: book
             }),
             complete: function(data) {
                 if(data.status === 200) {
@@ -166,8 +169,58 @@ function var_dump(object) {
         });
     }
 
+    function getBookById(bookId) {
+        const requestUrl = apiRoot + "books/" + bookId;
+                var result;
+
+                $.ajax({
+                    url: requestUrl,
+                    method: 'GET',
+                    contentType: "application/json",
+                    async: false,
+                    success: function (data) {
+                        result = data;
+                    },
+                    error: function() {
+                        result = false;
+                    }
+                });
+                return result;
+    }
+
     function removeFromCollection(bookId) {
-        alert("Item removed from collection");
+        var collectionItem = getCollectionItemByBookId(bookId);
+                console.log(var_dump(collectionItem));
+                var requestUrl = apiRoot + "items-collection/" + collectionItem.id;
+                $.ajax({
+                    url: requestUrl,
+                    method: 'DELETE',
+                    processData: false,
+                    complete: function(data) {
+                        if(data.status === 200) {
+                            alert("Item removed from collection");
+                        }
+                    }
+                });
+    }
+
+    function getCollectionItemByBookId(bookId) {
+        const requestUrl = apiRoot + "items-collection/" + bookId + "/book";
+                        var result;
+
+                        $.ajax({
+                            url: requestUrl,
+                            method: 'GET',
+                            contentType: "application/json",
+                            async: false,
+                            success: function (data) {
+                                result = data;
+                            },
+                            error: function() {
+                                result = false;
+                            }
+                        });
+                        return result;
     }
 
     function handleFormOrLangSubmitRequest(event) {
