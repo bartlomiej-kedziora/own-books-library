@@ -250,7 +250,8 @@ function var_dump(object) {
         var parentEl = $(this).parents('[data-task-id]');
         var taskId = parentEl.attr('data-task-id');
         var requestUrl = apiRoot + event.data.urlType;
-
+//alert(var_dump(requestUrl));
+alert(var_dump(taskId));
         $.ajax({
             url: requestUrl + '/' + taskId,
             method: 'DELETE',

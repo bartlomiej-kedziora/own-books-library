@@ -35,5 +35,5 @@ if (window.location.href.indexOf("authors") != -1 || /authors\/\d+$/.test(window
         }
 
         getAll(urlType);
-        $tasksContainer.on('click','[data-task-delete-button]', {urlType: urlType},handleDeleteRequest);
+        $tasksContainer.on('click','[data-task-delete-button]', {urlType: "authors"},handleDeleteRequest);
 }

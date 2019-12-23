@@ -41,5 +41,5 @@ if (window.location.href.indexOf("collections") != -1) {
         };
 
         getAll(urlType);
-        $tasksContainer.on('click','[data-task-delete-button]', {urlType: urlType},handleDeleteRequest);
+        $tasksContainer.on('click','[data-task-delete-button]', {urlType: "items-collection"},handleDeleteRequest);
     }

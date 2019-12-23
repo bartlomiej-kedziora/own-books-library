@@ -17,6 +17,7 @@
             <div class="grid-item">Published</div>
             <div class="grid-item">Authors</div>
             <div class="grid-item">Collection</div>
+            <div class="grid-item">Action</div>
         </div>
         <div class="datatable__tasks-container" data-tasks-container></div>
     </section>
@@ -30,13 +31,17 @@
         <div class="grid-item" data-task-series-section><p class="datatable__field-value" data-task-series-paragraph></p></div>
         <div class="grid-item" data-task-genre-section><p class="datatable__field-value" data-task-genre-paragraph></p></div>
         <div class="grid-item" data-task-year-section><p class="datatable__field-value" data-task-year-paragraph></p></div>
-        <div class="grid-item" ><p><a href="#" data-task-authors-section data-task-au="0"><img th:src="@{/img/icon-authors.png}" height="22" width="22"/></a></p></div>
+        <div class="grid-item" ><p><a href="#" data-task-authors-section data-task-id="0"><img th:src="@{/img/icon-authors.png}" height="22" width="22"/></a></p></div>
         <div class="grid-item" >
             <p>
                 <a href="#" data-task-addtocollection-section><img th:src="@{/img/plus.png}" height="22" width="22"/></a>
                 <a href="#" data-task-removefromcollection-section><img th:src="@{/img/minus.png}" height="22" width="22"/></a>
             </p>
         </div>
+        <fieldset class="datatable__row-section datatable__row-section--button-section">
+            <button type="button" data-task-edit-button class="datatable__button">Edit</button>
+            <div class="grid-item"><button type="button" data-task-delete-button class="datatable__button">Delete</button></div>
+        </fieldset>
     </div>
 </div>
 <div th:replace="fragments/footer :: footer">&copy; 2019 The Static Templates</div>

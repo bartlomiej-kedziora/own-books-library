@@ -15,7 +15,7 @@ if (window.location.href.indexOf("books") != -1 || /books\/\d+$/.test(window.loc
         function createData(data, counter) {
             const element = $(datatableRowTemplate).clone();
 
-            element.attr('data-book-id', data.id);
+            element.attr('data-task-id', data.id);
             element.find('[data-task-counter] [data-task-counter-paragraph]').text(counter);
             element.find('[data-task-title-section] [data-task-title-paragraph]').text(data.title);
             element.find('[data-task-titleENG-section] [data-task-titleENG-paragraph]').text(data.titleEng);
@@ -39,5 +39,5 @@ if (window.location.href.indexOf("books") != -1 || /books\/\d+$/.test(window.loc
         }
 
         getAll(urlType);
-        $tasksContainer.on('click','[data-task-delete-button]', {urlType: urlType},handleDeleteRequest);
+        $tasksContainer.on('click','[data-task-delete-button]', {urlType: "books"},handleDeleteRequest);
 }
