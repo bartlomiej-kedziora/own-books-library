@@ -1,10 +1,84 @@
 const apiRoot = 'http://localhost:8080/v1/';
-    const datatableRowTemplate = $('[data-datatable-row-template]');//.children()[0];
-    const $tasksContainer = $('[data-tasks-container]');
+const datatableRowTemplate = $('[data-datatable-row-template]');//.children()[0];
+const $tasksContainer = $('[data-tasks-container]');
 
 function var_dump(object) {
     return JSON.stringify(object);
 }
+
+function justPost(event, values, redirect) {
+    var requestUrl = apiRoot + event.data.urlType;
+        $.ajax({
+            url: requestUrl,
+            method: 'POST',
+            processData: false,
+            contentType: "application/json; charset=utf-8",
+            dataType: 'json',
+            data: values,
+            complete: function(data) {
+                if(data.status === 200) {
+//                    window.location.href = redirect;
+                }
+            }
+        });
+}
+
+function getAll(urlType) {
+    $tasksContainer.empty();
+    const requestUrl = apiRoot + urlType;
+    $.ajax({
+        url: requestUrl,
+        method: 'GET',
+        contentType: "application/json",
+        success: function (result) {
+            if(!(result instanceof Array)) {
+                result = new Array(result);
+            }
+            console.log("DANE: " + var_dump(result));
+            counter = 0;
+            result.forEach(data => {
+                var obj = createData(data, ++counter);
+                $.each(obj, function(k,v) {
+                    if(isNaN(k) && k.indexOf('key') !== -1) {
+                        v.appendTo($tasksContainer);
+                    } else {
+                        obj.appendTo($tasksContainer)
+                    }
+                })
+            })
+        }
+    });
+}
+
+function isData(urlType) {
+    const requestUrl = apiRoot + urlType;
+    var status = false;
+
+    $.ajax({
+        url: requestUrl,
+        method: 'GET',
+        contentType: "application/json",
+        async: false,
+        success: function (tasks) {
+            status = tasks.length > 0;
+        },
+        error: function() {
+            status = false;
+        }
+    });
+    return status;
+}
+
+function linkRender(ajaxUrl, hrefUrl) {
+    if(isData(ajaxUrl)) {
+        window.location.href = hrefUrl;
+    }
+    else {
+        alert("No items found!");
+    }
+}
+
+//VERIFY BELOW IF NEEDED
 
 // ADD SECTION
     if (window.location.href.search("author$") != -1) {
@@ -85,67 +159,9 @@ function var_dump(object) {
         getBooks(urlType);
     }
     // END ADD SECTION
-        function getAll(urlType) {
-            $tasksContainer.empty();
-            const requestUrl = apiRoot + urlType;
-//            alert(requestUrl);
 
-            $.ajax({
-                url: requestUrl,
-                method: 'GET',
-                contentType: "application/json",
-                success: function (result) {
-                if(!(result instanceof Array)) {
-                    result = new Array(result);
-                }
-                console.log("DANE: " + var_dump(result));
-                    counter = 0;
-                    result.forEach(data => {
-                        //availableTasks[task.id] = task;
-                        var obj = createData(data, ++counter);
-                            $.each(obj, function(k,v) {
-                                if(isNaN(k) && k.indexOf('key') !== -1) {
-                                    v.appendTo($tasksContainer);
-                                } else {
-                                    obj.appendTo($tasksContainer)
-                                }
-                            })
-                    })
-                }
-                // error: function() {
-                //     alert("Item not found!");
-                //     window.location.href = document.referrer;
-                // }
-            });
-        }
 
-    function isData(urlType) {
-        const requestUrl = apiRoot + urlType;
-        var status = false;
 
-        $.ajax({
-            url: requestUrl,
-            method: 'GET',
-            contentType: "application/json",
-            async: false,
-            success: function (tasks) {
-                status = tasks.length > 0;
-            },
-            error: function() {
-                status = false;
-            }
-        });
-        return status;
-    }
-
-    function linkRender(ajaxUrl, hrefUrl) {
-        if(isData(ajaxUrl)) {
-            window.location.href = hrefUrl;
-        }
-        else {
-            alert("No items found!");
-        }
-    }
 
     function addToCollection(bookId) {
         //event.preventDefault();
@@ -250,8 +266,6 @@ function var_dump(object) {
         var parentEl = $(this).parents('[data-task-id]');
         var taskId = parentEl.attr('data-task-id');
         var requestUrl = apiRoot + event.data.urlType;
-//alert(var_dump(requestUrl));
-alert(var_dump(taskId));
         $.ajax({
             url: requestUrl + '/' + taskId,
             method: 'DELETE',

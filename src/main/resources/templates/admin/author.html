@@ -11,7 +11,7 @@
         <form
                 class="datatable__row"
                 method="POST"
-                action="/authors"
+                action="/v1/books"
                 data-task-add-form
         >
             <div class="datatable__form">
@@ -63,7 +63,7 @@
                         <label class="datatable__input-label">
                             Books
                         </label>
-                         <select class="datatable__select" name="list-name" data-list-name-select>
+                         <select class="datatable__select" name="books[]" data-list-name-select>
                             <option disabled selected>--- select a list ---</option>
                          </select>
                             <a href="#" data-task-addbook-section><img th:src="@{/img/plus.png}" height="22" width="22"/></a>
