@@ -1,5 +1,6 @@
 package com.akudama.books.service;
 
+import com.akudama.books.controller.exceptions.ItemNotFoundWithMessageException;
 import com.akudama.books.domain.entity.Author;
 import com.akudama.books.repository.AuthorRepository;
 import com.akudama.books.repository.BookRepository;
@@ -39,6 +40,22 @@ public class AuthorDbService {
         return repository.save(findAuthorIfExists(author));
     }
 
+    public Author updateAuthor(final Author author) {
+        return repository.findById(author.getId())
+                .map(a -> saveAuthor(new Author(a.getId(),
+                        author.getYearOfBirth(),
+                        author.getName(),
+                        author.getSurname(),
+                        author.getCity(),
+                        author.getCountry(),
+                        Stream.of(a.getBooks(),
+                                author.getBooks())
+                                .flatMap(Collection::stream)
+                                .collect(Collectors.toList())
+                )))
+                .orElseThrow(() -> new ItemNotFoundWithMessageException("Author not exists!"));
+    }
+
     public void deleteAuthor(final long id) {
         bookRepository.findByAuthorsId(id)
                 .ifPresent(books -> books.forEach(b -> {
@@ -54,18 +71,27 @@ public class AuthorDbService {
                 author.getYearOfBirth(),
                 author.getCountry(),
                 author.getCity())
-                .map(a -> new Author(a.getId(),
-                        author.getYearOfBirth(),
-                        author.getName(),
-                        author.getSurname(),
-                        author.getCity(),
-                        author.getCountry(),
-                        Stream.of(a.getBooks(),
-                                author.getBooks())
-                                .flatMap(Collection::stream)
-                                .collect(Collectors.toList())
-                ))
                 .orElseGet(() -> author);
     }
+
+//    private Author findAuthorIfExists(Author author) {
+//        return repository.findByNameAndSurnameAndYearOfBirthAndCountryAndCity(author.getName(),
+//                author.getSurname(),
+//                author.getYearOfBirth(),
+//                author.getCountry(),
+//                author.getCity())
+//                .map(a -> new Author(a.getId(),
+//                        author.getYearOfBirth(),
+//                        author.getName(),
+//                        author.getSurname(),
+//                        author.getCity(),
+//                        author.getCountry(),
+//                        Stream.of(a.getBooks(),
+//                                author.getBooks())
+//                                .flatMap(Collection::stream)
+//                                .collect(Collectors.toList())
+//                ))
+//                .orElseGet(() -> author);
+//    }
 
 }

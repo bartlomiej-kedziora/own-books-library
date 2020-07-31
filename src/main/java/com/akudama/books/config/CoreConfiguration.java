@@ -37,7 +37,8 @@ public class CoreConfiguration implements WebMvcConfigurer {
     }
 
     private ApiInfo apiEndPointsInfo() {
-        return new ApiInfoBuilder().title("Spring Boot REST API")
+        return new ApiInfoBuilder()
+                .title("Spring Boot REST API")
                 .description("Own Library Management REST API")
                 .contact(new Contact("Bartlomiej Kedziora", "www.akudama.pl", "root@gmail.com"))
                 .license("Apache 2.0")

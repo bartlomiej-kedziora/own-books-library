@@ -14,10 +14,13 @@ import java.util.Set;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.CrossOrigin;
+import org.springframework.web.bind.annotation.DeleteMapping;
+import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RestController;
 
 @CrossOrigin(origins = "*")
@@ -35,30 +38,30 @@ public class AuthorController {
         this.modelConverter = modelConverter;
     }
 
-    @RequestMapping(method = RequestMethod.GET)
+    @GetMapping
     public List<AuthorDto> getAuthors() {
         return modelConverter.convertToDtoList(service.getAllAuthors(), AuthorDto.class);
     }
 
-    @RequestMapping(method = RequestMethod.GET, value = "/details")
+    @GetMapping("/details")
     public List<AuthorDetailsDto> getAuthorsWithDetails() {
         return modelConverter.convertToDtoList(service.getAllAuthors(), AuthorDetailsDto.class);
     }
 
-    @RequestMapping(method = RequestMethod.GET, value = "/{authorId}")
+    @GetMapping("/{authorId}")
     public AuthorDto getAuthor(@PathVariable long authorId) {
         return modelConverter.convertToDto(
                 service.getAuthor(authorId).orElseThrow(ItemNotFoundException::new), AuthorDto.class);
     }
 
 
-    @RequestMapping(method = RequestMethod.GET, value = "/{authorId}/details")
+    @GetMapping("/{authorId}/details")
     public AuthorDetailsDto getAuthorWithDetails(@PathVariable long authorId) {
         return modelConverter.convertToDto(
                 service.getAuthor(authorId).orElseThrow(ItemNotFoundException::new), AuthorDetailsDto.class);
     }
 
-    @RequestMapping(method = RequestMethod.GET, value = "/{bookId}/book")
+    @GetMapping("/{bookId}/book")
     public Set<AuthorDto> getAuthorsByBook(@PathVariable long bookId) {
         return modelConverter.convertToDtoSet(
                 new HashSet<>(service.getAuthorsByBook(bookId).orElseThrow(ItemNotFoundException::new)),
@@ -67,22 +70,22 @@ public class AuthorController {
     }
 
     @PreAuthorize("hasRole('ROLE_ADMIN')")
-    @RequestMapping(method = RequestMethod.DELETE, value = "/{authorId}")
+    @DeleteMapping("/{authorId}")
     public void deleteAuthor(@PathVariable long authorId) {
         service.deleteAuthor(authorId);
     }
 
-    @RequestMapping(method = RequestMethod.PUT)
+    @PutMapping
     public AuthorDto updateAuthor(@RequestBody AuthorDto author) {
         return modelConverter.convertToDto(
-                service.saveAuthor(
+                service.updateAuthor(
                         modelConverter.convertToEntity(author, Author.class)
                 ),
                 AuthorDto.class
         );
     }
 
-    @RequestMapping(method = RequestMethod.POST, consumes = APPLICATION_JSON_VALUE)
+    @PostMapping(consumes = APPLICATION_JSON_VALUE)
     public void createAuthor(@RequestBody AuthorDto author) {
         service.saveAuthor(modelConverter.convertToEntity(author, Author.class));
     }
